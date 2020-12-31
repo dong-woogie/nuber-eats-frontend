@@ -1,15 +1,34 @@
+import { gql, useMutation } from "@apollo/client";
 import React from "react";
 import { useForm } from "react-hook-form";
+import FormError from "../components/FormError";
 
 interface ILoginForm {
   email: string;
   password: string;
 }
 
+const LOGIN_MUTATION = gql`
+  mutation login($email: String!, $password: String!) {
+    login(input: { email: $email, password: $password }) {
+      ok
+      error
+      token
+    }
+  }
+`;
+
 function Login() {
   const { register, errors, handleSubmit, getValues } = useForm<ILoginForm>();
+  const [loginMutation] = useMutation(LOGIN_MUTATION);
   const onSubmit = () => {
-    console.log(getValues());
+    const { email, password } = getValues();
+    loginMutation({
+      variables: {
+        email,
+        password,
+      },
+    });
   };
   return (
     <div className="h-screen bg-gray-800 flex items-center justify-center">
@@ -27,10 +46,9 @@ function Login() {
             required
           />
           {errors.email?.message && (
-            <span className="text-red-500 font-medium">
-              {errors.email.message}
-            </span>
+            <FormError errorMessage={errors.email?.message} />
           )}
+
           <input
             className="input"
             placeholder="Password"
@@ -43,14 +61,10 @@ function Login() {
             required
           />
           {errors.password?.message && (
-            <span className="text-red-500 font-medium">
-              {errors.password.message}
-            </span>
+            <FormError errorMessage={errors.password.message} />
           )}
           {errors.password?.type === "minLength" && (
-            <span className="text-red-500 font-medium">
-              Password must be more than 10 chars.
-            </span>
+            <FormError errorMessage="Password must be more than 10 chars." />
           )}
           <button className="btn">Log In</button>
         </form>
