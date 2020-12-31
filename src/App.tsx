@@ -1,10 +1,16 @@
 import React from "react";
+import { Route, Switch } from "react-router-dom";
+import CreateAccount from "./pages/CreateAccount";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
 
 function App() {
   return (
-    <div className=" bg-black ">
-      <h2 className=" text-xl text-white ">하이우기</h2>
-    </div>
+    <Switch>
+      <Route path="/" exact component={Home} />
+      <Route path="/login" component={Login} />
+      <Route path="/create-account" component={CreateAccount} />
+    </Switch>
   );
 }
 
