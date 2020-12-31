@@ -1,7 +1,11 @@
-import { gql, useMutation } from "@apollo/client";
+import { ApolloError, gql, useMutation } from "@apollo/client";
 import React from "react";
 import { useForm } from "react-hook-form";
 import FormError from "../components/FormError";
+import {
+  LoginMitation,
+  LoginMitationVariables,
+} from "../__generated__/LoginMitation";
 
 interface ILoginForm {
   email: string;
@@ -9,8 +13,8 @@ interface ILoginForm {
 }
 
 const LOGIN_MUTATION = gql`
-  mutation login($email: String!, $password: String!) {
-    login(input: { email: $email, password: $password }) {
+  mutation LoginMitation($loginInput: LoginInput!) {
+    login(input: $loginInput) {
       ok
       error
       token
@@ -20,13 +24,25 @@ const LOGIN_MUTATION = gql`
 
 function Login() {
   const { register, errors, handleSubmit, getValues } = useForm<ILoginForm>();
-  const [loginMutation] = useMutation(LOGIN_MUTATION);
+
+  const onCompleted = ({ login }: LoginMitation) => {
+    const { ok, error, token } = login;
+    if (ok) {
+      console.log(token);
+    }
+  };
+  const [loginMutation, { data: loginMutationResult, loading }] = useMutation<
+    LoginMitation,
+    LoginMitationVariables
+  >(LOGIN_MUTATION, {
+    onCompleted,
+  });
   const onSubmit = () => {
+    if (loading) return;
     const { email, password } = getValues();
     loginMutation({
       variables: {
-        email,
-        password,
+        loginInput: { email, password },
       },
     });
   };
@@ -40,24 +56,18 @@ function Login() {
             placeholder="Email"
             name="email"
             type="email"
-            ref={register({
-              required: "Email is required",
-            })}
+            ref={register({ required: "Email is required" })}
             required
           />
           {errors.email?.message && (
             <FormError errorMessage={errors.email?.message} />
           )}
-
           <input
             className="input"
             placeholder="Password"
             name="password"
             type="password"
-            ref={register({
-              required: "Password is required",
-              minLength: 10,
-            })}
+            ref={register({ required: "Password is required" })}
             required
           />
           {errors.password?.message && (
@@ -66,7 +76,10 @@ function Login() {
           {errors.password?.type === "minLength" && (
             <FormError errorMessage="Password must be more than 10 chars." />
           )}
-          <button className="btn">Log In</button>
+          <button className="btn">{loading ? "Loading..." : "Log In"}</button>
+          {loginMutationResult?.login.error && (
+            <FormError errorMessage={loginMutationResult.login.error} />
+          )}
         </form>
       </div>
     </div>
