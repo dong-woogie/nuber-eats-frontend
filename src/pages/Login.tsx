@@ -1,4 +1,4 @@
-import { ApolloError, gql, useMutation } from "@apollo/client";
+import { gql, useMutation } from "@apollo/client";
 import React from "react";
 import { useForm } from "react-hook-form";
 import FormError from "../components/FormError";
@@ -6,6 +6,9 @@ import {
   LoginMitation,
   LoginMitationVariables,
 } from "../__generated__/LoginMitation";
+import LogoImage from "../images/eats-logo.svg";
+import Button from "../components/Button";
+import { Link } from "react-router-dom";
 
 interface ILoginForm {
   email: string;
@@ -23,10 +26,18 @@ const LOGIN_MUTATION = gql`
 `;
 
 function Login() {
-  const { register, errors, handleSubmit, getValues } = useForm<ILoginForm>();
+  const {
+    register,
+    errors,
+    handleSubmit,
+    getValues,
+    formState,
+  } = useForm<ILoginForm>({
+    mode: "onChange",
+  });
 
   const onCompleted = ({ login }: LoginMitation) => {
-    const { ok, error, token } = login;
+    const { ok, token } = login;
     if (ok) {
       console.log(token);
     }
@@ -47,12 +58,13 @@ function Login() {
     });
   };
   return (
-    <div className="h-screen bg-gray-800 flex items-center justify-center">
-      <div className="bg-white p-10 rounded-lg w-full max-w-lg text-center shadow-2xl">
-        <h3 className="text-2xl text-gray-600">Login</h3>
-        <form className="grid gap-3 px-5" onSubmit={handleSubmit(onSubmit)}>
+    <div className="h-screen flex flex-col items-center mt-10 lg:mt-28">
+      <div className="w-full flex flex-col items-center max-w-screen-sm px-5">
+        <img className="w-52" src={LogoImage} alt="logo" />
+        <h4 className="w-full font-medium text-3xl mt-10 mb-5">Welcome back</h4>
+        <form className="grid gap-3 w-full" onSubmit={handleSubmit(onSubmit)}>
           <input
-            className="input mt-5"
+            className="input"
             placeholder="Email"
             name="email"
             type="email"
@@ -76,11 +88,21 @@ function Login() {
           {errors.password?.type === "minLength" && (
             <FormError errorMessage="Password must be more than 10 chars." />
           )}
-          <button className="btn">{loading ? "Loading..." : "Log In"}</button>
+          <Button
+            activeText="Log In"
+            canClick={formState.isValid}
+            loading={loading}
+          />
           {loginMutationResult?.login.error && (
             <FormError errorMessage={loginMutationResult.login.error} />
           )}
         </form>
+        <div className="mt-5 text-lg">
+          Uber는 처음이신가요?{"  "}
+          <Link to="create-account" className="text-lime-700 hover:underline">
+            계정 만들기
+          </Link>
+        </div>
       </div>
     </div>
   );
