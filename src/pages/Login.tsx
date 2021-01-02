@@ -8,7 +8,9 @@ import {
 } from "../__generated__/LoginMitation";
 import LogoImage from "../images/eats-logo.svg";
 import Button from "../components/Button";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { Helmet } from "react-helmet";
+import { loggedVars } from "../apollo";
 
 interface ILoginForm {
   email: string;
@@ -35,12 +37,11 @@ function Login() {
   } = useForm<ILoginForm>({
     mode: "onChange",
   });
-
+  const history = useHistory();
   const onCompleted = ({ login }: LoginMitation) => {
-    const { ok, token } = login;
-    if (ok) {
-      console.log(token);
-    }
+    if (!login.ok) return;
+    loggedVars(true);
+    history.push("/");
   };
   const [loginMutation, { data: loginMutationResult, loading }] = useMutation<
     LoginMitation,
@@ -59,6 +60,9 @@ function Login() {
   };
   return (
     <div className="h-screen flex flex-col items-center mt-10 lg:mt-28">
+      <Helmet>
+        <title>Create Account | Nuber Eats</title>
+      </Helmet>
       <div className="w-full flex flex-col items-center max-w-screen-sm px-5">
         <img className="w-52" src={LogoImage} alt="logo" />
         <h4 className="w-full font-medium text-3xl mt-10 mb-5">Welcome back</h4>
@@ -99,7 +103,7 @@ function Login() {
         </form>
         <div className="mt-5 text-lg">
           Uber는 처음이신가요?{"  "}
-          <Link to="create-account" className="text-lime-700 hover:underline">
+          <Link to="/create-account" className="text-lime-700 hover:underline">
             계정 만들기
           </Link>
         </div>
