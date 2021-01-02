@@ -9,8 +9,8 @@ import {
 import LogoImage from "../images/eats-logo.svg";
 import Button from "../components/Button";
 import { Link, useHistory } from "react-router-dom";
-import { Helmet } from "react-helmet";
-import { loggedVars } from "../apollo";
+import { Helmet } from "react-helmet-async";
+import { authTokenVars, loggedVars } from "../apollo";
 
 interface ILoginForm {
   email: string;
@@ -39,7 +39,9 @@ function Login() {
   });
   const history = useHistory();
   const onCompleted = ({ login }: LoginMitation) => {
-    if (!login.ok) return;
+    const { ok, token } = login;
+    if (!ok) return;
+    authTokenVars(token);
     loggedVars(true);
     history.push("/");
   };
@@ -61,7 +63,7 @@ function Login() {
   return (
     <div className="h-screen flex flex-col items-center mt-10 lg:mt-28">
       <Helmet>
-        <title>Create Account | Nuber Eats</title>
+        <title>Login | Nuber Eats</title>
       </Helmet>
       <div className="w-full flex flex-col items-center max-w-screen-sm px-5">
         <img className="w-52" src={LogoImage} alt="logo" />

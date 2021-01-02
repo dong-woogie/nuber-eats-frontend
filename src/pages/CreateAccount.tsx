@@ -5,7 +5,7 @@ import FormError from "../components/FormError";
 import LogoImage from "../images/eats-logo.svg";
 import Button from "../components/Button";
 import { Link, useHistory } from "react-router-dom";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import { UserRole } from "../__generated__/globalTypes";
 import {
   CreateAccountMutation,

@@ -6,11 +6,14 @@ import { client } from "./apollo";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "./styles/styles.css";
+import { HelmetProvider } from "react-helmet-async";
 
 ReactDOM.render(
   <ApolloProvider client={client}>
     <BrowserRouter>
-      <App />
+      <HelmetProvider>
+        <App />
+      </HelmetProvider>
     </BrowserRouter>
   </ApolloProvider>,
   document.getElementById("root")
