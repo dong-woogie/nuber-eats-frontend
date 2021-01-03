@@ -11,6 +11,7 @@ import Button from "../components/Button";
 import { Link, useHistory } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { authTokenVars, loggedVars } from "../apollo";
+import { LOCAL_STORAGE_TOKEN } from "../constants";
 
 interface ILoginForm {
   email: string;
@@ -40,9 +41,10 @@ function Login() {
   const history = useHistory();
   const onCompleted = ({ login }: LoginMitation) => {
     const { ok, token } = login;
-    if (!ok) return;
+    if (!(ok && token)) return;
     authTokenVars(token);
     loggedVars(true);
+    localStorage.setItem(LOCAL_STORAGE_TOKEN, token);
     history.push("/");
   };
   const [loginMutation, { data: loginMutationResult, loading }] = useMutation<

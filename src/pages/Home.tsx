@@ -1,32 +1,40 @@
 import React from "react";
-import { useReactiveVar } from "@apollo/client";
+import { gql, useQuery, useReactiveVar } from "@apollo/client";
 import { loggedVars } from "../apollo";
 import Login from "./Login";
 import { Helmet } from "react-helmet";
+import { MeQuery } from "../__generated__/MeQuery";
+
+const ME_QUERY = gql`
+  query MeQuery {
+    me {
+      email
+      role
+    }
+  }
+`;
 
 function Home() {
   const isLoggedIn = useReactiveVar(loggedVars);
+  const { data, loading, error } = useQuery<MeQuery>(ME_QUERY);
+
+  if (!isLoggedIn) return <Login />;
+  if (loading || error || !data) {
+    return (
+      <div className="h-screen flex items-center justify-center">
+        <span className="font-medium text-3xl tracking-wider">Loading...</span>
+      </div>
+    );
+  }
   return (
     <div>
-      {isLoggedIn ? (
-        <div>
-          <Helmet>
-            <title>Home | Number Eats</title>
-          </Helmet>
-          로그인
-          <div>
-            <button
-              onClick={() => {
-                loggedVars(false);
-              }}
-            >
-              로그아웃버튼
-            </button>
-          </div>
-        </div>
-      ) : (
-        <Login />
-      )}
+      <div>
+        <Helmet>
+          <title>Home | Number Eats</title>
+        </Helmet>
+        <p>email : {data?.me.email}</p>
+        <p>role : {data?.me.role}</p>
+      </div>
     </div>
   );
 }
