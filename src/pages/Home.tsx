@@ -1,22 +1,13 @@
 import React from "react";
-import { gql, useQuery, useReactiveVar } from "@apollo/client";
+import { useReactiveVar } from "@apollo/client";
 import { loggedVars } from "../apollo";
 import Login from "./Login";
 import { Helmet } from "react-helmet";
-import { MeQuery } from "../__generated__/MeQuery";
-
-const ME_QUERY = gql`
-  query MeQuery {
-    me {
-      email
-      role
-    }
-  }
-`;
+import { useMe } from "../hooks/useMe";
 
 function Home() {
   const isLoggedIn = useReactiveVar(loggedVars);
-  const { data, loading, error } = useQuery<MeQuery>(ME_QUERY);
+  const { data, loading, error } = useMe();
 
   if (!isLoggedIn) return <Login />;
   if (loading || error || !data) {
