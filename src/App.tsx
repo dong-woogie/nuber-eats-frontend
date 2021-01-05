@@ -1,19 +1,13 @@
+import { useReactiveVar } from "@apollo/client";
 import React from "react";
-import { Route, Switch } from "react-router-dom";
-import CreateAccount from "./pages/CreateAccount";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import NotFound from "./pages/NotFound";
+import { loggedVars } from "./apollo";
+import LoggedInRoute from "./routes/LoggedInRoute";
+import LoggedOutRoute from "./routes/LoggedOutRoute";
 
 function App() {
-  return (
-    <Switch>
-      <Route path="/" exact component={Home} />
-      <Route path="/login" component={Login} />
-      <Route path="/create-account" component={CreateAccount} />
-      <Route component={NotFound} />
-    </Switch>
-  );
+  const isLogged = useReactiveVar(loggedVars);
+  if (isLogged) return <LoggedInRoute />;
+  return <LoggedOutRoute />;
 }
 
 export default App;
