@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 
 function NotFound() {
   return (
-    <div className="h-screen flex flex-col items-center justify-center">
-      <h1 className="text-3xl font-semibold mb-5">Not Found Page 404</h1>
-      <h4 className="text-xl font-medium mb-3">
+    <div className="mt-52 flex flex-col items-center justify-center">
+      <h1 className="title">Not Found Page 404</h1>
+      <h4 className="sub text-center mx-5 sm:mx-0">
         The page you're looking for does not exist or has moved.
       </h4>
       <Link to="/" className="text-lime-700 hover:underline">

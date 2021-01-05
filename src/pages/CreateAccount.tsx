@@ -8,9 +8,9 @@ import { Link, useHistory } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { UserRole } from "../__generated__/globalTypes";
 import {
-  CreateAccountMutation,
-  CreateAccountMutationVariables,
-} from "../__generated__/CreateAccountMutation";
+  createAccountMutation,
+  createAccountMutationVariables,
+} from "../__generated__/createAccountMutation";
 
 interface ICreateAccountForm {
   email: string;
@@ -19,7 +19,7 @@ interface ICreateAccountForm {
 }
 
 const CREATE_ACCOUNT_MUTATION = gql`
-  mutation CreateAccountMutation($createAccountInput: CreateAccountInput!) {
+  mutation createAccountMutation($createAccountInput: CreateAccountInput!) {
     createAccount(input: $createAccountInput) {
       ok
       error
@@ -43,7 +43,7 @@ function CreateAccount() {
     },
   });
   const history = useHistory();
-  const onCompleted = ({ createAccount }: CreateAccountMutation) => {
+  const onCompleted = ({ createAccount }: createAccountMutation) => {
     const { ok } = createAccount;
     if (!ok) return;
     history.push("/login");
@@ -52,7 +52,7 @@ function CreateAccount() {
   const [
     createAccountMutation,
     { data: createMutationResult, loading },
-  ] = useMutation<CreateAccountMutation, CreateAccountMutationVariables>(
+  ] = useMutation<createAccountMutation, createAccountMutationVariables>(
     CREATE_ACCOUNT_MUTATION,
     {
       onCompleted,

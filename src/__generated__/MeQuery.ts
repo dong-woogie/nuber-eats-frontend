@@ -11,8 +11,10 @@ import { UserRole } from "./globalTypes";
 
 export interface MeQuery_me {
   __typename: "User";
+  id: number;
   email: string;
   role: UserRole;
+  verified: boolean;
 }
 
 export interface MeQuery {

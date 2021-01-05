@@ -3,9 +3,9 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import FormError from "../components/FormError";
 import {
-  LoginMitation,
-  LoginMitationVariables,
-} from "../__generated__/LoginMitation";
+  loginMitation,
+  loginMitationVariables,
+} from "../__generated__/loginMitation";
 import LogoImage from "../images/eats-logo.svg";
 import Button from "../components/Button";
 import { Link, useHistory } from "react-router-dom";
@@ -19,7 +19,7 @@ interface ILoginForm {
 }
 
 const LOGIN_MUTATION = gql`
-  mutation LoginMitation($loginInput: LoginInput!) {
+  mutation loginMitation($loginInput: LoginInput!) {
     login(input: $loginInput) {
       ok
       error
@@ -39,7 +39,7 @@ function Login() {
     mode: "onChange",
   });
   const history = useHistory();
-  const onCompleted = ({ login }: LoginMitation) => {
+  const onCompleted = ({ login }: loginMitation) => {
     const { ok, token } = login;
     if (!(ok && token)) return;
     authTokenVars(token);
@@ -48,8 +48,8 @@ function Login() {
     history.push("/");
   };
   const [loginMutation, { data: loginMutationResult, loading }] = useMutation<
-    LoginMitation,
-    LoginMitationVariables
+    loginMitation,
+    loginMitationVariables
   >(LOGIN_MUTATION, {
     onCompleted,
   });
