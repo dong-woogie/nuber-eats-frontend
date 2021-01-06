@@ -6,6 +6,8 @@ import {
 } from "../../__generated__/restaurantsPageQuery";
 import foodImg from "../../images/food.png";
 import marketingImg from "../../images/marketing.png";
+import Category from "../../components/Category";
+import Restaurant from "../../components/Restaurant";
 
 const RESTAURANTS_QUERY = gql`
   query restaurantsPageQuery($input: RestaurantsInput!) {
@@ -49,7 +51,7 @@ function Restaurants() {
       input: { page: 1 },
     },
   });
-  console.log(data);
+
   if (loading) return null;
   return (
     <div className="flex-1">
@@ -60,36 +62,39 @@ function Restaurants() {
             Search for a favorite restaurant, cuisine, or dish.
           </h4>
         </div>
-        <div className="sm:w-2/3 w-full box-border flex justify-center lg:justify-end lg:gap-10">
-          <img src={foodImg} alt="food" className="w-full h-full lg:max-w-lg" />
+        <div className="sm:w-2/3 w-full box-border flex justify-center lg:gap-10">
+          <img src={foodImg} alt="food" className="w-full h-full sm:max-w-md" />
           <img
             src={marketingImg}
             alt="food"
-            className="hidden xl:block w-full h-full max-w-lg"
+            className="hidden xl:block w-full h-full max-w-md"
           />
         </div>
       </section>
-      <section className="max-w-screen-xl w-full m-auto mt-8 px-8 xl:px-0">
-        <div className="flex justify-around">
+      <section className="base-wrap-w mt-8">
+        <div className="flex justify-around max-w-md m-auto">
           {data?.allCategoies.categories?.map((category) => (
-            <div
-              className="flex flex-col justify-center items-center cursor-pointer"
-              key={category.id + category.name}
-            >
-              <div className="w-10 h-10 bg-gray-100 hover:bg-gray-200 active:bg-gray-300 rounded-full box-content p-1.5">
-                <img
-                  className="w-full h-full"
-                  src={category.coverImg || ""}
-                  alt="cover"
-                />
-              </div>
-              <div className="mt-3">
-                <span className="font-medium text-sm">{category.name}</span>
-              </div>
-            </div>
+            <Category
+              id={category.id + ""}
+              name={category.name}
+              coverImg={category.coverImg}
+              key={category.id}
+            />
           ))}
         </div>
-        <hr className="mt-8"></hr>
+        <hr className="mt-8" />
+      </section>
+
+      <section className="base-wrap-w mt-10 grid grid-cols-1 sm:grid-cols-3 gap-x-5 gap-y-10">
+        {data?.restaurants.results?.map((restaurant) => (
+          <Restaurant
+            id={restaurant.id + ""}
+            coverImg={restaurant.coverImg}
+            name={restaurant.name}
+            categoryName={restaurant.category?.name}
+            key={restaurant.id}
+          />
+        ))}
       </section>
     </div>
   );

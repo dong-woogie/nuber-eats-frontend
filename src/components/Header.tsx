@@ -17,11 +17,11 @@ function Header() {
         </div>
       )}
       <header className="py-5">
-        <div className="w-full px-8 xl:px-0 max-w-screen-xl mx-auto flex flex-wrap justify-between items-center">
+        <div className="base-wrap-w flex flex-wrap items-center justify-between ">
           <Link to="/">
             <img src={Logo} alt="logo" className="w-40" />
           </Link>
-          <div className="hidden sm:block w-1/2">
+          <div className="hidden sm:block w-2/5">
             <form className="relative w-full">
               <FontAwesomeIcon
                 icon={faSearch}
