@@ -1,32 +1,16 @@
-import { gql, useQuery } from "@apollo/client";
-import React from "react";
-import {
-  restaurantsPageQuery,
-  restaurantsPageQueryVariables,
-} from "../../__generated__/restaurantsPageQuery";
+import React, { useRef } from "react";
 import foodImg from "../../images/food.png";
 import marketingImg from "../../images/marketing.png";
 import Category from "../../components/Category";
 import Restaurant from "../../components/Restaurant";
+import { useRestaurantsQuery } from "../../hooks/useRestaurantsPage";
+import { gql } from "@apollo/client";
 
 const RESTAURANTS_QUERY = gql`
-  query restaurantsPageQuery($input: RestaurantsInput!) {
-    allCategoies {
-      ok
-      error
-      categories {
-        id
-        name
-        coverImg
-        slug
-        restaurantCount
-      }
-    }
+  query restaurantsQuery($input: RestaurantsInput!) {
     restaurants(input: $input) {
       ok
       error
-      totalPages
-      totalResults
       results {
         id
         name
@@ -43,16 +27,34 @@ const RESTAURANTS_QUERY = gql`
 `;
 
 function Restaurants() {
-  const { data, loading } = useQuery<
-    restaurantsPageQuery,
-    restaurantsPageQueryVariables
-  >(RESTAURANTS_QUERY, {
-    variables: {
-      input: { page: 1 },
-    },
-  });
+  const page = useRef(1);
+  const { data, fetchMore } = useRestaurantsQuery({ page: 1 });
 
-  if (loading) return null;
+  const onClickMoreView = async () => {
+    if (!data?.restaurants.totalPages) return;
+    if (page.current >= data?.restaurants.totalPages) return;
+    page.current += 1;
+    await fetchMore({
+      query: RESTAURANTS_QUERY,
+      variables: {
+        input: { page: page.current },
+      },
+      updateQuery(preResult, { fetchMoreResult }) {
+        const results = [
+          ...(preResult.restaurants.results || []),
+          ...(fetchMoreResult?.restaurants.results || []),
+        ];
+        return {
+          ...preResult,
+          restaurants: {
+            ...preResult.restaurants,
+            results,
+          },
+        };
+      },
+    });
+  };
+
   return (
     <div className="flex-1">
       <section className="bg-gray-800 w-full flex items-center sm:p-3 md:px-16 md:py-6 sm:max-h-80">
@@ -85,7 +87,7 @@ function Restaurants() {
         <hr className="mt-8" />
       </section>
 
-      <section className="base-wrap-w mt-10 grid grid-cols-1 sm:grid-cols-3 gap-x-5 gap-y-10">
+      <section className="base-wrap-w my-10 grid grid-cols-1 sm:grid-cols-3 gap-x-5 gap-y-10">
         {data?.restaurants.results?.map((restaurant) => (
           <Restaurant
             id={restaurant.id + ""}
@@ -96,6 +98,17 @@ function Restaurants() {
           />
         ))}
       </section>
+
+      {page.current < (data?.restaurants.totalPages || 0) && (
+        <div className="base-wrap base-wrap-w mb-10">
+          <button
+            className="focus:outline-none bg-black text-white p-3"
+            onClick={onClickMoreView}
+          >
+            MORE VIEW
+          </button>
+        </div>
+      )}
     </div>
   );
 }
