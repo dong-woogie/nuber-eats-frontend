@@ -1,6 +1,6 @@
 module.exports = {
   client: {
-    includes: ["./src/**/*.tsx"],
+    includes: ["./src/**/*.{tsx,ts}"],
     excludes: [],
     tagName: "gql",
     service: {

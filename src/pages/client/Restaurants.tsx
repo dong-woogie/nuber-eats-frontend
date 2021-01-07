@@ -5,6 +5,8 @@ import Category from "../../components/Category";
 import Restaurant from "../../components/Restaurant";
 import { useRestaurantsQuery } from "../../hooks/useRestaurantsPage";
 import { gql } from "@apollo/client";
+import { RESTAURANT_FRAGMENT } from "../../fragments";
+import MoreViewBtn from "../../components/MoreViewBtn";
 
 const RESTAURANTS_QUERY = gql`
   query restaurantsQuery($input: RestaurantsInput!) {
@@ -12,18 +14,11 @@ const RESTAURANTS_QUERY = gql`
       ok
       error
       results {
-        id
-        name
-        address
-        coverImg
-        category {
-          name
-          slug
-        }
-        isPromoted
+        ...RestaurantParts
       }
     }
   }
+  ${RESTAURANT_FRAGMENT}
 `;
 
 function Restaurants() {
@@ -33,6 +28,7 @@ function Restaurants() {
   const onClickMoreView = async () => {
     if (!data?.restaurants.totalPages) return;
     if (page.current >= data?.restaurants.totalPages) return;
+
     page.current += 1;
     await fetchMore({
       query: RESTAURANTS_QUERY,
@@ -78,6 +74,7 @@ function Restaurants() {
           {data?.allCategoies.categories?.map((category) => (
             <Category
               id={category.id + ""}
+              slug={category.slug}
               name={category.name}
               coverImg={category.coverImg}
               key={category.id}
@@ -87,7 +84,7 @@ function Restaurants() {
         <hr className="mt-8" />
       </section>
 
-      <section className="base-wrap-w my-10 grid grid-cols-1 sm:grid-cols-3 gap-x-5 gap-y-10">
+      <section className="restaurants-wrap">
         {data?.restaurants.results?.map((restaurant) => (
           <Restaurant
             id={restaurant.id + ""}
@@ -100,14 +97,7 @@ function Restaurants() {
       </section>
 
       {page.current < (data?.restaurants.totalPages || 0) && (
-        <div className="base-wrap base-wrap-w mb-10">
-          <button
-            className="focus:outline-none bg-black text-white p-3"
-            onClick={onClickMoreView}
-          >
-            MORE VIEW
-          </button>
-        </div>
+        <MoreViewBtn onClick={onClickMoreView} />
       )}
     </div>
   );
