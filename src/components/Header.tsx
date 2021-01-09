@@ -1,7 +1,7 @@
 import React from "react";
 import Logo from "../images/nuber-logo.svg";
 import { Link } from "react-router-dom";
-import { useMe } from "../hooks/useMe";
+import { useMe } from "../lib/hooks/useMe";
 import SearchForm from "./SearchForm";
 
 function Header() {

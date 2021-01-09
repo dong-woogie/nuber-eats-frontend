@@ -2,7 +2,7 @@ import React from "react";
 import Button from "../../components/Button";
 import { useForm } from "react-hook-form";
 import { gql, useApolloClient, useMutation } from "@apollo/client";
-import { useMe } from "../../hooks/useMe";
+import { useMe } from "../../lib/hooks/useMe";
 import { useHistory } from "react-router-dom";
 import {
   editProfile,

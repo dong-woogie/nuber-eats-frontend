@@ -29,3 +29,7 @@
 .search {
   @apply pl-16 w-full text-lg pr-5 py-4 outline-none bg-gray-50 border-b-4 focus:border-gray-600 transition-colors;
 }
+
+.restaurants-wrap {
+  @apply base-wrap-w my-10 grid grid-cols-1 md:grid-cols-3 gap-x-5 gap-y-10;
+}

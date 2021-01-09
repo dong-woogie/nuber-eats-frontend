@@ -6,7 +6,7 @@ import {
   verifyEmail,
   verifyEmailVariables,
 } from "../../__generated__/verifyEmail";
-import { useMe } from "../../hooks/useMe";
+import { useMe } from "../../lib/hooks/useMe";
 
 const VERIFY_EMAIL_MUTATION = gql`
   mutation verifyEmail($input: VerifyEmailInput!) {

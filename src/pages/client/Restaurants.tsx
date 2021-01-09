@@ -1,55 +1,16 @@
-import React, { useRef } from "react";
+import React, { useCallback } from "react";
 import foodImg from "../../images/food.png";
 import marketingImg from "../../images/marketing.png";
 import Category from "../../components/Category";
-import Restaurant from "../../components/Restaurant";
-import { useRestaurantsQuery } from "../../hooks/useRestaurantsPage";
-import { gql } from "@apollo/client";
-import { RESTAURANT_FRAGMENT } from "../../fragments";
 import MoreViewBtn from "../../components/MoreViewBtn";
-
-const RESTAURANTS_QUERY = gql`
-  query restaurantsQuery($input: RestaurantsInput!) {
-    restaurants(input: $input) {
-      ok
-      error
-      results {
-        ...RestaurantParts
-      }
-    }
-  }
-  ${RESTAURANT_FRAGMENT}
-`;
+import { useRestaurantsPage } from "../../lib/hooks/useRestaurantsPage";
+import RestaurantGrid from "../../components/RestaurantGrid";
 
 function Restaurants() {
-  const page = useRef(1);
-  const { data, fetchMore } = useRestaurantsQuery({ page: 1 });
-
-  const onClickMoreView = async () => {
-    if (!data?.restaurants.totalPages) return;
-    if (page.current >= data?.restaurants.totalPages) return;
-
-    page.current += 1;
-    await fetchMore({
-      query: RESTAURANTS_QUERY,
-      variables: {
-        input: { page: page.current },
-      },
-      updateQuery(preResult, { fetchMoreResult }) {
-        const results = [
-          ...(preResult.restaurants.results || []),
-          ...(fetchMoreResult?.restaurants.results || []),
-        ];
-        return {
-          ...preResult,
-          restaurants: {
-            ...preResult.restaurants,
-            results,
-          },
-        };
-      },
-    });
-  };
+  const { data, loading, onLoadMore, page } = useRestaurantsPage();
+  const onClickMoreView = useCallback(() => {
+    onLoadMore(page);
+  }, [page, onLoadMore]);
 
   return (
     <div className="flex-1">
@@ -71,7 +32,7 @@ function Restaurants() {
       </section>
       <section className="base-wrap-w mt-8">
         <div className="flex justify-around max-w-md m-auto">
-          {data?.allCategoies.categories?.map((category) => (
+          {data?.allCategories.categories?.map((category) => (
             <Category
               id={category.id + ""}
               slug={category.slug}
@@ -84,19 +45,12 @@ function Restaurants() {
         <hr className="mt-8" />
       </section>
 
-      <section className="restaurants-wrap">
-        {data?.restaurants.results?.map((restaurant) => (
-          <Restaurant
-            id={restaurant.id + ""}
-            coverImg={restaurant.coverImg}
-            name={restaurant.name}
-            categoryName={restaurant.category?.name}
-            key={restaurant.id}
-          />
-        ))}
-      </section>
+      <RestaurantGrid
+        restaurants={data?.restaurants.restaurants || []}
+        loading={loading}
+      />
 
-      {page.current < (data?.restaurants.totalPages || 0) && (
+      {page <= (data?.restaurants.totalPages || 0) && (
         <MoreViewBtn onClick={onClickMoreView} />
       )}
     </div>

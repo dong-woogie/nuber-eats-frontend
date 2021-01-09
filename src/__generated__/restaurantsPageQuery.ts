@@ -9,7 +9,7 @@ import { RestaurantsInput } from "./globalTypes";
 // GraphQL query operation: restaurantsPageQuery
 // ====================================================
 
-export interface restaurantsPageQuery_allCategoies_categories {
+export interface restaurantsPageQuery_allCategories_categories {
   __typename: "Category";
   id: number;
   name: string;
@@ -18,26 +18,26 @@ export interface restaurantsPageQuery_allCategoies_categories {
   restaurantCount: number;
 }
 
-export interface restaurantsPageQuery_allCategoies {
+export interface restaurantsPageQuery_allCategories {
   __typename: "AllCategoriesOutput";
   ok: boolean;
   error: string | null;
-  categories: restaurantsPageQuery_allCategoies_categories[] | null;
+  categories: restaurantsPageQuery_allCategories_categories[] | null;
 }
 
-export interface restaurantsPageQuery_restaurants_results_category {
+export interface restaurantsPageQuery_restaurants_restaurants_category {
   __typename: "Category";
   name: string;
   slug: string;
 }
 
-export interface restaurantsPageQuery_restaurants_results {
+export interface restaurantsPageQuery_restaurants_restaurants {
   __typename: "Restaurant";
   id: number;
   name: string;
   address: string;
   coverImg: string | null;
-  category: restaurantsPageQuery_restaurants_results_category | null;
+  category: restaurantsPageQuery_restaurants_restaurants_category | null;
   isPromoted: boolean;
 }
 
@@ -47,11 +47,11 @@ export interface restaurantsPageQuery_restaurants {
   error: string | null;
   totalPages: number | null;
   totalResults: number | null;
-  results: restaurantsPageQuery_restaurants_results[] | null;
+  restaurants: restaurantsPageQuery_restaurants_restaurants[] | null;
 }
 
 export interface restaurantsPageQuery {
-  allCategoies: restaurantsPageQuery_allCategoies;
+  allCategories: restaurantsPageQuery_allCategories;
   restaurants: restaurantsPageQuery_restaurants;
 }
 
