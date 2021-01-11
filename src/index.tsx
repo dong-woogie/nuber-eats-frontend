@@ -3,7 +3,7 @@ import { BrowserRouter } from "react-router-dom";
 import React from "react";
 import ReactDOM from "react-dom";
 import { client } from "./apollo";
-import App from "./App";
+import App from "./components/App";
 import reportWebVitals from "./reportWebVitals";
 import "./styles/styles.css";
 import { HelmetProvider } from "react-helmet-async";
