@@ -1,7 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import LoadError from "../../components/LoadError";
-import MoreViewBtn from "../../components/MoreViewBtn";
 import RestaurantGrid from "../../components/RestaurantGrid";
 import { useCategoryRestaurants } from "../../lib/hooks/useCategoryRestaurants";
 
@@ -26,10 +25,9 @@ function Category() {
       <RestaurantGrid
         restaurants={data?.category.restaurants || []}
         loading={loading}
+        onClickMoreView={onClickMoreView}
+        isMoreView={page <= (data.category.totalPages || 0)}
       />
-      {page <= (data.category.totalPages || 0) && (
-        <MoreViewBtn onClick={onClickMoreView} />
-      )}
     </div>
   );
 }

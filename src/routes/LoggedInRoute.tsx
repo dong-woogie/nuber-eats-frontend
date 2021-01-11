@@ -29,7 +29,7 @@ function LoggedInRoute() {
   return (
     <div className="h-screen flex flex-col">
       <Header />
-      {loading && <Loading loading={loading} />}
+      {loading && <Loading />}
       <Switch>
         {data?.me.role === UserRole.Client && ClientRoutes}
         <Route path="/confirm" component={ConfirmEmail} />

@@ -1,4 +1,4 @@
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import React from "react";
 import { Link, useParams } from "react-router-dom";
 import { RESTAURANT_QUERY } from "../../lib/graphql/restaurant";
@@ -13,12 +13,12 @@ interface IRestaurantParams {
 
 function RestaurantPage() {
   const { id } = useParams<IRestaurantParams>();
-  const { data, loading, error } = useQuery<
-    restaurantQuery,
-    restaurantQueryVariables
-  >(RESTAURANT_QUERY, {
-    variables: { input: { restaurantId: +id } },
-  });
+  const { data } = useQuery<restaurantQuery, restaurantQueryVariables>(
+    RESTAURANT_QUERY,
+    {
+      variables: { input: { restaurantId: +id } },
+    }
+  );
 
   return (
     <div>

@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import qs from "query-string";
-import MoreViewBtn from "../../components/MoreViewBtn";
 import { useSearchRestaurants } from "../../lib/hooks/useSearchRestaurants";
 import RestaurantGrid from "../../components/RestaurantGrid";
 
@@ -13,8 +12,8 @@ function Search() {
     term || ""
   );
 
-  const onClickMoreView = () => {
-    onLoadMore(page);
+  const onClickMoreView = async () => {
+    await onLoadMore(page);
   };
 
   useEffect(() => {
@@ -27,10 +26,9 @@ function Search() {
       <RestaurantGrid
         restaurants={data?.searchRestaurants.restaurants || []}
         loading={loading}
+        onClickMoreView={onClickMoreView}
+        isMoreView={page <= (data?.searchRestaurants.totalPages || 0)}
       />
-      {page <= (data?.searchRestaurants.totalPages || 0) && (
-        <MoreViewBtn onClick={onClickMoreView} />
-      )}
     </div>
   );
 }

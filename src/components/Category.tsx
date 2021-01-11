@@ -2,13 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 interface ICategoryProps {
-  id: string;
   name: string;
   slug: string;
   coverImg?: string | null;
 }
 
-function Category({ id, name, coverImg, slug }: ICategoryProps) {
+function Category({ name, coverImg, slug }: ICategoryProps) {
   return (
     <Link to={`/category/${slug}`}>
       <div className="flex flex-col justify-center items-center cursor-pointer group">
