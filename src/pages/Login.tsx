@@ -11,14 +11,14 @@ import Button from "../components/Button";
 import { Link, useHistory } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { authTokenVars, loggedVars } from "../apollo";
-import { LOCAL_STORAGE_TOKEN } from "../constants";
+import { EMAIL_PATTERN, LOCAL_STORAGE_TOKEN } from "../constants";
 
 interface ILoginForm {
   email: string;
   password: string;
 }
 
-const LOGIN_MUTATION = gql`
+export const LOGIN_MUTATION = gql`
   mutation loginMitation($loginInput: LoginInput!) {
     login(input: $loginInput) {
       ok
@@ -76,18 +76,27 @@ function Login() {
             placeholder="Email"
             name="email"
             type="email"
-            ref={register({ required: "Email is required" })}
+            ref={register({
+              required: "Email is required",
+              pattern: EMAIL_PATTERN,
+            })}
             required
           />
           {errors.email?.message && (
             <FormError errorMessage={errors.email?.message} />
+          )}
+          {errors.email?.type === "pattern" && (
+            <FormError errorMessage={"please enter a valid email"} />
           )}
           <input
             className="input"
             placeholder="Password"
             name="password"
             type="password"
-            ref={register({ required: "Password is required" })}
+            ref={register({
+              required: "Password is required",
+              // minLength : 10
+            })}
             required
           />
           {errors.password?.message && (
@@ -97,7 +106,7 @@ function Login() {
             <FormError errorMessage="Password must be more than 10 chars." />
           )}
           <Button
-            activeText="Log In"
+            activeText="LOGIN"
             canClick={formState.isValid}
             loading={loading}
           />

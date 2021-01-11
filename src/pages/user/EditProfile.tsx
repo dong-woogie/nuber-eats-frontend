@@ -8,6 +8,7 @@ import {
   editProfile,
   editProfileVariables,
 } from "../../__generated__/editProfile";
+import { EMAIL_PATTERN } from "../../constants";
 
 interface IForm {
   email?: string;
@@ -98,7 +99,7 @@ function EditProfile() {
       >
         <input
           ref={register({
-            pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+            pattern: EMAIL_PATTERN,
           })}
           className="input"
           name="email"

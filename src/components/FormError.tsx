@@ -5,7 +5,11 @@ interface IFormError {
 }
 
 function FormError({ errorMessage }: IFormError) {
-  return <span className="text-red-500 font-medium">{errorMessage}</span>;
+  return (
+    <span role="alert" className="text-red-500 font-medium">
+      {errorMessage}
+    </span>
+  );
 }
 
 export default FormError;
