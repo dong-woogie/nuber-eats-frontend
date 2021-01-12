@@ -11,7 +11,7 @@ import {
   createAccountMutation,
   createAccountMutationVariables,
 } from "../__generated__/createAccountMutation";
-import { EMAIL_PATTERN } from "../constants";
+import { EMAIL_PATTERN, VALIDATION_ERROR_MESSAGE } from "../constants";
 
 interface ICreateAccountForm {
   email: string;
@@ -91,7 +91,7 @@ function CreateAccount() {
             required
           />
           {errors.email?.type === "pattern" && (
-            <FormError errorMessage="please enter a valid email" />
+            <FormError errorMessage={VALIDATION_ERROR_MESSAGE} />
           )}
           {errors.email?.message && (
             <FormError errorMessage={errors.email?.message} />

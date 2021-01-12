@@ -11,7 +11,11 @@ import Button from "../components/Button";
 import { Link, useHistory } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { authTokenVars, loggedVars } from "../apollo";
-import { EMAIL_PATTERN, LOCAL_STORAGE_TOKEN } from "../constants";
+import {
+  EMAIL_PATTERN,
+  LOCAL_STORAGE_TOKEN,
+  VALIDATION_ERROR_MESSAGE,
+} from "../constants";
 
 interface ILoginForm {
   email: string;
@@ -86,7 +90,7 @@ function Login() {
             <FormError errorMessage={errors.email?.message} />
           )}
           {errors.email?.type === "pattern" && (
-            <FormError errorMessage={"please enter a valid email"} />
+            <FormError errorMessage={VALIDATION_ERROR_MESSAGE} />
           )}
           <input
             className="input"

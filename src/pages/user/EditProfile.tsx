@@ -8,7 +8,9 @@ import {
   editProfile,
   editProfileVariables,
 } from "../../__generated__/editProfile";
-import { EMAIL_PATTERN } from "../../constants";
+import { EMAIL_PATTERN, VALIDATION_ERROR_MESSAGE } from "../../constants";
+import FormError from "../../components/FormError";
+import { Helmet } from "react-helmet-async";
 
 interface IForm {
   email?: string;
@@ -26,7 +28,13 @@ const EDIT_PROFILE_MUTATION = gql`
 
 function EditProfile() {
   const { data: userData, loading /*refetch*/ } = useMe();
-  const { register, handleSubmit, getValues, formState } = useForm<IForm>({
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    formState,
+    errors,
+  } = useForm<IForm>({
     defaultValues: {
       email: userData?.me.email || "",
     },
@@ -92,6 +100,9 @@ function EditProfile() {
 
   return (
     <div className="base-wrap mb-52">
+      <Helmet>
+        <title>Edit Profile | Nuber Eats</title>
+      </Helmet>
       <h4 className="sub">Edit Profile</h4>
       <form
         className="grid gap-3 w-full max-w-screen-sm px-10 md:px-0"
@@ -104,12 +115,17 @@ function EditProfile() {
           className="input"
           name="email"
           type="email"
+          placeholder="Email"
         />
+        {errors.email?.type === "pattern" && (
+          <FormError errorMessage={VALIDATION_ERROR_MESSAGE} />
+        )}
         <input
           ref={register}
           className="input"
           name="password"
           type="password"
+          placeholder="Password"
         />
         <Button
           loading={editProfileLoading}
