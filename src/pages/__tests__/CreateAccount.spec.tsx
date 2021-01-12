@@ -6,6 +6,18 @@ import { render, RenderResult } from "../../test-utils";
 import { UserRole } from "../../__generated__/globalTypes";
 import CreateAccount, { CREATE_ACCOUNT_MUTATION } from "../CreateAccount";
 
+const mockPush = jest.fn();
+
+jest.mock("react-router-dom", () => {
+  const realModule = jest.requireActual("react-router-dom");
+  return {
+    ...realModule,
+    useHistory: () => ({
+      push: mockPush,
+    }),
+  };
+});
+
 describe("<CreateAccount />", () => {
   let mockedClient: MockApolloClient;
   let renderResult: RenderResult;
@@ -19,6 +31,10 @@ describe("<CreateAccount />", () => {
         </ApolloProvider>
       );
     });
+  });
+
+  afterAll(() => {
+    jest.clearAllMocks();
   });
 
   it("should render OK", async () => {
@@ -58,12 +74,7 @@ describe("<CreateAccount />", () => {
   });
 
   it("submit form and call createAccount mutation", async () => {
-    const {
-      getByPlaceholderText,
-      getByDisplayValue,
-      getByRole,
-      debug,
-    } = renderResult;
+    const { getByPlaceholderText, getByDisplayValue, getByRole } = renderResult;
     const email = getByPlaceholderText(/email/i);
     const password = getByPlaceholderText(/password/i);
     const submitButton = getByRole("button");
@@ -101,5 +112,7 @@ describe("<CreateAccount />", () => {
     expect(mockedResponse).toHaveBeenCalledWith({
       createAccountInput: createAccountInput,
     });
+
+    expect(mockPush).toHaveBeenCalledWith("/login");
   });
 });
