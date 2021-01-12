@@ -2,7 +2,8 @@
   "data": {
     "editProfile": {
       "ok": true,
-      "erorr": null
+      "erorr": null,
+      "__typename": "EditProfileOutput"
     }
   }
 }

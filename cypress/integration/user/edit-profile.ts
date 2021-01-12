@@ -21,7 +21,7 @@ describe("edit-profile", () => {
     user.intercept("POST", "http://localhost:4000/graphql", (req) => {
       if (req.body?.operationName === "editProfile") {
         // @ts-ignore
-        req.body?.variables?.input?.email = EDIT_EMAIL;
+        req.body?.variables?.input?.email = realAccount.email;
         req.reply((res) => {
           res.send({
             fixture: "user/edit-profile.json",

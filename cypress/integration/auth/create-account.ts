@@ -18,7 +18,7 @@ describe("create account e2e", () => {
 
   it("should create account and visit login page", () => {
     user.visit("/create-account");
-    user.intercept("http://localhost:4000", (req) => {
+    user.intercept("POST", "http://localhost:4000/graphql", (req) => {
       const { operationName } = req.body;
       if (operationName && operationName === "createAccountMutation") {
         req.reply((res) => {
