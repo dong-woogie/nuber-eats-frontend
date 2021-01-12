@@ -43,10 +43,10 @@ describe("create account e2e", () => {
     user.wait(1000);
 
     // real login
-    user.title().should("eq", "Login | Nuber Eats");
-    user.findAllByPlaceholderText(/email/i).type("com6511@gmail.com");
-    user.findAllByPlaceholderText(/password/i).type("1234");
-    user.findByRole("button").click();
-    user.window().its("localStorage.nuber-token").should("be.a", "string");
+    // @ts-ignore
+    user.login("com6511@gmail.com", "1234");
+
+    user.wait(1000);
+    user.title().should("eq", "nuber-eats-frontend");
   });
 });

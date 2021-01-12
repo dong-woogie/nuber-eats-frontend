@@ -31,13 +31,7 @@ describe("login", () => {
   });
 
   it("can fill out form and login", () => {
-    user.visit("/");
-    user.findByPlaceholderText(/email/i).type("com6511@gmail.com");
-    user.findByPlaceholderText(/password/i).type("1234");
-    user
-      .findByRole("button")
-      .should("not.have.class", "point-events-none")
-      .click();
-    user.window().its("localStorage.nuber-token").should("be.a", "string");
+    // @ts-ignore
+    user.login("com6511@gmail.com", "1234");
   });
 });
