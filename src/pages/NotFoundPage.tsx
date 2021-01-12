@@ -2,9 +2,9 @@ import React from "react";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 
-function NotFound() {
+function NotFoundPage() {
   return (
-    <div className="mt-52 flex flex-col items-center justify-center">
+    <div className="mt-20 sm:mt-52 flex flex-col items-center justify-center">
       <Helmet>
         <title>Not found | Nuber Eats</title>
       </Helmet>
@@ -19,4 +19,4 @@ function NotFound() {
   );
 }
 
-export default NotFound;
+export default NotFoundPage;

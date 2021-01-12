@@ -4,7 +4,7 @@ import qs from "query-string";
 import { useSearchRestaurants } from "../../lib/hooks/useSearchRestaurants";
 import RestaurantGrid from "../../components/RestaurantGrid";
 
-function Search() {
+function SearchRestaurantsPage() {
   const location = useLocation();
   const history = useHistory();
   const { term }: { term?: string } = qs.parse(location.search);
@@ -33,4 +33,4 @@ function Search() {
   );
 }
 
-export default Search;
+export default SearchRestaurantsPage;

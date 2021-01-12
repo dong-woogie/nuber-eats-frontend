@@ -4,7 +4,9 @@ import userEvent from "@testing-library/user-event";
 import { createMockClient, MockApolloClient } from "mock-apollo-client";
 import { render, RenderResult } from "../../test-utils";
 import { UserRole } from "../../__generated__/globalTypes";
-import CreateAccount, { CREATE_ACCOUNT_MUTATION } from "../CreateAccount";
+import CreateAccountPage, {
+  CREATE_ACCOUNT_MUTATION,
+} from "../CreateAccountPage";
 
 const mockPush = jest.fn();
 
@@ -27,7 +29,7 @@ describe("<CreateAccount />", () => {
       mockedClient = createMockClient();
       renderResult = render(
         <ApolloProvider client={mockedClient}>
-          <CreateAccount />
+          <CreateAccountPage />
         </ApolloProvider>
       );
     });

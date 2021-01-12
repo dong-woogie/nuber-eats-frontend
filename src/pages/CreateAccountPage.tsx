@@ -28,7 +28,7 @@ export const CREATE_ACCOUNT_MUTATION = gql`
   }
 `;
 
-function CreateAccount() {
+function CreateAccountPage() {
   const {
     register,
     errors,
@@ -140,4 +140,4 @@ function CreateAccount() {
   );
 }
 
-export default CreateAccount;
+export default CreateAccountPage;

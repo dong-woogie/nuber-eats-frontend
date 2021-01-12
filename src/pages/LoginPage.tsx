@@ -32,7 +32,7 @@ export const LOGIN_MUTATION = gql`
   }
 `;
 
-function Login() {
+function LoginPage() {
   const {
     register,
     errors,
@@ -123,4 +123,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default LoginPage;

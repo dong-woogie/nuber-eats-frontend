@@ -26,7 +26,7 @@ const EDIT_PROFILE_MUTATION = gql`
   }
 `;
 
-function EditProfile() {
+function EditProfilePage() {
   const { data: userData, loading /*refetch*/ } = useMe();
   const {
     register,
@@ -137,4 +137,4 @@ function EditProfile() {
   );
 }
 
-export default EditProfile;
+export default EditProfilePage;

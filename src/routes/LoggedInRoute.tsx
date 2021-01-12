@@ -2,37 +2,70 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 
 import Header from "../components/Header";
-import Loading from "../components/Loading";
 import { useMe } from "../lib/hooks/useMe";
-import Category from "../pages/client/Category";
+import CategoryPage from "../pages/client/CategoryPage";
 import RestaurantPage from "../pages/client/RestaurantPage";
-import Restaurants from "../pages/client/Restaurants";
-import Search from "../pages/client/Search";
-import NotFound from "../pages/NotFound";
-import ConfirmEmail from "../pages/user/ConfirmEmail";
-import EditProfile from "../pages/user/EditProfile";
+import RestaurantsPage from "../pages/client/RestaurantsPage";
+import SearchRestaurantsPage from "../pages/client/SearchRestaurantsPage";
+import NotFoundPage from "../pages/NotFoundPage";
+import MyRestaurantsPage from "../pages/owner/MyRestaurantsPage";
+import ConfirmEmailPage from "../pages/user/ConfirmEmailPage";
+import EditProfilePage from "../pages/user/EditProfilePage";
 import { UserRole } from "../__generated__/globalTypes";
 
-const ClientRoutes = [
-  <Route path="/" component={Restaurants} exact key={1} />,
-  <Route path="/confirm" component={ConfirmEmail} key={2} />,
-  <Route path="/edit-profile" component={EditProfile} key={3} />,
-  <Route path="/search" component={Search} key={4} />,
-  <Route path="/category/:slug" component={Category} key={5} />,
-  <Route path="/restaurants/:id" component={RestaurantPage} key={6} />,
-  <Route component={NotFound} key={7} />,
+const clientRoutes = [
+  { path: "/", component: RestaurantsPage },
+  { path: "/search", component: SearchRestaurantsPage },
+  { path: "/category/:slug", component: CategoryPage },
+  { path: "/restaurants/:id", component: RestaurantPage },
+  { path: "/confirm", component: ConfirmEmailPage },
+  { path: "/edit-profile", component: EditProfilePage },
+  { component: NotFoundPage },
+];
+
+const ownerRoutes = [
+  { path: "/", component: MyRestaurantsPage },
+  { path: "/confirm", component: ConfirmEmailPage },
+  { path: "/edit-profile", component: EditProfilePage },
+  { component: NotFoundPage },
 ];
 
 function LoggedInRoute() {
-  const { data, loading } = useMe();
+  const { data } = useMe();
 
   return (
     <div className="h-screen flex flex-col">
       <Header />
-      {loading && <Loading />}
       <Switch>
-        {data?.me.role === UserRole.Client && ClientRoutes}
-        <Route path="/confirm" component={ConfirmEmail} />
+        {data?.me.role === UserRole.Client &&
+          clientRoutes.map((route) => {
+            if (!route.path) {
+              return <Route key="Not Found" component={NotFoundPage} />;
+            }
+            return (
+              <Route
+                key={route.path}
+                path={route.path}
+                component={route.component}
+                exact={route.path === "/"}
+              />
+            );
+          })}
+
+        {data?.me.role === UserRole.Owner &&
+          ownerRoutes.map((route) => {
+            if (!route.path) {
+              return <Route key="Not Found" component={NotFoundPage} />;
+            }
+            return (
+              <Route
+                key={route.path}
+                path={route.path}
+                component={route.component}
+                exact={route.path === "/"}
+              />
+            );
+          })}
       </Switch>
     </div>
   );

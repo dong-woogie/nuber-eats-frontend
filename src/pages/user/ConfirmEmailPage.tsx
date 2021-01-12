@@ -17,7 +17,7 @@ const VERIFY_EMAIL_MUTATION = gql`
   }
 `;
 
-function ConfirmEmail() {
+function ConfirmEmailPage() {
   const history = useHistory();
   const location = useLocation();
   const query: { code?: string } = qs.parse(location.search);
@@ -67,4 +67,4 @@ function ConfirmEmail() {
   );
 }
 
-export default ConfirmEmail;
+export default ConfirmEmailPage;

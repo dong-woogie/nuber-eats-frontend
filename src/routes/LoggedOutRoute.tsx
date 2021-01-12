@@ -1,16 +1,16 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import CreateAccount from "../pages/CreateAccount";
-import Login from "../pages/Login";
-import NotFound from "../pages/NotFound";
+import CreateAccountPage from "../pages/CreateAccountPage";
+import LoginPage from "../pages/LoginPage";
+import NotFoundPage from "../pages/NotFoundPage";
 
 function LoggedOutRoute() {
   return (
     <Switch>
-      <Route path="/" component={Login} exact />
-      <Route path="/login" component={Login} />
-      <Route path="/create-account" component={CreateAccount} />
-      <Route component={NotFound} />
+      <Route path="/" component={LoginPage} exact />
+      <Route path="/login" component={LoginPage} />
+      <Route path="/create-account" component={CreateAccountPage} />
+      <Route component={NotFoundPage} />
     </Switch>
   );
 }

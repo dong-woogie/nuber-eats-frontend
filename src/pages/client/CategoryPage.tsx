@@ -8,7 +8,7 @@ interface ICategoryParams {
   slug: string;
 }
 
-function Category() {
+function CategoryPage() {
   const params = useParams<ICategoryParams>();
 
   const { data, loading, onLoadMore, page } = useCategoryRestaurants(
@@ -32,4 +32,4 @@ function Category() {
   );
 }
 
-export default Category;
+export default CategoryPage;
