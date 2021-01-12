@@ -7,7 +7,7 @@ import NotFound from "../pages/NotFound";
 function LoggedOutRoute() {
   return (
     <Switch>
-      <Route path="/" component={Login} />
+      <Route path="/" component={Login} exact />
       <Route path="/login" component={Login} />
       <Route path="/create-account" component={CreateAccount} />
       <Route component={NotFound} />

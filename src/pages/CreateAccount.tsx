@@ -11,6 +11,7 @@ import {
   createAccountMutation,
   createAccountMutationVariables,
 } from "../__generated__/createAccountMutation";
+import { EMAIL_PATTERN } from "../constants";
 
 interface ICreateAccountForm {
   email: string;
@@ -18,7 +19,7 @@ interface ICreateAccountForm {
   role: UserRole;
 }
 
-const CREATE_ACCOUNT_MUTATION = gql`
+export const CREATE_ACCOUNT_MUTATION = gql`
   mutation createAccountMutation($createAccountInput: CreateAccountInput!) {
     createAccount(input: $createAccountInput) {
       ok
@@ -83,9 +84,15 @@ function CreateAccount() {
             placeholder="Email"
             name="email"
             type="email"
-            ref={register({ required: "Email is required" })}
+            ref={register({
+              required: "Email is required",
+              pattern: EMAIL_PATTERN,
+            })}
             required
           />
+          {errors.email?.type === "pattern" && (
+            <FormError errorMessage="please enter a valid email" />
+          )}
           {errors.email?.message && (
             <FormError errorMessage={errors.email?.message} />
           )}
@@ -99,9 +106,6 @@ function CreateAccount() {
           />
           {errors.password?.message && (
             <FormError errorMessage={errors.password.message} />
-          )}
-          {errors.password?.type === "minLength" && (
-            <FormError errorMessage="Password must be more than 10 chars." />
           )}
           <select
             ref={register({ required: "Role is required" })}

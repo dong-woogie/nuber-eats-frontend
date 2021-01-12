@@ -30,7 +30,9 @@ function RestaurantGrid({
           />
         ))}
         {loading &&
-          Array.from({ length: 3 }).map((empty) => <SkeletonRestaurant />)}
+          Array.from({ length: 3 }).map((empty, index) => (
+            <SkeletonRestaurant key={index} />
+          ))}
       </section>
       {!loading && isMoreView && <MoreViewBtn onClick={onClickMoreView} />}
     </div>

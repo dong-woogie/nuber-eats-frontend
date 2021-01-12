@@ -93,17 +93,11 @@ function Login() {
             placeholder="Password"
             name="password"
             type="password"
-            ref={register({
-              required: "Password is required",
-              // minLength : 10
-            })}
+            ref={register({ required: "Password is required" })}
             required
           />
           {errors.password?.message && (
             <FormError errorMessage={errors.password.message} />
-          )}
-          {errors.password?.type === "minLength" && (
-            <FormError errorMessage="Password must be more than 10 chars." />
           )}
           <Button
             activeText="LOGIN"

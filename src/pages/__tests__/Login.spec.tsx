@@ -60,7 +60,7 @@ describe("<Login />", () => {
   });
 
   it("submit form and call login mutation", async () => {
-    const { getByRole, getByPlaceholderText, debug } = renderResult;
+    const { getByRole, getByPlaceholderText } = renderResult;
     const submitButton = getByRole("button");
     const email = getByPlaceholderText(/email/i);
     const password = getByPlaceholderText(/password/i);
