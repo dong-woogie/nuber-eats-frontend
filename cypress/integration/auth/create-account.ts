@@ -23,13 +23,7 @@ describe("create account e2e", () => {
       if (operationName && operationName === "createAccountMutation") {
         req.reply((res) => {
           res.send({
-            data: {
-              createAccount: {
-                ok: true,
-                error: null,
-                __typename: "CreateAccountOutput",
-              },
-            },
+            fixture: "auth/create-account.json",
           });
         });
       }
@@ -45,8 +39,5 @@ describe("create account e2e", () => {
     // real login
     // @ts-ignore
     user.login("com6511@gmail.com", "1234");
-
-    user.wait(1000);
-    user.title().should("eq", "nuber-eats-frontend");
   });
 });
