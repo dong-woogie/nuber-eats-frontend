@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 function NotFoundPage() {
   return (
-    <div className="mt-20 sm:mt-52 flex flex-col items-center justify-center">
+    <div className="base-wrap mb-wrap">
       <Helmet>
         <title>Not found | Nuber Eats</title>
       </Helmet>
@@ -12,8 +12,9 @@ function NotFoundPage() {
       <h4 className="sub text-center mx-5 sm:mx-0">
         The page you're looking for does not exist or has moved.
       </h4>
-      <Link to="/" className="text-lime-700 hover:underline">
-        Go back home &rarr;
+      <Link to="/" className="flex justify-center items-center">
+        <span className="link">Go back home</span>
+        <span className="text-3xl ml-1"> 🏃‍♀️🏃‍♂️ </span>
       </Link>
     </div>
   );

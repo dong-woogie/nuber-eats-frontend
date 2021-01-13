@@ -70,3 +70,16 @@ export const RESTAURANT_QUERY = gql`
   }
   ${RESTAURANT_FRAGMENT}
 `;
+
+export const MY_RESTAURANTS_QUERY = gql`
+  query myRestaurantsQuery {
+    myRestaurants {
+      ok
+      error
+      restaurants {
+        ...RestaurantParts
+      }
+    }
+  }
+  ${RESTAURANT_FRAGMENT}
+`;

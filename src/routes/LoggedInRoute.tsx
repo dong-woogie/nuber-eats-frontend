@@ -8,6 +8,7 @@ import RestaurantPage from "../pages/client/RestaurantPage";
 import RestaurantsPage from "../pages/client/RestaurantsPage";
 import SearchRestaurantsPage from "../pages/client/SearchRestaurantsPage";
 import NotFoundPage from "../pages/NotFoundPage";
+import CreateRestaurantPage from "../pages/owner/CreateRestaurantPage";
 import MyRestaurantsPage from "../pages/owner/MyRestaurantsPage";
 import ConfirmEmailPage from "../pages/user/ConfirmEmailPage";
 import EditProfilePage from "../pages/user/EditProfilePage";
@@ -27,6 +28,7 @@ const ownerRoutes = [
   { path: "/", component: MyRestaurantsPage },
   { path: "/confirm", component: ConfirmEmailPage },
   { path: "/edit-profile", component: EditProfilePage },
+  { path: "/create-restaurant", component: CreateRestaurantPage },
   { component: NotFoundPage },
 ];
 
