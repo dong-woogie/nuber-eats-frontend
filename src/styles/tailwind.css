@@ -31,7 +31,7 @@
 }
 
 .search {
-  @apply pl-16 w-full text-lg pr-5 outline-none bg-gray-50 border-b-4 focus:border-gray-600 transition-colors;
+  @apply pl-16 w-full text-lg pr-5 py-3 outline-none bg-gray-50 border-b-4 focus:border-gray-600 transition-colors;
 }
 
 .restaurants-wrap {
