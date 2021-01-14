@@ -7,7 +7,7 @@
 }
 
 .btn {
-  @apply py-4 bg-lime-600 text-white focus:outline-none hover:bg-lime-700 active:bg-lime-800 transition-colors;
+  @apply py-4  text-white focus:outline-none  transition-colors w-full;
 }
 
 .title {

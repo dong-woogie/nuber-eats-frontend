@@ -13,6 +13,8 @@ module.exports = {
   variants: {
     extend: {
       backgroundColor: ["responsive", "hover", "focus", "active"],
+      textColor: ["responsive", "hover", "focus", "active"],
+      opacity: ["responsive", "hover", "focus", "active"],
     },
   },
   plugins: [],

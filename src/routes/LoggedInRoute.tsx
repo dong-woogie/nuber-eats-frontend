@@ -1,5 +1,6 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
+import CreateRestaurantDialog from "../components/common/dialog/CreateRestaurantDialog";
 
 import Header from "../components/Header";
 import { useMe } from "../lib/hooks/useMe";
@@ -8,12 +9,12 @@ import RestaurantPage from "../pages/client/RestaurantPage";
 import RestaurantsPage from "../pages/client/RestaurantsPage";
 import SearchRestaurantsPage from "../pages/client/SearchRestaurantsPage";
 import NotFoundPage from "../pages/NotFoundPage";
-import CreateRestaurantPage from "../pages/owner/CreateRestaurantPage";
 import MyRestaurantsPage from "../pages/owner/MyRestaurantsPage";
 import ConfirmEmailPage from "../pages/user/ConfirmEmailPage";
 import EditProfilePage from "../pages/user/EditProfilePage";
 import { UserRole } from "../__generated__/globalTypes";
 
+//Route컴포넌트와 Dialog컴포넌트는 코드스플리팅을 하자
 const clientRoutes = [
   { path: "/", component: RestaurantsPage },
   { path: "/search", component: SearchRestaurantsPage },
@@ -28,9 +29,10 @@ const ownerRoutes = [
   { path: "/", component: MyRestaurantsPage },
   { path: "/confirm", component: ConfirmEmailPage },
   { path: "/edit-profile", component: EditProfilePage },
-  { path: "/create-restaurant", component: CreateRestaurantPage },
   { component: NotFoundPage },
 ];
+
+const ownerDialogs = [CreateRestaurantDialog];
 
 function LoggedInRoute() {
   const { data } = useMe();
@@ -69,6 +71,8 @@ function LoggedInRoute() {
             );
           })}
       </Switch>
+      {data?.me.role === UserRole.Owner &&
+        ownerDialogs.map((Component, index) => <Component key={index} />)}
     </div>
   );
 }

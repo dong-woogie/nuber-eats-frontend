@@ -10,6 +10,7 @@ import { setContext } from "@apollo/client/link/context";
 const token = localStorage.getItem(LOCAL_STORAGE_TOKEN);
 export const loggedVars = makeVar(Boolean(token));
 export const authTokenVars = makeVar(token);
+export const createRestaurantDialogVars = makeVar(false);
 
 const httpLink = createHttpLink({
   uri: "http://localhost:4000/graphql",
@@ -38,6 +39,11 @@ export const client = new ApolloClient({
           token: {
             read() {
               return authTokenVars();
+            },
+          },
+          isCreateRestaurantDialog: {
+            read() {
+              return createRestaurantDialogVars();
             },
           },
         },
