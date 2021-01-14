@@ -7,9 +7,14 @@ import SkeletonRestaurant from "./SkeletonRestaurant";
 interface IRestaurantGridProps {
   restaurants: RestaurantParts[];
   loading: boolean;
-  isMoreView: boolean;
-  onClickMoreView: () => Promise<void>;
+  isMoreView?: boolean;
+  onClickMoreView?: () => Promise<void>;
 }
+
+RestaurantGrid.defaultProps = {
+  loading: false,
+  isMoreView: false,
+};
 
 function RestaurantGrid({
   restaurants,
@@ -34,7 +39,9 @@ function RestaurantGrid({
             <SkeletonRestaurant key={index} />
           ))}
       </section>
-      {!loading && isMoreView && <MoreViewBtn onClick={onClickMoreView} />}
+      {!loading && isMoreView && (
+        <MoreViewBtn onClick={onClickMoreView || async function () {}} />
+      )}
     </div>
   );
 }

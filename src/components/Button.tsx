@@ -1,27 +1,34 @@
 import React from "react";
+import { darkenColor } from "../lib/utils/taliwindUtils";
 
 interface IButtonProps {
   activeText: string;
-  canClick: boolean;
-  loading: boolean;
+  canClick?: boolean;
+  loading?: boolean;
+  color?: string;
 }
 
-function Button({ activeText, canClick, loading }: IButtonProps) {
+function Button(props: IButtonProps) {
+  const { activeText, canClick, loading, color = "bg-lime-600" } = props;
+  const canClickStyles = () => {
+    if (!canClick) return "bg-gray-300 pointer-events-none";
+    return `${color} 
+      hover:${darkenColor(color, 1)} 
+      active:${darkenColor(color, 2)}
+    `;
+  };
   return (
     // eslint-disable-next-line jsx-a11y/no-redundant-roles
-    <button
-      role={"button"}
-      className={`
-      py-4  text-white focus:outline-none  transition-colors
-      ${
-        canClick
-          ? "bg-lime-600 hover:bg-lime-700 active:bg-lime-800"
-          : "bg-gray-300 pointer-events-none"
-      }`}
-    >
+    <button role={"button"} className={`btn ${canClickStyles()}`}>
       {loading ? "loading...." : activeText}
     </button>
   );
 }
+
+Button.defaultProps = {
+  loading: false,
+  canClick: true,
+  color: "bg-lime-600",
+};
 
 export default Button;
