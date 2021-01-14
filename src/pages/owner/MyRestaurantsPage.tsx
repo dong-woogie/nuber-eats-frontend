@@ -1,30 +1,48 @@
-import { useQuery } from "@apollo/client";
 import React from "react";
+import { useQuery } from "@apollo/client";
 import { Helmet } from "react-helmet-async";
-import { Link } from "react-router-dom";
+import { createRestaurantDialogVars } from "../../apollo";
 import { MY_RESTAURANTS_QUERY } from "../../lib/graphql/restaurant";
 import { myRestaurantsQuery } from "../../__generated__/myRestaurantsQuery";
+import RestaurantGrid from "../../components/RestaurantGrid";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 
 function MyRestaurantsPage() {
   const { data } = useQuery<myRestaurantsQuery>(MY_RESTAURANTS_QUERY);
-  console.log(data);
+  const onOpenDialog = () => createRestaurantDialogVars(true);
   return (
-    <div className="base-wrap">
+    <div className="flex-1">
       <Helmet>
         <title>Owner Home | Nuber Eats</title>
       </Helmet>
+      {(data?.myRestaurants.restaurants?.length || 0) > 0 && (
+        <RestaurantGrid restaurants={data?.myRestaurants.restaurants || []} />
+      )}
       {data?.myRestaurants.restaurants?.length === 0 && (
-        <div className="mb-wrap text-center">
-          <h1 className="font-semibold text-7xl text-gray-800 mb-5">텅</h1>
-          <h4 className="font-medium text-lg">소유한 음식점이 없습니다.</h4>
-          <Link to="/create-restaurant">
-            <h5 className=" mt-3 flex items-center justify-center">
-              <span className="link">음식점 등록하러 가기</span>
+        <div className="flex justify-center items-center h-full">
+          <div className="mb-wrap text-center">
+            <h1 className="font-semibold text-7xl text-gray-800 mb-5">텅</h1>
+            <h4 className="text-lg font-light">소유한 음식점이 없습니다.</h4>
+            <div
+              className=" mt-3 flex items-center justify-center cursor-pointer"
+              onClick={onOpenDialog}
+            >
+              <span className="link">음식점 등록하기</span>
               <span className="text-3xl ml-1"> 🏃‍♀️ </span>
-            </h5>
-          </Link>
+            </div>
+          </div>
         </div>
       )}
+      <div className="base-wrap-w">
+        <div className="fixed right-0 bottom-0 mr-3 mb-3 sm:mr-10 sm:mb-20 xl:mr-40">
+          <FontAwesomeIcon
+            icon={faPlusCircle}
+            className="text-6xl text-red-300 hover:text-red-500 active:opacity-90 xl:text-7xl rounded-full cursor-pointer"
+            onClick={onOpenDialog}
+          />
+        </div>
+      </div>
     </div>
   );
 }
