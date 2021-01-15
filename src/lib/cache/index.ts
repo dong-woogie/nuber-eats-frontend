@@ -1,6 +1,3 @@
-import { useApolloClient } from "@apollo/client";
-import { DocumentNode } from "graphql";
-
 interface ICacheRestaurantQuery {
   id: number;
   name: string;
