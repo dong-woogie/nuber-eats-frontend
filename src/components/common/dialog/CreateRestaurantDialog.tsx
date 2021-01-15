@@ -1,4 +1,9 @@
-import { gql, useMutation, useReactiveVar } from "@apollo/client";
+import {
+  gql,
+  useApolloClient,
+  useMutation,
+  useReactiveVar,
+} from "@apollo/client";
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { createRestaurantDialogVars } from "../../../apollo";
@@ -10,6 +15,8 @@ import {
   createRestaurantMutation,
   createRestaurantMutationVariables,
 } from "../../../__generated__/createRestaurantMutation";
+import { MY_RESTAURANTS_QUERY } from "../../../lib/graphql/restaurant";
+import { cacheMyRestaurantQuery } from "../../../lib/cache";
 
 interface IFormProps {
   name: string;
@@ -22,6 +29,7 @@ const CREATE_RESTAURANT_MUTATION = gql`
     createRestaurant(input: $input) {
       ok
       error
+      restaurantId
     }
   }
 `;
@@ -48,6 +56,7 @@ function CreateRestaurantDialog() {
     coverImg: "",
     loading: false,
   });
+  const client = useApolloClient();
 
   const onClose = () => createRestaurantDialogVars(false);
   const onClickFileInput = () => {
@@ -90,6 +99,26 @@ function CreateRestaurantDialog() {
   });
 
   function onCompleted(data: createRestaurantMutation) {
+    const {
+      createRestaurant: { ok, restaurantId },
+    } = data;
+    if (!ok || restaurantId === null) return;
+    const { name, address, categoryName } = getValues();
+    const cacheQuery = client.readQuery({
+      query: MY_RESTAURANTS_QUERY,
+    });
+
+    client.writeQuery({
+      query: MY_RESTAURANTS_QUERY,
+      data: cacheMyRestaurantQuery(cacheQuery, {
+        id: restaurantId,
+        name,
+        categoryName,
+        address,
+        coverImg: uploadFile.coverImg,
+      }),
+    });
+
     createRestaurantDialogVars(false);
   }
 

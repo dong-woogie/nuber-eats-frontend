@@ -9,7 +9,6 @@ interface IRestaurantProps {
 }
 
 function Restaurant({ id, coverImg, name, categoryName }: IRestaurantProps) {
-  console.log(categoryName);
   return (
     <Link to={`/restaurants/${id}`}>
       <div
