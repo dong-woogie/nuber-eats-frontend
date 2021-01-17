@@ -1,4 +1,4 @@
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import React from "react";
 import {
   myRestaurantQuery,
@@ -18,10 +18,15 @@ function MyRestaurant() {
     { variables: { input: { restaurantId: +restaurantId } } }
   );
 
-  console.log(data);
   return (
-    <div>
-      <h1>MY RESTAURANT</h1>
+    <div className="flex-1">
+      <section
+        className="banner"
+        style={{
+          backgroundImage: `url(${data?.myRestaurant.restaurant?.coverImg})`,
+        }}
+      ></section>
+      <section></section>
     </div>
   );
 }

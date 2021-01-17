@@ -23,7 +23,7 @@ function RestaurantPage() {
   return (
     <div>
       <section
-        className="bg-gray-100 py-24 sm:py-32 flex justify-center relative bg-no-repeat bg-cover bg-center"
+        className="banner flex justify-center relative"
         style={{
           backgroundImage: `url(${data?.restaurant.result?.coverImg})`,
         }}

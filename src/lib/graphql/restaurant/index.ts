@@ -1,5 +1,9 @@
 import { gql } from "@apollo/client";
-import { CATEGORY_FRAGMENT, RESTAURANT_FRAGMENT } from "../../../fragments";
+import {
+  CATEGORY_FRAGMENT,
+  DISH_FRAGMENT,
+  RESTAURANT_FRAGMENT,
+} from "../../../fragments";
 
 export const RESTAURANTS_PAGE_QUERY = gql`
   query restaurantsPageQuery($input: RestaurantsInput!) {
@@ -91,8 +95,12 @@ export const MY_RESTAURANT_QUERY = gql`
       error
       restaurant {
         ...RestaurantParts
+        menu {
+          ...DishParts
+        }
       }
     }
   }
   ${RESTAURANT_FRAGMENT}
+  ${DISH_FRAGMENT}
 `;
