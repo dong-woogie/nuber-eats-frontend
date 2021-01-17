@@ -1,21 +1,42 @@
 import React from "react";
+import loadable from "@loadable/component";
 import { Route, Switch } from "react-router-dom";
-import CreateRestaurantDialog from "../components/common/dialog/CreateRestaurantDialog";
-
 import Header from "../components/Header";
 import { useMe } from "../lib/hooks/useMe";
-import CategoryPage from "../pages/client/CategoryPage";
-import RestaurantPage from "../pages/client/RestaurantPage";
-import RestaurantsPage from "../pages/client/RestaurantsPage";
-import SearchRestaurantsPage from "../pages/client/SearchRestaurantsPage";
-import NotFoundPage from "../pages/NotFoundPage";
-import MyRestaurant from "../pages/owner/MyRestaurant";
-import MyRestaurantsPage from "../pages/owner/MyRestaurantsPage";
-import ConfirmEmailPage from "../pages/user/ConfirmEmailPage";
-import EditProfilePage from "../pages/user/EditProfilePage";
 import { UserRole } from "../__generated__/globalTypes";
 
-//Route컴포넌트와 Dialog컴포넌트는 코드스플리팅을 하자
+const CategoryPage = loadable(() => import("../pages/client/CategoryPage"));
+const RestaurantPage = loadable(() => import("../pages/client/RestaurantPage"));
+const RestaurantsPage = loadable(
+  () => import("../pages/client/RestaurantsPage")
+);
+const SearchRestaurantsPage = loadable(
+  () => import("../pages/client/SearchRestaurantsPage")
+);
+const NotFoundPage = loadable(() => import("../pages/NotFoundPage"));
+const MyRestaurant = loadable(() => import("../pages/owner/MyRestaurant"));
+const MyRestaurantsPage = loadable(
+  () => import("../pages/owner/MyRestaurantsPage")
+);
+const ConfirmEmailPage = loadable(
+  () => import("../pages/user/ConfirmEmailPage")
+);
+const EditProfilePage = loadable(() => import("../pages/user/EditProfilePage"));
+
+const CreateRestaurantDialog = loadable(
+  () => import("../components/common/dialog/CreateRestaurantDialog")
+);
+const CreateDishDialog = loadable(
+  () => import("../components/common/dialog/CreateDishDialog")
+);
+const CreateRestaurantFixedButton = loadable(
+  () => import("../components/common/fixed/CreateRestaurantFixedButton")
+);
+const CreateDishFixedButton = loadable(
+  () => import("../components/common/fixed/CreateDishFixedButton")
+);
+
+// Route컴포넌트와 Dialog컴포넌트는 route기준으로 코드스플리팅
 const clientRoutes = [
   { path: "/", component: RestaurantsPage },
   { path: "/search", component: SearchRestaurantsPage },
@@ -34,48 +55,66 @@ const ownerRoutes = [
   { component: NotFoundPage },
 ];
 
-const ownerDialogs = [CreateRestaurantDialog];
+const ownerFixedComponent = [
+  {
+    path: "/",
+    components: [CreateRestaurantFixedButton, CreateRestaurantDialog],
+  },
+  {
+    path: "/restaurants/:id",
+    components: [CreateDishFixedButton, CreateDishDialog],
+  },
+];
 
 function LoggedInRoute() {
   const { data } = useMe();
 
   return (
-    <div className="h-screen flex flex-col">
-      <Header />
-      <Switch>
-        {data?.me.role === UserRole.Client &&
-          clientRoutes.map((route) => {
-            if (!route.path) {
-              return <Route key="Not Found" component={NotFoundPage} />;
-            }
-            return (
-              <Route
-                key={route.path}
-                path={route.path}
-                component={route.component}
-                exact={route.path === "/"}
-              />
-            );
-          })}
+    <>
+      <div className="h-screen flex flex-col">
+        <Header />
+        <Switch>
+          {data?.me.role === UserRole.Client &&
+            clientRoutes.map((route) => {
+              if (!route.path) {
+                return <Route key="Not Found" component={NotFoundPage} />;
+              }
+              return (
+                <Route
+                  key={route.path}
+                  path={route.path}
+                  component={route.component}
+                  exact={route.path === "/"}
+                />
+              );
+            })}
 
-        {data?.me.role === UserRole.Owner &&
-          ownerRoutes.map((route) => {
-            if (!route.path) {
-              return <Route key="Not Found" component={NotFoundPage} />;
-            }
-            return (
-              <Route
-                key={route.path}
-                path={route.path}
-                component={route.component}
-                exact={route.path === "/"}
-              />
-            );
-          })}
+          {data?.me.role === UserRole.Owner &&
+            ownerRoutes.map((route) => {
+              if (!route.path) {
+                return <Route key="Not Found" component={NotFoundPage} />;
+              }
+              return (
+                <Route
+                  key={route.path}
+                  path={route.path}
+                  component={route.component}
+                  exact={route.path === "/"}
+                />
+              );
+            })}
+        </Switch>
+      </div>
+      <Switch>
+        {ownerFixedComponent.map(({ path, components }, index) => (
+          <Route path={path} key={path} exact>
+            {components.map((Component, index) => (
+              <Component key={index} />
+            ))}
+          </Route>
+        ))}
       </Switch>
-      {data?.me.role === UserRole.Owner &&
-        ownerDialogs.map((Component, index) => <Component key={index} />)}
-    </div>
+    </>
   );
 }
 

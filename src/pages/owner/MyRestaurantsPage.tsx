@@ -5,8 +5,6 @@ import { createRestaurantDialogVars } from "../../apollo";
 import { MY_RESTAURANTS_QUERY } from "../../lib/graphql/restaurant";
 import { myRestaurantsQuery } from "../../__generated__/myRestaurantsQuery";
 import RestaurantGrid from "../../components/RestaurantGrid";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 
 function MyRestaurantsPage() {
   const { data } = useQuery<myRestaurantsQuery>(MY_RESTAURANTS_QUERY);
@@ -34,15 +32,6 @@ function MyRestaurantsPage() {
           </div>
         </div>
       )}
-      <div className="base-wrap-w">
-        <div className="fixed right-0 bottom-0 mr-3 mb-3 sm:mr-10 sm:mb-20 xl:mr-40">
-          <FontAwesomeIcon
-            icon={faPlusCircle}
-            className="text-6xl text-red-300 hover:text-red-500 active:opacity-90 xl:text-7xl rounded-full cursor-pointer"
-            onClick={onOpenDialog}
-          />
-        </div>
-      </div>
     </div>
   );
 }
