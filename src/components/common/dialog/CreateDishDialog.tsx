@@ -105,7 +105,7 @@ function CreateDishDialog() {
   return (
     <>
       <DialogWrap title="메뉴 등록하기" onClose={onClose}>
-        <div className="mt-10">
+        <div className="mt-10 mb-20">
           <form className="mt-10" onSubmit={onSubmit}>
             <FileInput
               onChange={onChangeFileInput}

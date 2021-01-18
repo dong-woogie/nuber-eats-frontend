@@ -6,6 +6,7 @@ import {
 } from "../../__generated__/myRestaurantQuery";
 import { MY_RESTAURANT_QUERY } from "../../lib/graphql/restaurant";
 import { useParams } from "react-router-dom";
+import DishGrid from "../../components/DishGrid";
 
 interface IParams {
   id: string;
@@ -15,7 +16,9 @@ function MyRestaurant() {
   const { id: restaurantId } = useParams<IParams>();
   const { data } = useQuery<myRestaurantQuery, myRestaurantQueryVariables>(
     MY_RESTAURANT_QUERY,
-    { variables: { input: { restaurantId: +restaurantId } } }
+    {
+      variables: { input: { restaurantId: +restaurantId } },
+    }
   );
 
   return (
@@ -26,7 +29,7 @@ function MyRestaurant() {
           backgroundImage: `url(${data?.myRestaurant.restaurant?.coverImg})`,
         }}
       ></section>
-      <section></section>
+      <DishGrid dishes={data?.myRestaurant.restaurant?.menu || []} />
     </div>
   );
 }

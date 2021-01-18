@@ -17,16 +17,15 @@ function OptionResult({
   };
   return (
     <div className="w-full flex items-center">
-      <div className="flex-1 flex items-center flex-nowrap whitespace-nowrap font-base text-base max-w-max text-gray-500 h-full overflow-hidden overflow-ellipsis">
-        <h4 className="text-gray-700 font-medium mr-5 w-10">옵션{index + 1}</h4>
+      <div className="flex-1 flex items-center flex-nowrap whitespace-nowrap font-base text-base text-gray-500 h-full overflow-hidden overflow-ellipsis">
+        <h4 className="text-gray-700 font-medium w-14">옵션{index + 1}</h4>
         <h4 className="w-20 sm:w-30">{option.name}</h4>
-        {option.price && <h4 className="ml-10">가격 : {option.price}</h4>}
-        선택 :{" "}
+        {option.price && <h4>가격 : {option.price}</h4>}
         {!!option.choices?.length && (
-          <div className="ml-10 overflow-ellipsis">
+          <div className="flex-1 overflow-ellipsis whitespace-nowrap overflow-hidden">
             {option.choices.reverse().map((choice) => (
-              <span className="mr-3">
-                {choice.name} - {choice.price}원
+              <span className="mr-3" key={choice.id}>
+                {choice.name}-{choice.price}원
               </span>
             ))}
           </div>
