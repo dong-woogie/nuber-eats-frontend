@@ -10,13 +10,13 @@
 export interface DishParts_options_choices {
   __typename: "DishChoice";
   name: string;
-  extra: number | null;
+  price: number | null;
 }
 
 export interface DishParts_options {
   __typename: "DishOption";
   name: string;
-  extra: number | null;
+  price: number | null;
   choices: DishParts_options_choices[] | null;
 }
 

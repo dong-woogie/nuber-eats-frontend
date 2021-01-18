@@ -11,6 +11,8 @@ const token = localStorage.getItem(LOCAL_STORAGE_TOKEN);
 export const loggedVars = makeVar(Boolean(token));
 export const authTokenVars = makeVar(token);
 export const createRestaurantDialogVars = makeVar(false);
+export const createDishDialogVars = makeVar(false);
+export const optionDialogVars = makeVar(false);
 
 const httpLink = createHttpLink({
   uri: "http://localhost:4000/graphql",
@@ -44,6 +46,16 @@ export const client = new ApolloClient({
           isCreateRestaurantDialog: {
             read() {
               return createRestaurantDialogVars();
+            },
+          },
+          isCreateDishDialog: {
+            read() {
+              return createDishDialogVars();
+            },
+          },
+          isOptionDialog: {
+            read() {
+              return optionDialogVars();
             },
           },
         },

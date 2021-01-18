@@ -18,13 +18,13 @@ export interface myRestaurantQuery_myRestaurant_restaurant_category {
 export interface myRestaurantQuery_myRestaurant_restaurant_menu_options_choices {
   __typename: "DishChoice";
   name: string;
-  extra: number | null;
+  price: number | null;
 }
 
 export interface myRestaurantQuery_myRestaurant_restaurant_menu_options {
   __typename: "DishOption";
   name: string;
-  extra: number | null;
+  price: number | null;
   choices: myRestaurantQuery_myRestaurant_restaurant_menu_options_choices[] | null;
 }
 
