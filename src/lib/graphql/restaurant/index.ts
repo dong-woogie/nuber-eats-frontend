@@ -2,6 +2,7 @@ import { gql } from "@apollo/client";
 import {
   CATEGORY_FRAGMENT,
   DISH_FRAGMENT,
+  ORDER_FRAGMENT,
   RESTAURANT_FRAGMENT,
 } from "../../../fragments";
 
@@ -98,9 +99,13 @@ export const MY_RESTAURANT_QUERY = gql`
         menu {
           ...DishParts
         }
+        orders {
+          ...OrderParts
+        }
       }
     }
   }
   ${RESTAURANT_FRAGMENT}
   ${DISH_FRAGMENT}
+  ${ORDER_FRAGMENT}
 `;
