@@ -1,6 +1,7 @@
 import { useQuery } from "@apollo/client";
 import React from "react";
 import { Link, useParams } from "react-router-dom";
+import DishGrid from "../../components/DishGrid";
 import { RESTAURANT_QUERY } from "../../lib/graphql/restaurant";
 import {
   restaurantQuery,
@@ -49,6 +50,11 @@ function RestaurantPage() {
         <div className="text-sm">{data?.restaurant.result?.address}</div>
       </div>
       <div className="w-full bg-gray-200 pt-0.5"></div>
+
+      <DishGrid
+        dishes={data?.restaurant.result?.menu || []}
+        restaurantId={+id}
+      />
     </div>
   );
 }

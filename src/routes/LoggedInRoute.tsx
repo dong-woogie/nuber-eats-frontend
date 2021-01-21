@@ -4,6 +4,8 @@ import { Route, Switch } from "react-router-dom";
 import Header from "../components/Header";
 import { useMe } from "../lib/hooks/useMe";
 import { UserRole } from "../__generated__/globalTypes";
+import BasketFixedButton from "../components/common/fixed/BasketFixedButton";
+import SelectDishDialog from "../components/common/dialog/SelectDishDialog";
 
 const CategoryPage = loadable(() => import("../pages/client/CategoryPage"));
 const RestaurantPage = loadable(() => import("../pages/client/RestaurantPage"));
@@ -105,15 +107,19 @@ function LoggedInRoute() {
             })}
         </Switch>
       </div>
-      <Switch>
-        {ownerFixedComponent.map(({ path, components }, index) => (
-          <Route path={path} key={path} exact>
-            {components.map((Component, index) => (
-              <Component key={index} />
-            ))}
-          </Route>
-        ))}
-      </Switch>
+      {data?.me.role === UserRole.Client && <BasketFixedButton />}
+      {data?.me.role === UserRole.Client && <SelectDishDialog />}
+      {data?.me.role === UserRole.Owner && (
+        <Switch>
+          {ownerFixedComponent.map(({ path, components }, index) => (
+            <Route path={path} key={path} exact>
+              {components.map((Component, index) => (
+                <Component key={index} />
+              ))}
+            </Route>
+          ))}
+        </Switch>
+      )}
     </>
   );
 }

@@ -1,5 +1,5 @@
-import { useQuery } from "@apollo/client";
-import React from "react";
+import { useApolloClient, useQuery } from "@apollo/client";
+import React, { useEffect } from "react";
 import {
   myRestaurantQuery,
   myRestaurantQueryVariables,
@@ -38,7 +38,10 @@ function MyRestaurant() {
           backgroundImage: `url(${data?.myRestaurant.restaurant?.coverImg})`,
         }}
       ></section>
-      <DishGrid dishes={data?.myRestaurant.restaurant?.menu || []} />
+      <DishGrid
+        dishes={data?.myRestaurant.restaurant?.menu || []}
+        restaurantId={+restaurantId}
+      />
       <section className="base-wrap-w pb-32">
         <VictoryChart
           width={window.innerWidth}
