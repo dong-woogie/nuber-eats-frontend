@@ -6,6 +6,9 @@ import { useMe } from "../lib/hooks/useMe";
 import { UserRole } from "../__generated__/globalTypes";
 import BasketFixedButton from "../components/common/fixed/BasketFixedButton";
 import SelectDishDialog from "../components/common/dialog/SelectDishDialog";
+import AddBasketAlert from "../components/common/alert/AddBasketAlert";
+import { addBasketAlertVars, selectDishFormVars } from "../apollo";
+import { useReactiveVar } from "@apollo/client";
 
 const CategoryPage = loadable(() => import("../pages/client/CategoryPage"));
 const RestaurantPage = loadable(() => import("../pages/client/RestaurantPage"));
@@ -70,10 +73,13 @@ const ownerFixedComponent = [
 
 function LoggedInRoute() {
   const { data } = useMe();
-
+  const isAddBasketAlert = !!useReactiveVar(addBasketAlertVars);
+  const isSelectDishForm = !!useReactiveVar(selectDishFormVars);
+  const isOverflowHidden = () =>
+    isAddBasketAlert || isSelectDishForm ? "overflow-hidden" : "";
   return (
     <>
-      <div className="h-screen flex flex-col">
+      <div className={`h-screen flex flex-col ${isOverflowHidden()}`}>
         <Header />
         <Switch>
           {data?.me.role === UserRole.Client &&
@@ -108,7 +114,12 @@ function LoggedInRoute() {
         </Switch>
       </div>
       {data?.me.role === UserRole.Client && <BasketFixedButton />}
-      {data?.me.role === UserRole.Client && <SelectDishDialog />}
+      {data?.me.role === UserRole.Client && isSelectDishForm && (
+        <SelectDishDialog />
+      )}
+      {data?.me.role === UserRole.Client && isAddBasketAlert && (
+        <AddBasketAlert />
+      )}
       {data?.me.role === UserRole.Owner && (
         <Switch>
           {ownerFixedComponent.map(({ path, components }, index) => (
