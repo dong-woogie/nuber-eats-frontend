@@ -6,6 +6,24 @@ import {
 } from "@apollo/client";
 import { LOCAL_STORAGE_TOKEN } from "./constants";
 import { setContext } from "@apollo/client/link/context";
+import { DishParts } from "./__generated__/DishParts";
+import { CreateOrderItemInput } from "./__generated__/globalTypes";
+
+interface IBasket extends CreateOrderItemInput {
+  name: string;
+  price: number;
+  total: number;
+  count: number;
+}
+
+interface IBasketVars {
+  restaurantId: number;
+  items: IBasket[];
+}
+
+export interface ISelectDish extends DishParts {
+  restaurantId: number;
+}
 
 const token = localStorage.getItem(LOCAL_STORAGE_TOKEN);
 export const loggedVars = makeVar(Boolean(token));
@@ -13,6 +31,8 @@ export const authTokenVars = makeVar(token);
 export const createRestaurantDialogVars = makeVar(false);
 export const createDishDialogVars = makeVar(false);
 export const optionDialogVars = makeVar(false);
+export const selectDishFormVars = makeVar<ISelectDish | null>(null);
+export const basketsVars = makeVar<IBasketVars | null>(null);
 
 const httpLink = createHttpLink({
   uri: "http://localhost:4000/graphql",
@@ -56,6 +76,16 @@ export const client = new ApolloClient({
           isOptionDialog: {
             read() {
               return optionDialogVars();
+            },
+          },
+          selectDishForm: {
+            read() {
+              return selectDishFormVars();
+            },
+          },
+          baskets: {
+            read() {
+              return basketsVars();
             },
           },
         },
