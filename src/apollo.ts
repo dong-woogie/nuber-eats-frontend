@@ -25,14 +25,20 @@ export interface ISelectDish extends DishParts {
   restaurantId: number;
 }
 
+export interface IAddBasketAlert {
+  onSubmit: () => void;
+}
+
 const token = localStorage.getItem(LOCAL_STORAGE_TOKEN);
 export const loggedVars = makeVar(Boolean(token));
 export const authTokenVars = makeVar(token);
 export const createRestaurantDialogVars = makeVar(false);
 export const createDishDialogVars = makeVar(false);
 export const optionDialogVars = makeVar(false);
+
 export const selectDishFormVars = makeVar<ISelectDish | null>(null);
 export const basketsVars = makeVar<IBasketVars | null>(null);
+export const addBasketAlertVars = makeVar<IAddBasketAlert | null>(null);
 
 const httpLink = createHttpLink({
   uri: "http://localhost:4000/graphql",
@@ -86,6 +92,11 @@ export const client = new ApolloClient({
           baskets: {
             read() {
               return basketsVars();
+            },
+          },
+          isAddBasketAlert: {
+            read() {
+              return addBasketAlertVars();
             },
           },
         },
