@@ -2,7 +2,11 @@ import { useReactiveVar } from "@apollo/client";
 import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { FormEvent, useEffect, useMemo, useState } from "react";
-import { basketsVars, selectDishFormVars } from "../../../apollo";
+import {
+  addBasketAlertVars,
+  basketsVars,
+  selectDishFormVars,
+} from "../../../apollo";
 import Button from "../../Button";
 import Checkbox from "../Checkbox";
 import DialogWrap from "./DialogWrap";
@@ -15,6 +19,7 @@ interface IOption {
 
 function SelectDishDialog() {
   const dish = useReactiveVar(selectDishFormVars);
+  const baskets = basketsVars();
   const [selectOptions, setSelectOptions] = useState<IOption[] | null>(null);
   const [count, setCount] = useState<number>(1);
   const total = useMemo(() => {
@@ -55,24 +60,42 @@ function SelectDishDialog() {
     selectDishFormVars(null);
   };
   const onClose = () => selectDishFormVars(null);
+
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!dish?.id) return;
+
+    const result = {
+      dishId: dish.id,
+      name: dish.name,
+      price: dish.price,
+      options: selectOptions,
+      count,
+      total,
+    };
+
+    if (baskets === null) {
+      basketsVars({
+        restaurantId: dish.restaurantId,
+        items: [result],
+      });
+      onClose();
+      return;
+    }
+    if (baskets?.restaurantId === dish.restaurantId) {
+      addBasketAlertVars({
+        onSubmit: () => {
+          basketsVars({ restaurantId: dish.restaurantId, items: [result] });
+          onClose();
+        },
+      });
+      return;
+    }
     basketsVars({
       restaurantId: dish.restaurantId,
-      items: [
-        {
-          dishId: dish.id,
-          name: dish.name,
-          price: dish.price,
-          options: selectOptions,
-          count,
-          total,
-        },
-      ],
+      items: [...baskets?.items, result],
     });
-
     onClose();
   };
   useEffect(() => {
@@ -181,7 +204,7 @@ function SelectDishDialog() {
             </div>
           </div>
 
-          <div className="fixed-form-btn-wrap p-2">
+          <div className="fixed-form-btn-wrap p-2 bg-white">
             <Button
               activeText={`${total}원 장바구니 담기`}
               color="bg-green-500"
