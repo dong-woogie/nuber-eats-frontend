@@ -70,10 +70,14 @@ export const RESTAURANT_QUERY = gql`
       error
       result {
         ...RestaurantParts
+        menu {
+          ...DishParts
+        }
       }
     }
   }
   ${RESTAURANT_FRAGMENT}
+  ${DISH_FRAGMENT}
 `;
 
 export const MY_RESTAURANTS_QUERY = gql`

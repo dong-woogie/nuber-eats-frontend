@@ -1,10 +1,18 @@
-import { gql, useMutation, useReactiveVar } from "@apollo/client";
+import {
+  gql,
+  useApolloClient,
+  useMutation,
+  useReactiveVar,
+} from "@apollo/client";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { createDishDialogVars, optionDialogVars } from "../../../apollo";
+import { DISH_FRAGMENT } from "../../../fragments";
+import { cacheDishQuqey } from "../../../lib/cache";
+import { MY_RESTAURANT_QUERY } from "../../../lib/graphql/restaurant";
 import {
   createDishMutation,
   createDishMutationVariables,
@@ -23,8 +31,12 @@ const CREATE_DISH_MUTATION = gql`
     createDish(input: $input) {
       ok
       error
+      dish {
+        ...DishParts
+      }
     }
   }
+  ${DISH_FRAGMENT}
 `;
 
 interface IForm {
@@ -97,7 +109,20 @@ function CreateDishDialog() {
     const filterOptions = dishOptions?.filter((option) => option.id !== id);
     setDishOptions(filterOptions);
   };
-  function onCompleted() {
+
+  const client = useApolloClient();
+
+  async function onCompleted(data: createDishMutation) {
+    const cacheQuery = client.readQuery({
+      query: MY_RESTAURANT_QUERY,
+      variables: { input: { restaurantId: +restaurantId } },
+    });
+
+    client.writeQuery({
+      query: MY_RESTAURANT_QUERY,
+      id: `Restaurant:${restaurantId}`,
+      data: cacheDishQuqey(cacheQuery, data.createDish.dish),
+    });
     onClose();
   }
 
