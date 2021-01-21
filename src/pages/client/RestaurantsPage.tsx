@@ -31,7 +31,7 @@ function RestaurantsPage() {
       </section>
 
       <CategoryList
-        categories={data?.allCategories.categories || []}
+        categories={data?.allCategories.categories?.slice(0, 5) || []}
         loading={loading}
       />
 
