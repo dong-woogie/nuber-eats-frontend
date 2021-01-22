@@ -1,5 +1,6 @@
 import React from "react";
 import { addBasketAlertVars } from "../../../apollo";
+import AlertWrap from "./AlertWrap";
 
 function AddBasketAlert() {
   const alertVars = addBasketAlertVars();
@@ -10,8 +11,8 @@ function AddBasketAlert() {
   };
   if (!alertVars) return null;
   return (
-    <div className="fixed top-0 h-screen w-full bg-black bg-opacity-30 flex justify-center items-center z-30">
-      <div className="relative bg-white rounded-xl mx-5">
+    <AlertWrap>
+      <div className="bg-white rounded-xl mx-5">
         <div className="p-8 flex flex-col justify-center items-center">
           <h3 className="text-center font-semibold">
             장바구니에는 같은 가게의 메뉴만 담을 수 있습니다.
@@ -42,7 +43,7 @@ function AddBasketAlert() {
           </button>
         </div>
       </div>
-    </div>
+    </AlertWrap>
   );
 }
 

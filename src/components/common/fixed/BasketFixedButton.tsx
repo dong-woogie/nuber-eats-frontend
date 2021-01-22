@@ -2,7 +2,11 @@ import { useReactiveVar } from "@apollo/client";
 import { faShoppingBasket } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-import { basketsVars } from "../../../apollo";
+import {
+  basketDialogVars,
+  basketsVars,
+  messageAlertVars,
+} from "../../../apollo";
 
 function BasketFixedButton() {
   const baskets = useReactiveVar(basketsVars);
@@ -10,8 +14,16 @@ function BasketFixedButton() {
     (prev, curr) => prev + curr.count,
     0
   );
+
+  const onOpenBasketDialog = () => {
+    if (baskets === null) return messageAlertVars("장바구니가 비어있습니다.");
+    basketDialogVars(true);
+  };
   return (
-    <div className="fixed-btn-wrap bg-green-400 hover:bg-green-500 active:bg-green-600 p-3 sm:p-5 borde cursor-pointer shadow-inner border-2 border-green-200">
+    <div
+      onClick={onOpenBasketDialog}
+      className="fixed-btn-wrap bg-green-400 hover:bg-green-500 active:bg-green-600 p-3 sm:p-5 borde cursor-pointer shadow-inner border-2 border-green-200"
+    >
       <FontAwesomeIcon
         icon={faShoppingBasket}
         className="text-white text-3xl"

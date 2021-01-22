@@ -35,6 +35,7 @@ export const authTokenVars = makeVar(token);
 export const createRestaurantDialogVars = makeVar(false);
 export const createDishDialogVars = makeVar(false);
 export const optionDialogVars = makeVar(false);
+export const messageAlertVars = makeVar("");
 
 export const selectDishFormVars = makeVar<ISelectDish | null>(null);
 export const basketsVars = makeVar<IBasketVars | null>(null);
@@ -97,6 +98,11 @@ export const client = new ApolloClient({
           isAddBasketAlert: {
             read() {
               return addBasketAlertVars();
+            },
+          },
+          isMessageAlert: {
+            read() {
+              return messageAlertVars();
             },
           },
         },
