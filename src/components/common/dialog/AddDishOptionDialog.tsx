@@ -38,7 +38,7 @@ function AddDishOptionDialog({ onSubmit }: IAddDishOptionDialogProps) {
     }
     setOptionState({
       ...optionState,
-      choices: [result, ...(optionState?.choices || [])],
+      choices: [...(optionState?.choices || []), result],
     });
   };
   const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {

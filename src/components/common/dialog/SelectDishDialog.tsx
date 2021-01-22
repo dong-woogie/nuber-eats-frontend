@@ -83,7 +83,7 @@ function SelectDishDialog() {
       onClose();
       return;
     }
-    if (baskets?.restaurantId === dish.restaurantId) {
+    if (baskets?.restaurantId !== dish.restaurantId) {
       addBasketAlertVars({
         onSubmit: () => {
           basketsVars({ restaurantId: dish.restaurantId, items: [result] });
@@ -132,7 +132,7 @@ function SelectDishDialog() {
                 if (option.choices && !!option.choices.length) {
                   return (
                     <div key={option.name}>
-                      <h3 className="text-xl font-semibold">{`${option.name} (선택1)`}</h3>
+                      <h3 className="mt-3 font-medium">{`${option.name} 선택1`}</h3>
                       {option.choices.map((choice) => (
                         <div
                           className="py-3 flex items-center"

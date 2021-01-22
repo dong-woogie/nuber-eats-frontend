@@ -23,9 +23,9 @@ function OptionResult({
         {option.price && <h4>가격 : {option.price}</h4>}
         {!!option.choices?.length && (
           <div className="flex-1 overflow-ellipsis whitespace-nowrap overflow-hidden">
-            {option.choices.reverse().map((choice) => (
+            {option.choices.map((choice) => (
               <span className="mr-3" key={choice.id}>
-                {choice.name}-{choice.price}원
+                {choice.name}-{choice.price || 0}원
               </span>
             ))}
           </div>

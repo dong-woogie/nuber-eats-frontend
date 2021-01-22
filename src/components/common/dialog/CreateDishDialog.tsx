@@ -84,8 +84,8 @@ function CreateDishDialog() {
       setDishOptions([{ id: 1, ...option }]);
     } else {
       setDishOptions([
-        { ...{ id: dishOptions[0].id || 1 }, ...option },
         ...dishOptions,
+        { ...{ id: dishOptions.slice(-1)[0].id || 1 }, ...option },
       ]);
     }
   };

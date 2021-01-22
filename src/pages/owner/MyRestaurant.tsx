@@ -1,5 +1,5 @@
-import { useApolloClient, useQuery } from "@apollo/client";
-import React, { useEffect } from "react";
+import { useQuery } from "@apollo/client";
+import React from "react";
 import {
   myRestaurantQuery,
   myRestaurantQueryVariables,
