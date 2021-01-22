@@ -9,16 +9,16 @@ import { setContext } from "@apollo/client/link/context";
 import { DishParts } from "./__generated__/DishParts";
 import { CreateOrderItemInput } from "./__generated__/globalTypes";
 
-interface IBasket extends CreateOrderItemInput {
+export interface IBasket extends CreateOrderItemInput {
   name: string;
   price: number;
   total: number;
   count: number;
 }
 
-interface IBasketVars {
-  restaurantId: number;
-  items: IBasket[];
+export interface IBasketVars {
+  restaurantId?: number;
+  items?: IBasket[];
 }
 
 export interface ISelectDish extends DishParts {

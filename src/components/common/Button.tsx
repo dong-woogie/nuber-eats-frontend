@@ -7,6 +7,7 @@ interface IButtonProps {
   loading?: boolean;
   color?: string;
   className?: string;
+  onClick?: () => void;
 }
 
 function Button(props: IButtonProps) {
@@ -16,6 +17,7 @@ function Button(props: IButtonProps) {
     loading,
     color = "bg-lime-600",
     className,
+    onClick,
   } = props;
   const canClickStyles = () => {
     if (!canClick) return `bg-gray-300 pointer-events-none`;
@@ -26,7 +28,11 @@ function Button(props: IButtonProps) {
   };
   return (
     // eslint-disable-next-line jsx-a11y/no-redundant-roles
-    <button role={"button"} className={`btn ${canClickStyles()} ${className}`}>
+    <button
+      role={"button"}
+      className={`btn ${canClickStyles()} ${className}`}
+      onClick={onClick}
+    >
       {loading ? "loading...." : activeText}
     </button>
   );

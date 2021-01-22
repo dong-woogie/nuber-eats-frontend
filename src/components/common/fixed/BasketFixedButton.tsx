@@ -10,7 +10,7 @@ import {
 
 function BasketFixedButton() {
   const baskets = useReactiveVar(basketsVars);
-  const basketCount = baskets?.items.reduce(
+  const basketCount = baskets?.items?.reduce(
     (prev, curr) => prev + curr.count,
     0
   );
