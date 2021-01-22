@@ -1,7 +1,7 @@
 import { MockedProvider } from "@apollo/client/testing";
 import React from "react";
 import { render, waitFor } from "@testing-library/react";
-import Header from "../Header";
+import Header from "../home/Header";
 import { ME_QUERY } from "../../lib/graphql/user";
 import { BrowserRouter } from "react-router-dom";
 

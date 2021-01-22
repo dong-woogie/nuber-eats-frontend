@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react";
-import MoreViewBtn from "../MoreViewBtn";
+import MoreViewBtn from "../common/MoreViewBtn";
 
 describe("<MoreViewBtn />", () => {
   it("should render OK with props", () => {

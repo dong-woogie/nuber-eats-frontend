@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react";
-import LoadError from "../LoadError";
+import LoadError from "../common/LoadError";
 
 describe("<LoadError />", () => {
   it("should render ok with props", () => {

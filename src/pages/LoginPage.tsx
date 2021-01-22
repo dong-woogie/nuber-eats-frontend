@@ -1,13 +1,13 @@
 import { gql, useMutation } from "@apollo/client";
 import React from "react";
 import { useForm } from "react-hook-form";
-import FormError from "../components/FormError";
+import FormError from "../components/common/FormError";
 import {
   loginMitation,
   loginMitationVariables,
 } from "../__generated__/loginMitation";
 import LogoImage from "../images/eats-logo.svg";
-import Button from "../components/Button";
+import Button from "../components/common/Button";
 import { Link, useHistory } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { authTokenVars, loggedVars } from "../apollo";

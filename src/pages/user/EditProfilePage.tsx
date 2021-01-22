@@ -1,5 +1,5 @@
 import React from "react";
-import Button from "../../components/Button";
+import Button from "../../components/common/Button";
 import { useForm } from "react-hook-form";
 import { gql, useApolloClient, useMutation } from "@apollo/client";
 import { useMe } from "../../lib/hooks/useMe";
@@ -9,7 +9,7 @@ import {
   editProfileVariables,
 } from "../../__generated__/editProfile";
 import { EMAIL_PATTERN, VALIDATION_ERROR_MESSAGE } from "../../constants";
-import FormError from "../../components/FormError";
+import FormError from "../../components/common/FormError";
 import { Helmet } from "react-helmet-async";
 
 interface IForm {

@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet-async";
 import { createRestaurantDialogVars } from "../../apollo";
 import { MY_RESTAURANTS_QUERY } from "../../lib/graphql/restaurant";
 import { myRestaurantsQuery } from "../../__generated__/myRestaurantsQuery";
-import RestaurantGrid from "../../components/RestaurantGrid";
+import RestaurantGrid from "../../components/restaurant/RestaurantGrid";
 
 function MyRestaurantsPage() {
   const { data } = useQuery<myRestaurantsQuery>(MY_RESTAURANTS_QUERY);

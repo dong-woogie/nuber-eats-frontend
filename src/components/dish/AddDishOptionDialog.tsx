@@ -2,11 +2,11 @@ import { useReactiveVar } from "@apollo/client";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { ChangeEvent, useEffect, useState } from "react";
-import { optionDialogVars } from "../../../apollo";
-import { DishOptionInputType } from "../../../__generated__/globalTypes";
-import Button from "../../Button";
-import OptionChoice from "../OptionChoice";
-import DialogWrap from "./DialogWrap";
+import { optionDialogVars } from "../../apollo";
+import { DishOptionInputType } from "../../__generated__/globalTypes";
+import Button from "../common/Button";
+import OptionChoice from "../common/OptionChoice";
+import DialogWrap from "../common/DialogWrap";
 
 interface IAddDishOptionDialogProps {
   onSubmit: (option: DishOptionInputType) => void;

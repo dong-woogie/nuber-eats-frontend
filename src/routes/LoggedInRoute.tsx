@@ -1,14 +1,21 @@
 import React from "react";
 import loadable from "@loadable/component";
 import { Route, Switch } from "react-router-dom";
-import Header from "../components/Header";
+import Header from "../components/home/Header";
 import { useMe } from "../lib/hooks/useMe";
 import { UserRole } from "../__generated__/globalTypes";
 import BasketFixedButton from "../components/common/fixed/BasketFixedButton";
-import SelectDishDialog from "../components/common/dialog/SelectDishDialog";
+import SelectDishDialog from "../components/dish/SelectDishDialog";
 import AddBasketAlert from "../components/common/alert/AddBasketAlert";
-import { addBasketAlertVars, selectDishFormVars } from "../apollo";
+import {
+  addBasketAlertVars,
+  basketDialogVars,
+  messageAlertVars,
+  selectDishFormVars,
+} from "../apollo";
 import { useReactiveVar } from "@apollo/client";
+import BasketDialog from "../components/basket/BasketDialog";
+import MessageAlert from "../components/common/alert/MessageAlert";
 
 const CategoryPage = loadable(() => import("../pages/client/CategoryPage"));
 const RestaurantPage = loadable(() => import("../pages/client/RestaurantPage"));
@@ -29,10 +36,10 @@ const ConfirmEmailPage = loadable(
 const EditProfilePage = loadable(() => import("../pages/user/EditProfilePage"));
 
 const CreateRestaurantDialog = loadable(
-  () => import("../components/common/dialog/CreateRestaurantDialog")
+  () => import("../components/restaurant/CreateRestaurantDialog")
 );
 const CreateDishDialog = loadable(
-  () => import("../components/common/dialog/CreateDishDialog")
+  () => import("../components/dish/CreateDishDialog")
 );
 const CreateRestaurantFixedButton = loadable(
   () => import("../components/common/fixed/CreateRestaurantFixedButton")
@@ -74,9 +81,16 @@ const ownerFixedComponent = [
 function LoggedInRoute() {
   const { data } = useMe();
   const isAddBasketAlert = !!useReactiveVar(addBasketAlertVars);
-  const isSelectDishForm = !!useReactiveVar(selectDishFormVars);
+  const isSelectDishFormDialog = !!useReactiveVar(selectDishFormVars);
+  const isBasketDialog = useReactiveVar(basketDialogVars);
+  const isMessageAlert = !!useReactiveVar(messageAlertVars);
   const isOverflowHidden = () =>
-    isAddBasketAlert || isSelectDishForm ? "overflow-hidden" : "";
+    isAddBasketAlert ||
+    isSelectDishFormDialog ||
+    isBasketDialog ||
+    isMessageAlert
+      ? "overflow-hidden"
+      : "";
   return (
     <>
       <div className={`h-screen flex flex-col ${isOverflowHidden()}`}>
@@ -114,12 +128,14 @@ function LoggedInRoute() {
         </Switch>
       </div>
       {data?.me.role === UserRole.Client && <BasketFixedButton />}
-      {data?.me.role === UserRole.Client && isSelectDishForm && (
+      {data?.me.role === UserRole.Client && isSelectDishFormDialog && (
         <SelectDishDialog />
       )}
       {data?.me.role === UserRole.Client && isAddBasketAlert && (
         <AddBasketAlert />
       )}
+      {data?.me.role === UserRole.Client && isBasketDialog && <BasketDialog />}
+      {data?.me.role === UserRole.Client && isMessageAlert && <MessageAlert />}
       {data?.me.role === UserRole.Owner && (
         <Switch>
           {ownerFixedComponent.map(({ path, components }, index) => (

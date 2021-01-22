@@ -1,5 +1,5 @@
 import React from "react";
-import { darkenColor } from "../lib/utils/taliwindUtils";
+import { darkenColor } from "../../lib/utils/taliwindUtils";
 
 interface IButtonProps {
   activeText: string;

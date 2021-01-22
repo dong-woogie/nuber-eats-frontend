@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import LoadError from "../../components/LoadError";
-import RestaurantGrid from "../../components/RestaurantGrid";
+import LoadError from "../../components/common/LoadError";
+import RestaurantGrid from "../../components/restaurant/RestaurantGrid";
 import { useCategoryRestaurants } from "../../lib/hooks/useCategoryRestaurants";
 
 interface ICategoryParams {

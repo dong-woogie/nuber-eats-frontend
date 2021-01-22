@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
-import Category from "../Category";
+import Category from "../category/Category";
 
 describe("<Category />", () => {
   it("should render OK with props", () => {

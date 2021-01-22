@@ -6,10 +6,10 @@ import {
   addBasketAlertVars,
   basketsVars,
   selectDishFormVars,
-} from "../../../apollo";
-import Button from "../../Button";
-import Checkbox from "../Checkbox";
-import DialogWrap from "./DialogWrap";
+} from "../../apollo";
+import Button from "../common/Button";
+import Checkbox from "../common/Checkbox";
+import DialogWrap from "../common/DialogWrap";
 
 interface IOption {
   name: string;

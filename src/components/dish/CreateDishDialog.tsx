@@ -9,22 +9,22 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
-import { createDishDialogVars, optionDialogVars } from "../../../apollo";
-import { DISH_FRAGMENT } from "../../../fragments";
-import { cacheDishQuqey } from "../../../lib/cache";
-import { MY_RESTAURANT_QUERY } from "../../../lib/graphql/restaurant";
+import { createDishDialogVars, optionDialogVars } from "../../apollo";
+import { DISH_FRAGMENT } from "../../fragments";
+import { cacheDishQuqey } from "../../lib/cache";
+import { MY_RESTAURANT_QUERY } from "../../lib/graphql/restaurant";
 import {
   createDishMutation,
   createDishMutationVariables,
-} from "../../../__generated__/createDishMutation";
-import { DishOptionInputType } from "../../../__generated__/globalTypes";
-import Button from "../../Button";
-import FormError from "../../FormError";
-import FileInput from "../FileInput";
-import { useFileInput } from "../hooks/useFileInput";
-import OptionResult from "../OptionResult";
+} from "../../__generated__/createDishMutation";
+import { DishOptionInputType } from "../../__generated__/globalTypes";
+import Button from "../common/Button";
+import FormError from "../common/FormError";
+import FileInput from "../common/FileInput";
+import { useFileInput } from "../common/hooks/useFileInput";
+import OptionResult from "../common/OptionResult";
 import AddDishOptionDialog from "./AddDishOptionDialog";
-import DialogWrap from "./DialogWrap";
+import DialogWrap from "../common/DialogWrap";
 
 const CREATE_DISH_MUTATION = gql`
   mutation createDishMutation($input: CreateDishInput!) {

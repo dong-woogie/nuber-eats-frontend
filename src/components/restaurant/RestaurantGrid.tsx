@@ -1,6 +1,6 @@
 import React from "react";
-import { RestaurantParts } from "../__generated__/RestaurantParts";
-import MoreViewBtn from "./MoreViewBtn";
+import { RestaurantParts } from "../../__generated__/RestaurantParts";
+import MoreViewBtn from "../common/MoreViewBtn";
 import Restaurant from "./Restaurant";
 import SkeletonRestaurant from "./SkeletonRestaurant";
 

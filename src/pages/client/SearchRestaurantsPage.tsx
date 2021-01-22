@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import qs from "query-string";
 import { useSearchRestaurants } from "../../lib/hooks/useSearchRestaurants";
-import RestaurantGrid from "../../components/RestaurantGrid";
+import RestaurantGrid from "../../components/restaurant/RestaurantGrid";
 
 function SearchRestaurantsPage() {
   const location = useLocation();

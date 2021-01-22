@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react";
-import FormError from "../FormError";
+import FormError from "../common/FormError";
 
 describe("<FormError />", () => {
   it("should render ok with props", () => {

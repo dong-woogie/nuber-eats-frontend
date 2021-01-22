@@ -1,8 +1,8 @@
 import React, { useCallback } from "react";
-import { selectDishFormVars } from "../apollo";
-import { DishParts } from "../__generated__/DishParts";
+import { selectDishFormVars } from "../../apollo";
+import { DishParts } from "../../__generated__/DishParts";
 import Dish from "./Dish";
-import { ISelectDish } from "../apollo";
+import { ISelectDish } from "../../apollo";
 
 interface IDishGrid {
   dishes: DishParts[];

@@ -1,5 +1,5 @@
 import React from "react";
-import { CategoryParts } from "../__generated__/CategoryParts";
+import { CategoryParts } from "../../__generated__/CategoryParts";
 import Category from "./Category";
 import SkeletonCategory from "./SkeletonCategory";
 

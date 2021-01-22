@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import Logo from "../images/nuber-logo.svg";
+import Logo from "../../images/nuber-logo.svg";
 import { Link } from "react-router-dom";
-import { useMe } from "../lib/hooks/useMe";
+import { useMe } from "../../lib/hooks/useMe";
 import SearchForm from "./SearchForm";
 import { faSearch, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

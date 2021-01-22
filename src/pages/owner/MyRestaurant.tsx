@@ -6,7 +6,7 @@ import {
 } from "../../__generated__/myRestaurantQuery";
 import { MY_RESTAURANT_QUERY } from "../../lib/graphql/restaurant";
 import { useParams } from "react-router-dom";
-import DishGrid from "../../components/DishGrid";
+import DishGrid from "../../components/dish/DishGrid";
 import {
   VictoryChart,
   VictoryLine,

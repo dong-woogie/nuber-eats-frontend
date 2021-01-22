@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
-import Restaurant from "../Restaurant";
+import Restaurant from "../restaurant/Restaurant";
 
 describe("<Restaurant />", () => {
   it("should render OK with props", () => {

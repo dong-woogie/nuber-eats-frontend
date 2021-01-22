@@ -6,18 +6,18 @@ import {
 } from "@apollo/client";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { createRestaurantDialogVars } from "../../../apollo";
-import Button from "../../Button";
-import DialogWrap from "./DialogWrap";
-import FormError from "../../FormError";
+import { createRestaurantDialogVars } from "../../apollo";
+import Button from "../common/Button";
+import DialogWrap from "../common/DialogWrap";
+import FormError from "../common/FormError";
 import {
   createRestaurantMutation,
   createRestaurantMutationVariables,
-} from "../../../__generated__/createRestaurantMutation";
-import { MY_RESTAURANTS_QUERY } from "../../../lib/graphql/restaurant";
-import { cacheMyRestaurantQuery } from "../../../lib/cache";
-import FileInput from "../FileInput";
-import { useFileInput } from "../hooks/useFileInput";
+} from "../../__generated__/createRestaurantMutation";
+import { MY_RESTAURANTS_QUERY } from "../../lib/graphql/restaurant";
+import { cacheMyRestaurantQuery } from "../../lib/cache";
+import FileInput from "../common/FileInput";
+import { useFileInput } from "../common/hooks/useFileInput";
 
 interface IFormProps {
   name: string;
