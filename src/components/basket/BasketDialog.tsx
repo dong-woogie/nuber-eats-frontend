@@ -2,6 +2,7 @@ import { gql, useMutation, useQuery, useReactiveVar } from "@apollo/client";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useMemo } from "react";
+import { useHistory } from "react-router-dom";
 import { basketDialogVars, basketsVars, confirmDialogVars } from "../../apollo";
 import { RESTAURANT_QUERY } from "../../lib/graphql/restaurant";
 import {
@@ -32,14 +33,22 @@ function BasketDialog() {
     RESTAURANT_QUERY,
     { variables: { input: { restaurantId: baskets?.restaurantId || 0 } } }
   );
-  const [createOrder, { data }] = useMutation<
+  const [createOrder] = useMutation<
     createOrderMutation,
     createOrderMutationVariables
   >(CREATE_ORDER_MUTATION, {
     onCompleted,
   });
+  const history = useHistory();
 
-  const onClose = () => basketDialogVars(false);
+  const onClose = () => {
+    basketDialogVars(false);
+  };
+
+  const reset = () => {
+    basketsVars(null);
+    onClose();
+  };
 
   const onCount = (dishId: number, count: number) => {
     const newItems = baskets?.items?.map((item) =>
@@ -95,8 +104,9 @@ function BasketDialog() {
   };
 
   function onCompleted(data: createOrderMutation) {
-    console.log(data);
     if (data.createOrder.ok) {
+      history.push(`/orders/${data.createOrder.orderId}`);
+      reset();
     }
   }
 
