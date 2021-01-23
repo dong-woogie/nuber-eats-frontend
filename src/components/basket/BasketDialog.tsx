@@ -21,6 +21,7 @@ export const CREATE_ORDER_MUTATION = gql`
     createOrder(input: $input) {
       ok
       error
+      orderId
     }
   }
 `;
@@ -34,7 +35,9 @@ function BasketDialog() {
   const [createOrder, { data }] = useMutation<
     createOrderMutation,
     createOrderMutationVariables
-  >(CREATE_ORDER_MUTATION);
+  >(CREATE_ORDER_MUTATION, {
+    onCompleted,
+  });
 
   const onClose = () => basketDialogVars(false);
 
@@ -49,7 +52,9 @@ function BasketDialog() {
   };
 
   const onDelete = (dishId: number) => {
-    const newItem = baskets?.items?.filter((item) => item.dishId !== dishId);
+    const newItem = baskets?.items?.filter(
+      (item) => item.selectDishId !== dishId
+    );
 
     if (newItem?.length === 0) return basketsVars(null);
 
@@ -65,6 +70,27 @@ function BasketDialog() {
       0
     );
   }, [baskets]);
+
+  const onClickToOrder = () => {
+    if (baskets === null || !baskets?.restaurantId || !baskets.items) return;
+    createOrder({
+      variables: {
+        input: {
+          restaurantId: baskets.restaurantId,
+          items: baskets.items?.map((item) => ({
+            dishId: item.dishId,
+            options: item.options,
+          })),
+        },
+      },
+    });
+  };
+
+  function onCompleted(data: createOrderMutation) {
+    console.log(data);
+    if (data.createOrder.ok) {
+    }
+  }
 
   return (
     <div className="fixed top-0 left-0 w-full h-screen z-30 bg-gray-200">
@@ -103,7 +129,7 @@ function BasketDialog() {
             <div className="bg-white">
               {baskets?.items?.map((selectDish) => (
                 <SelectDish
-                  key={selectDish.dishId}
+                  key={selectDish.selectDishId}
                   selectDish={selectDish}
                   onCount={onCount}
                   onDelete={onDelete}
@@ -111,10 +137,17 @@ function BasketDialog() {
               ))}
             </div>
 
-            <div className="bg-white py-3 cursor-pointer" onClick={onClose}>
+            <div className="bg-white py-4 cursor-pointer" onClick={onClose}>
               <div className="base-wrap-w text-green-400 flex justify-center items-center active:opacity-70">
                 <FontAwesomeIcon icon={faPlus} />
                 <span className="ml-2 font-medium">더 담으러 가기</span>
+              </div>
+            </div>
+
+            <div className="bg-white py-4 mt-5">
+              <div className="base-wrap-w flex justify-between">
+                <h4 className="font-semibold">총 주문금액</h4>
+                <h4 className="font-semibold">{total}원</h4>
               </div>
             </div>
 
@@ -123,6 +156,7 @@ function BasketDialog() {
                 activeText={`${total}원 주문하기`}
                 color="bg-green-500"
                 className="rounded-md"
+                onClick={onClickToOrder}
               />
             </div>
           </div>

@@ -6,9 +6,8 @@ import { useMe } from "../lib/hooks/useMe";
 import { UserRole } from "../__generated__/globalTypes";
 import BasketFixedButton from "../components/common/fixed/BasketFixedButton";
 import SelectDishDialog from "../components/dish/SelectDishDialog";
-import AddBasketAlert from "../components/common/alert/AddBasketAlert";
 import {
-  addBasketAlertVars,
+  confirmDialogVars,
   basketDialogVars,
   messageAlertVars,
   selectDishFormVars,
@@ -16,6 +15,7 @@ import {
 import { useReactiveVar } from "@apollo/client";
 import BasketDialog from "../components/basket/BasketDialog";
 import MessageAlert from "../components/common/alert/MessageAlert";
+import ConfirmDialog from "../components/common/alert/ConfirmDialog";
 
 const CategoryPage = loadable(() => import("../pages/client/CategoryPage"));
 const RestaurantPage = loadable(() => import("../pages/client/RestaurantPage"));
@@ -80,12 +80,13 @@ const ownerFixedComponent = [
 
 function LoggedInRoute() {
   const { data } = useMe();
-  const isAddBasketAlert = !!useReactiveVar(addBasketAlertVars);
+  const isConfirmDialog = !!useReactiveVar(confirmDialogVars);
   const isSelectDishFormDialog = !!useReactiveVar(selectDishFormVars);
   const isBasketDialog = useReactiveVar(basketDialogVars);
   const isMessageAlert = !!useReactiveVar(messageAlertVars);
+
   const isOverflowHidden = () =>
-    isAddBasketAlert ||
+    isConfirmDialog ||
     isSelectDishFormDialog ||
     isBasketDialog ||
     isMessageAlert
@@ -131,8 +132,8 @@ function LoggedInRoute() {
       {data?.me.role === UserRole.Client && isSelectDishFormDialog && (
         <SelectDishDialog />
       )}
-      {data?.me.role === UserRole.Client && isAddBasketAlert && (
-        <AddBasketAlert />
+      {data?.me.role === UserRole.Client && isConfirmDialog && (
+        <ConfirmDialog />
       )}
       {data?.me.role === UserRole.Client && isBasketDialog && <BasketDialog />}
       {data?.me.role === UserRole.Client && isMessageAlert && <MessageAlert />}

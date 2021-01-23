@@ -3,7 +3,7 @@ import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useMemo, useState } from "react";
 import {
-  addBasketAlertVars,
+  confirmDialogVars,
   basketsVars,
   selectDishFormVars,
 } from "../../apollo";
@@ -65,7 +65,8 @@ function SelectDishDialog() {
     if (!dish?.id) return;
 
     const result = {
-      dishId: dish.id + +new Date(),
+      dishId: dish.id,
+      selectDishId: +new Date() + dish.id,
       name: dish.name,
       price: dish.price,
       options: selectOptions,
@@ -74,8 +75,11 @@ function SelectDishDialog() {
     };
 
     if (baskets !== null && baskets?.restaurantId !== dish.restaurantId) {
-      return addBasketAlertVars({
-        onSubmit: () => {
+      return confirmDialogVars({
+        title: "장바구니에는 같은 가게의 메뉴만 담을 수 있습니다.",
+        subTitle:
+          "선택하신 메뉴를 장바구니에 담을 경우 이전에 담은 메뉴가 삭제됩니다.",
+        onConfirm: () => {
           basketsVars({ restaurantId: dish.restaurantId, items: [result] });
           onClose();
         },

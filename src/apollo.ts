@@ -14,6 +14,7 @@ export interface IBasket extends CreateOrderItemInput {
   price: number;
   total: number;
   count: number;
+  selectDishId: number;
 }
 
 export interface IBasketVars {
@@ -25,8 +26,10 @@ export interface ISelectDish extends DishParts {
   restaurantId: number;
 }
 
-export interface IAddBasketAlert {
-  onSubmit: () => void;
+interface IConfirmDialog {
+  title?: string;
+  subTitle?: string;
+  onConfirm: () => void;
 }
 
 const token = localStorage.getItem(LOCAL_STORAGE_TOKEN);
@@ -36,12 +39,12 @@ export const createRestaurantDialogVars = makeVar(false);
 export const createDishDialogVars = makeVar(false);
 export const optionDialogVars = makeVar(false);
 export const basketDialogVars = makeVar(false);
+export const confirmDialogVars = makeVar<IConfirmDialog | null>(null);
 
 export const messageAlertVars = makeVar("");
 
 export const selectDishFormVars = makeVar<ISelectDish | null>(null);
 export const basketsVars = makeVar<IBasketVars | null>(null);
-export const addBasketAlertVars = makeVar<IAddBasketAlert | null>(null);
 
 const httpLink = createHttpLink({
   uri: "http://localhost:4000/graphql",
