@@ -85,13 +85,18 @@ function LoggedInRoute() {
   const isBasketDialog = useReactiveVar(basketDialogVars);
   const isMessageAlert = !!useReactiveVar(messageAlertVars);
 
-  const isOverflowHidden = () =>
-    isConfirmDialog ||
-    isSelectDishFormDialog ||
-    isBasketDialog ||
-    isMessageAlert
-      ? "overflow-hidden"
-      : "";
+  const isOverflowHidden = () => {
+    if (
+      isConfirmDialog ||
+      isSelectDishFormDialog ||
+      isBasketDialog ||
+      isMessageAlert
+    ) {
+      return "overflow-hidden";
+    }
+    return "";
+  };
+
   return (
     <>
       <div className={`h-screen flex flex-col ${isOverflowHidden()}`}>

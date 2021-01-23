@@ -29,6 +29,8 @@ export interface ISelectDish extends DishParts {
 interface IConfirmDialog {
   title?: string;
   subTitle?: string;
+  confirmText?: string;
+  cancelText?: string;
   onConfirm: () => void;
 }
 

@@ -2,7 +2,7 @@ import { gql, useMutation, useQuery, useReactiveVar } from "@apollo/client";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useMemo } from "react";
-import { basketDialogVars, basketsVars } from "../../apollo";
+import { basketDialogVars, basketsVars, confirmDialogVars } from "../../apollo";
 import { RESTAURANT_QUERY } from "../../lib/graphql/restaurant";
 import {
   createOrderMutation,
@@ -72,6 +72,14 @@ function BasketDialog() {
   }, [baskets]);
 
   const onClickToOrder = () => {
+    confirmDialogVars({
+      title: "주문하시겠습니까?",
+      confirmText: "주문하기",
+      onConfirm,
+    });
+  };
+
+  const onConfirm = () => {
     if (baskets === null || !baskets?.restaurantId || !baskets.items) return;
     createOrder({
       variables: {
