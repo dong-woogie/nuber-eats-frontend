@@ -34,6 +34,7 @@ const ConfirmEmailPage = loadable(
   () => import("../pages/user/ConfirmEmailPage")
 );
 const EditProfilePage = loadable(() => import("../pages/user/EditProfilePage"));
+const OrderPage = loadable(() => import("../pages/client/OrderPage"));
 
 const CreateRestaurantDialog = loadable(
   () => import("../components/restaurant/CreateRestaurantDialog")
@@ -56,6 +57,7 @@ const clientRoutes = [
   { path: "/restaurants/:id", component: RestaurantPage },
   { path: "/confirm", component: ConfirmEmailPage },
   { path: "/edit-profile", component: EditProfilePage },
+  { path: "/orders/:orderId", component: OrderPage },
   { component: NotFoundPage },
 ];
 

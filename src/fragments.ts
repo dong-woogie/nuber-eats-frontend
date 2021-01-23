@@ -49,3 +49,34 @@ export const ORDER_FRAGMENT = gql`
     total
   }
 `;
+
+export const GET_ORDER_FRAGMENT = gql`
+  fragment GetOrderParts on Order {
+    id
+    createdAt
+    total
+    status
+    customer {
+      email
+    }
+    driver {
+      email
+    }
+    restaurant {
+      id
+      name
+    }
+    items {
+      dish {
+        id
+        price
+        name
+      }
+      options {
+        name
+        choice
+        price
+      }
+    }
+  }
+`;
