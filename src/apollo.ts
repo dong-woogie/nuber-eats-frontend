@@ -3,11 +3,14 @@ import {
   createHttpLink,
   InMemoryCache,
   makeVar,
+  split,
 } from "@apollo/client";
+import { WebSocketLink } from "@apollo/client/link/ws";
 import { LOCAL_STORAGE_TOKEN } from "./constants";
 import { setContext } from "@apollo/client/link/context";
 import { DishParts } from "./__generated__/DishParts";
 import { CreateOrderItemInput } from "./__generated__/globalTypes";
+import { getMainDefinition } from "@apollo/client/utilities";
 
 export interface IBasket extends CreateOrderItemInput {
   name: string;
@@ -52,6 +55,16 @@ const httpLink = createHttpLink({
   uri: "http://localhost:4000/graphql",
 });
 
+const wsLink = new WebSocketLink({
+  uri: `ws://localhost:4000/graphql`,
+  options: {
+    reconnect: true,
+    connectionParams: {
+      "x-jwt": authTokenVars() || "",
+    },
+  },
+});
+
 const authLink = setContext((_, { headers }) => {
   return {
     headers: {
@@ -61,8 +74,20 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
+const splitLink = split(
+  ({ query }) => {
+    const definition = getMainDefinition(query);
+    return (
+      definition.kind === "OperationDefinition" &&
+      definition.operation === "subscription"
+    );
+  },
+  wsLink,
+  authLink.concat(httpLink)
+);
+
 export const client = new ApolloClient({
-  link: authLink.concat(httpLink),
+  link: splitLink,
   cache: new InMemoryCache({
     typePolicies: {
       Query: {
