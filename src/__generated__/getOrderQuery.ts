@@ -43,6 +43,7 @@ export interface getOrderQuery_getOrder_order_items {
   __typename: "OrderItem";
   dish: getOrderQuery_getOrder_order_items_dish | null;
   options: getOrderQuery_getOrder_order_items_options[] | null;
+  total: number | null;
 }
 
 export interface getOrderQuery_getOrder_order {

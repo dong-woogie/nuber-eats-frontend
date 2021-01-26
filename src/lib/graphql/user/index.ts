@@ -1,5 +1,5 @@
 import { gql } from "@apollo/client";
-import { DISH_FRAGMENT, GET_ORDER_FRAGMENT } from "../../../fragments";
+import { GET_ORDER_FRAGMENT } from "../../../fragments";
 
 export const ME_QUERY = gql`
   query MeQuery {

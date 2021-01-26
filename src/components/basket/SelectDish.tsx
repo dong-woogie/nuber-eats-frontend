@@ -16,7 +16,7 @@ function SelectDish({ selectDish, onCount, onDelete }: ISelectDish) {
     onCount(selectDish.dishId, count);
   };
   const onDeleteSelectDish = () => {
-    onDelete(selectDish.dishId);
+    onDelete(selectDish.selectDishId);
   };
   return (
     <div className="relative base-wrap-w bg-white mt-5 py-3 border-b-2 border-gray-200">

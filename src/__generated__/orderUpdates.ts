@@ -43,6 +43,7 @@ export interface orderUpdates_orderUpdates_items {
   __typename: "OrderItem";
   dish: orderUpdates_orderUpdates_items_dish | null;
   options: orderUpdates_orderUpdates_items_options[] | null;
+  total: number | null;
 }
 
 export interface orderUpdates_orderUpdates {

@@ -43,6 +43,7 @@ export interface GetOrderParts_items {
   __typename: "OrderItem";
   dish: GetOrderParts_items_dish | null;
   options: GetOrderParts_items_options[] | null;
+  total: number | null;
 }
 
 export interface GetOrderParts {

@@ -77,6 +77,7 @@ export const GET_ORDER_FRAGMENT = gql`
         choice
         price
       }
+      total
     }
   }
 `;

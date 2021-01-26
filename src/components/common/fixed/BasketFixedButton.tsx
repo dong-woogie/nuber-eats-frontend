@@ -2,6 +2,7 @@ import { useReactiveVar } from "@apollo/client";
 import { faShoppingBasket } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
+import { useLocation } from "react-router-dom";
 import {
   basketDialogVars,
   basketsVars,
@@ -9,6 +10,7 @@ import {
 } from "../../../apollo";
 
 function BasketFixedButton() {
+  const location = useLocation();
   const baskets = useReactiveVar(basketsVars);
   const basketCount = baskets?.items?.reduce(
     (prev, curr) => prev + curr.count,
@@ -19,6 +21,7 @@ function BasketFixedButton() {
     if (baskets === null) return messageAlertVars("장바구니가 비어있습니다.");
     basketDialogVars(true);
   };
+  if (location.pathname.includes("orders")) return null;
   return (
     <div
       onClick={onOpenBasketDialog}
