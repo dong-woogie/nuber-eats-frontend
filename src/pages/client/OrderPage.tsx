@@ -1,6 +1,9 @@
 import { gql, useQuery } from "@apollo/client";
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { messageAlertVars } from "../../apollo";
+import Order from "../../components/order/Order";
+import { ORDER_STATUS_TEXT } from "../../constants";
 import { GET_ORDER_FRAGMENT } from "../../fragments";
 import { GET_ORDER_QUERY } from "../../lib/graphql/user";
 import {
@@ -28,8 +31,10 @@ function OrderPage() {
     getOrderQuery,
     getOrderQueryVariables
   >(GET_ORDER_QUERY, { variables: { input: { id: +orderId } } });
+
   useEffect(() => {
     if (!data?.getOrder.ok) return;
+    if (!subscribeToMore) return;
     subscribeToMore({
       document: ORDER_SUBSCRIPTION,
       variables: { input: { id: +orderId } },
@@ -40,6 +45,7 @@ function OrderPage() {
         }: { subscriptionData: { data: orderUpdates } }
       ) {
         if (!data) return prev;
+        messageAlertVars(ORDER_STATUS_TEXT[data.orderUpdates.status]);
         return {
           getOrder: {
             ...prev.getOrder,
@@ -51,11 +57,13 @@ function OrderPage() {
       },
     });
   }, [data, orderId, subscribeToMore]);
+
   return (
-    <div>
-      <h1 className="font-semibold text-lg text-center">
-        {data?.getOrder.order?.status}
-      </h1>
+    <div className="base-wrap-w pb-20">
+      <Order order={data?.getOrder.order} />
+      <div className="card mt-5 text-red-500 font-semibold text-center cursor-pointer active:text-red-400">
+        주문내역 삭제하기
+      </div>
     </div>
   );
 }
