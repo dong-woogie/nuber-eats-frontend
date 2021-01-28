@@ -10,15 +10,15 @@ import {
   getOrderQuery,
   getOrderQueryVariables,
 } from "../../__generated__/getOrderQuery";
-import { orderUpdates } from "../../__generated__/orderUpdates";
+import { orderUpdate } from "../../__generated__/orderUpdate";
 
 interface IParams {
   orderId: string;
 }
 
 const ORDER_SUBSCRIPTION = gql`
-  subscription orderUpdates($input: OrderUpdatesInput!) {
-    orderUpdates(input: $input) {
+  subscription orderUpdate($input: OrderUpdatesInput!) {
+    orderUpdate(input: $input) {
       ...GetOrderParts
     }
   }
@@ -42,15 +42,15 @@ function OrderPage() {
         prev,
         {
           subscriptionData: { data },
-        }: { subscriptionData: { data: orderUpdates } }
+        }: { subscriptionData: { data: orderUpdate } }
       ) {
         if (!data) return prev;
-        messageAlertVars(ORDER_STATUS_TEXT[data.orderUpdates.status]);
+        messageAlertVars(ORDER_STATUS_TEXT[data.orderUpdate.status]);
         return {
           getOrder: {
             ...prev.getOrder,
             order: {
-              ...data.orderUpdates,
+              ...data.orderUpdate,
             },
           },
         };
