@@ -5,7 +5,7 @@ import {
   myRestaurantQueryVariables,
 } from "../../__generated__/myRestaurantQuery";
 import { MY_RESTAURANT_QUERY } from "../../lib/graphql/restaurant";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import DishGrid from "../../components/dish/DishGrid";
 import {
   VictoryChart,
@@ -38,6 +38,12 @@ function MyRestaurant() {
           backgroundImage: `url(${data?.myRestaurant.restaurant?.coverImg})`,
         }}
       ></section>
+
+      <Link to={`/orders/wating?restaurantId=${restaurantId}`}>
+        <div className="py-5 bg-green-400 hover:bg-green-500 active:bg-green-600 text-center text-white text-lg font-bold">
+          장사 시작하기
+        </div>
+      </Link>
       <DishGrid
         dishes={data?.myRestaurant.restaurant?.menu || []}
         restaurantId={+restaurantId}

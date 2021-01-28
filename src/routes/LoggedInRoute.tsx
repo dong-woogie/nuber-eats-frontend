@@ -35,7 +35,10 @@ const ConfirmEmailPage = loadable(
 );
 const EditProfilePage = loadable(() => import("../pages/user/EditProfilePage"));
 const OrderPage = loadable(() => import("../pages/client/OrderPage"));
-
+const OrdersPage = loadable(() => import("../pages/client/OrdersPage"));
+const OwnerOrdersPage = loadable(
+  () => import("../pages/owner/orders/OwnerOrdersPage")
+);
 const CreateRestaurantDialog = loadable(
   () => import("../components/restaurant/CreateRestaurantDialog")
 );
@@ -58,6 +61,7 @@ const clientRoutes = [
   { path: "/confirm", component: ConfirmEmailPage },
   { path: "/edit-profile", component: EditProfilePage },
   { path: "/orders/:orderId", component: OrderPage },
+  { path: "/orders", component: OrdersPage },
   { component: NotFoundPage },
 ];
 
@@ -66,6 +70,7 @@ const ownerRoutes = [
   { path: "/confirm", component: ConfirmEmailPage },
   { path: "/edit-profile", component: EditProfilePage },
   { path: "/restaurants/:id", component: MyRestaurant },
+  { path: "/orders", component: OwnerOrdersPage },
   { component: NotFoundPage },
 ];
 
@@ -114,7 +119,7 @@ function LoggedInRoute() {
                   key={route.path}
                   path={route.path}
                   component={route.component}
-                  exact={route.path === "/"}
+                  exact={route.path === ("/" || "/orders")}
                 />
               );
             })}
