@@ -6,11 +6,11 @@ import { ORDER_STATUS_TEXT } from "../../constants";
 import { getOrderQuery_getOrder_order } from "../../__generated__/getOrderQuery";
 import OrderItem from "./OrderItem";
 
-interface IOrderProps {
+interface IOrderTemplateProps {
   order?: getOrderQuery_getOrder_order | null;
 }
 
-function Order({ order }: IOrderProps) {
+function OrderTemplate({ order }: IOrderTemplateProps) {
   if (!order) return null;
   return (
     <>
@@ -65,4 +65,4 @@ function Order({ order }: IOrderProps) {
   );
 }
 
-export default Order;
+export default OrderTemplate;
