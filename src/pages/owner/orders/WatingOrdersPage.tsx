@@ -1,5 +1,7 @@
 import { gql, useQuery } from "@apollo/client";
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
+import OrderSimpleItem from "../../../components/order/OrderSimpleItem";
 import { GET_ORDER_FRAGMENT } from "../../../fragments";
 import {
   getOrdersQuery,
@@ -47,13 +49,17 @@ function WatingOrdersPage() {
           subscriptionData: { data },
         }: { subscriptionData: { data: pendingOrder } }
       ) {
-        console.log(data);
         return prev;
       },
     });
   }, [subscribeToMore]);
-
-  return <div></div>;
+  return (
+    <div className="base-wrap-w">
+      {data?.getOrders.orders?.map((order) => (
+        <OrderSimpleItem order={order} key={order.id} />
+      ))}
+    </div>
+  );
 }
 
 export default WatingOrdersPage;

@@ -8,7 +8,7 @@ interface IOrdersNav {
 
 function OrdersNav({ status, restaurantId }: IOrdersNav) {
   return (
-    <header className="flex text-white h-16">
+    <header className="flex text-white h-16 base-wrap-w">
       <Link
         to={`/orders/wating?restaurantId=${restaurantId}`}
         className={`flex-1 center h-full hover:bg-green-600 ${
