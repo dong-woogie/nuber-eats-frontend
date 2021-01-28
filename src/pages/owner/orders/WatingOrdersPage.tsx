@@ -49,12 +49,18 @@ function WatingOrdersPage() {
           subscriptionData: { data },
         }: { subscriptionData: { data: pendingOrder } }
       ) {
-        return prev;
+        if (!data) return prev;
+        return {
+          getOrders: {
+            ...prev.getOrders,
+            orders: [...(prev.getOrders.orders || []), data.pendingOrder],
+          },
+        };
       },
     });
   }, [subscribeToMore]);
   return (
-    <div className="base-wrap-w">
+    <div>
       {data?.getOrders.orders?.map((order) => (
         <OrderSimpleItem order={order} key={order.id} />
       ))}
