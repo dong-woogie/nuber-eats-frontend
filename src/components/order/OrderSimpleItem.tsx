@@ -35,7 +35,7 @@ function OrderSimpleItem({ order }: IOrderSimpleItemProps) {
         {order.total}원
       </div>
 
-      <Link to={`/orders/${order.id}`}>
+      <Link to={`/order/${order.id}`}>
         <div className="opacity-0 hover:opacity-100 absolute w-full h-full top-0 left-0 center cursor-pointer bg-black bg-opacity-40">
           <div className="opacity-100 font-bold">주문표 상세보기</div>
         </div>

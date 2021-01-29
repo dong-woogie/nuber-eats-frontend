@@ -10,7 +10,7 @@ interface IRestaurantProps {
 
 function Restaurant({ id, coverImg, name, categoryName }: IRestaurantProps) {
   return (
-    <Link to={`/restaurants/${id}`}>
+    <Link to={`/restaurant/${id}`}>
       <div
         className="bg-gray-100 shadow-md py-20 sm:py-28 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${coverImg})` }}

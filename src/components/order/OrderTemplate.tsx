@@ -39,7 +39,7 @@ function OrderTemplate({ order }: IOrderTemplateProps) {
         </h5>
         <h5 className="font-thin text-sm">주문 번호 : {order?.id}</h5>
 
-        <Link to={`/restaurants/${order?.restaurant.id}`}>
+        <Link to={`/restaurant/${order?.restaurant.id}`}>
           <div className="py-3 text-center border-2 mt-3 rounded-lg hover:bg-green-50 active:bg-green-100">
             <FontAwesomeIcon icon={faHome} className="" />
             <span className="ml-2">가게보기</span>
