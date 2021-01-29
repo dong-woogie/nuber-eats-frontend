@@ -20,7 +20,7 @@ function Button(props: IButtonProps) {
     onClick,
   } = props;
   const canClickStyles = () => {
-    if (!canClick) return `bg-gray-300 pointer-events-none`;
+    if (!canClick || loading) return `bg-gray-300 pointer-events-none`;
     return `${color} 
       hover:${darkenColor(color, 1)} 
       active:${darkenColor(color, 2)}
