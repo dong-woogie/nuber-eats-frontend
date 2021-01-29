@@ -2,7 +2,7 @@ import { useQuery } from "@apollo/client";
 import React from "react";
 import { Link, useParams } from "react-router-dom";
 import DishGrid from "../../components/dish/DishGrid";
-import { RESTAURANT_QUERY } from "../../lib/graphql/restaurant";
+import { RESTAURANT_QUERY } from "../../lib/graphql/restaurant/query";
 import {
   restaurantQuery,
   restaurantQueryVariables,
