@@ -7,15 +7,7 @@ import {
   verifyEmailVariables,
 } from "../../__generated__/verifyEmail";
 import { useMe } from "../../lib/hooks/useMe";
-
-const VERIFY_EMAIL_MUTATION = gql`
-  mutation verifyEmail($input: VerifyEmailInput!) {
-    verifyEmail(input: $input) {
-      ok
-      error
-    }
-  }
-`;
+import { VERIFY_EMAIL_MUTATION } from "../../lib/graphql/user";
 
 function ConfirmEmailPage() {
   const history = useHistory();

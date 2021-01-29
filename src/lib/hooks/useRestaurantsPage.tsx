@@ -4,7 +4,7 @@ import {
   restaurantsPageQuery,
   restaurantsPageQueryVariables,
 } from "../../__generated__/restaurantsPageQuery";
-import { RESTAURANTS_PAGE_QUERY } from "../graphql/restaurant";
+import { RESTAURANTS_PAGE_QUERY } from "../graphql/restaurant/query";
 
 export const useRestaurantsPage = () => {
   const { data, loading, fetchMore } = useQuery<

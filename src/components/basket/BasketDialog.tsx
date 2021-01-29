@@ -1,9 +1,10 @@
-import { gql, useMutation, useQuery, useReactiveVar } from "@apollo/client";
+import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useMemo } from "react";
 import { useHistory } from "react-router-dom";
 import { basketDialogVars, basketsVars, confirmDialogVars } from "../../apollo";
+import { CREATE_ORDER_MUTATION } from "../../lib/graphql/order";
 import { RESTAURANT_QUERY } from "../../lib/graphql/restaurant";
 import {
   createOrderMutation,
@@ -16,16 +17,6 @@ import {
 import Button from "../common/Button";
 import IconButton from "../common/IconButton";
 import SelectDish from "./SelectDish";
-
-export const CREATE_ORDER_MUTATION = gql`
-  mutation createOrderMutation($input: CreateOrderInput!) {
-    createOrder(input: $input) {
-      ok
-      error
-      orderId
-    }
-  }
-`;
 
 function BasketDialog() {
   const baskets = useReactiveVar(basketsVars);

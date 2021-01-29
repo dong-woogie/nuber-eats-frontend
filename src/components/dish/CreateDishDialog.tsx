@@ -1,18 +1,15 @@
-import {
-  gql,
-  useApolloClient,
-  useMutation,
-  useReactiveVar,
-} from "@apollo/client";
+import { useApolloClient, useMutation, useReactiveVar } from "@apollo/client";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { createDishDialogVars, optionDialogVars } from "../../apollo";
-import { DISH_FRAGMENT } from "../../fragments";
 import { cacheDishQuqey } from "../../lib/cache";
-import { MY_RESTAURANT_QUERY } from "../../lib/graphql/restaurant";
+import {
+  CREATE_DISH_MUTATION,
+  MY_RESTAURANT_QUERY,
+} from "../../lib/graphql/restaurant";
 import {
   createDishMutation,
   createDishMutationVariables,
@@ -25,19 +22,6 @@ import { useFileInput } from "../common/hooks/useFileInput";
 import OptionResult from "../common/OptionResult";
 import AddDishOptionDialog from "./AddDishOptionDialog";
 import DialogWrap from "../common/DialogWrap";
-
-const CREATE_DISH_MUTATION = gql`
-  mutation createDishMutation($input: CreateDishInput!) {
-    createDish(input: $input) {
-      ok
-      error
-      dish {
-        ...DishParts
-      }
-    }
-  }
-  ${DISH_FRAGMENT}
-`;
 
 interface IForm {
   name: string;

@@ -1,4 +1,4 @@
-import { gql, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import React from "react";
 import { useForm } from "react-hook-form";
 import FormError from "../components/common/FormError";
@@ -16,21 +16,12 @@ import {
   LOCAL_STORAGE_TOKEN,
   VALIDATION_ERROR_MESSAGE,
 } from "../constants";
+import { LOGIN_MUTATION } from "../lib/graphql/user";
 
 interface ILoginForm {
   email: string;
   password: string;
 }
-
-export const LOGIN_MUTATION = gql`
-  mutation loginMitation($loginInput: LoginInput!) {
-    login(input: $loginInput) {
-      ok
-      error
-      token
-    }
-  }
-`;
 
 function LoginPage() {
   const {

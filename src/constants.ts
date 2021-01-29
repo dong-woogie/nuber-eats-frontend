@@ -7,7 +7,7 @@ export const EMAIL_PATTERN = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*
 export const VALIDATION_ERROR_MESSAGE = "please enter a valid email";
 
 export const ORDER_STATUS_TEXT = {
-  [OrderStatus.Pending]: "주문을 완료했어요.",
+  [OrderStatus.Pending]: "주문을 확인하고 있어요.",
   [OrderStatus.Cooking]: "조리를 시작했어요.",
   [OrderStatus.Cooked]: "조리가 완료되었어요.",
   [OrderStatus.PickUp]: "배달을 시작했어요.",

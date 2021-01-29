@@ -11,20 +11,12 @@ import {
 import { EMAIL_PATTERN, VALIDATION_ERROR_MESSAGE } from "../../constants";
 import FormError from "../../components/common/FormError";
 import { Helmet } from "react-helmet-async";
+import { EDIT_PROFILE_MUTATION } from "../../lib/graphql/user";
 
 interface IForm {
   email?: string;
   password?: string;
 }
-
-const EDIT_PROFILE_MUTATION = gql`
-  mutation editProfile($input: EditProfileInput!) {
-    editProfile(input: $input) {
-      ok
-      error
-    }
-  }
-`;
 
 function EditProfilePage() {
   const { data: userData, loading /*refetch*/ } = useMe();

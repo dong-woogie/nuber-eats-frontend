@@ -1,4 +1,4 @@
-import { gql, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import React from "react";
 import { useForm } from "react-hook-form";
 import FormError from "../components/common/FormError";
@@ -12,21 +12,13 @@ import {
   createAccountMutationVariables,
 } from "../__generated__/createAccountMutation";
 import { EMAIL_PATTERN, VALIDATION_ERROR_MESSAGE } from "../constants";
+import { CREATE_ACCOUNT_MUTATION } from "../lib/graphql/user";
 
 interface ICreateAccountForm {
   email: string;
   password: string;
   role: UserRole;
 }
-
-export const CREATE_ACCOUNT_MUTATION = gql`
-  mutation createAccountMutation($createAccountInput: CreateAccountInput!) {
-    createAccount(input: $createAccountInput) {
-      ok
-      error
-    }
-  }
-`;
 
 function CreateAccountPage() {
   const {

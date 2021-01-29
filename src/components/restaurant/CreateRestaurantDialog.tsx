@@ -1,9 +1,4 @@
-import {
-  gql,
-  useApolloClient,
-  useMutation,
-  useReactiveVar,
-} from "@apollo/client";
+import { useApolloClient, useMutation, useReactiveVar } from "@apollo/client";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { createRestaurantDialogVars } from "../../apollo";
@@ -14,7 +9,10 @@ import {
   createRestaurantMutation,
   createRestaurantMutationVariables,
 } from "../../__generated__/createRestaurantMutation";
-import { MY_RESTAURANTS_QUERY } from "../../lib/graphql/restaurant";
+import {
+  CREATE_RESTAURANT_MUTATION,
+  MY_RESTAURANTS_QUERY,
+} from "../../lib/graphql/restaurant";
 import { cacheMyRestaurantQuery } from "../../lib/cache";
 import FileInput from "../common/FileInput";
 import { useFileInput } from "../common/hooks/useFileInput";
@@ -24,16 +22,6 @@ interface IFormProps {
   address: string;
   categoryName: string;
 }
-
-const CREATE_RESTAURANT_MUTATION = gql`
-  mutation createRestaurantMutation($input: CreateRestaurantInput!) {
-    createRestaurant(input: $input) {
-      ok
-      error
-      restaurantId
-    }
-  }
-`;
 
 function CreateRestaurantDialog() {
   const {
