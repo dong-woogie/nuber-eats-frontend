@@ -52,6 +52,7 @@ const CreateRestaurantFixedButton = loadable(
 const CreateDishFixedButton = loadable(
   () => import("../components/common/fixed/CreateDishFixedButton")
 );
+const Dashboard = loadable(() => import("../pages/driver/Dashboard"));
 
 // Route컴포넌트와 Dialog컴포넌트는 route기준으로 코드스플리팅
 const clientRoutes = [
@@ -85,6 +86,11 @@ const ownerFixedComponent = [
     path: "/restaurants/:id",
     components: [CreateDishFixedButton, CreateDishDialog],
   },
+];
+
+const driverRoutes = [
+  { path: "/", component: Dashboard },
+  { component: NotFoundPage },
 ];
 
 function LoggedInRoute() {
@@ -128,6 +134,21 @@ function LoggedInRoute() {
 
           {data?.me.role === UserRole.Owner &&
             ownerRoutes.map((route) => {
+              if (!route.path) {
+                return <Route key="Not Found" component={NotFoundPage} />;
+              }
+              return (
+                <Route
+                  key={route.path}
+                  path={route.path}
+                  component={route.component}
+                  exact={route.path === "/"}
+                />
+              );
+            })}
+
+          {data?.me.role === UserRole.Delivery &&
+            driverRoutes.map((route) => {
               if (!route.path) {
                 return <Route key="Not Found" component={NotFoundPage} />;
               }
