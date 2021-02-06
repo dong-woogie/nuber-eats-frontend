@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom";
 import { basketDialogVars, basketsVars, confirmDialogVars } from "../../apollo";
 import { CREATE_ORDER_MUTATION } from "../../lib/graphql/order";
 import { RESTAURANT_QUERY } from "../../lib/graphql/restaurant";
+import { useMe } from "../../lib/hooks/useMe";
 import {
   createOrderMutation,
   createOrderMutationVariables,
@@ -24,6 +25,7 @@ function BasketDialog() {
     RESTAURANT_QUERY,
     { variables: { input: { restaurantId: baskets?.restaurantId || 0 } } }
   );
+  const { data: userData } = useMe();
   const [createOrder] = useMutation<
     createOrderMutation,
     createOrderMutationVariables
@@ -96,7 +98,7 @@ function BasketDialog() {
 
   function onCompleted(data: createOrderMutation) {
     if (data.createOrder.ok) {
-      history.push(`/orders/${data.createOrder.orderId}`);
+      history.push(`/order/${data.createOrder.orderId}`);
       reset();
     }
   }
@@ -131,6 +133,14 @@ function BasketDialog() {
               <div className="base-wrap-w">
                 <h3 className="font-semibold text-xl">
                   {restaurant.data?.restaurant.result?.name}
+                </h3>
+              </div>
+            </div>
+
+            <div className="bg-white mt-5 py-3 border-b-2 border-gray-300">
+              <div className="base-wrap-w">
+                <h3 className="font-semibold text-sm text-gray-700">
+                  배달주소 - {userData?.me.address}
                 </h3>
               </div>
             </div>

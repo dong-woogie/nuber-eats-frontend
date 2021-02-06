@@ -1,5 +1,15 @@
 import { gql } from "@apollo/client";
 
+export const USER_FRAGMENT = gql`
+  fragment UserParts on User {
+    id
+    email
+    role
+    verified
+    address
+  }
+`;
+
 export const RESTAURANT_FRAGMENT = gql`
   fragment RestaurantParts on Restaurant {
     id

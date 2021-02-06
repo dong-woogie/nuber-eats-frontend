@@ -45,6 +45,7 @@ export const createDishDialogVars = makeVar(false);
 export const optionDialogVars = makeVar(false);
 export const basketDialogVars = makeVar(false);
 export const confirmDialogVars = makeVar<IConfirmDialog | null>(null);
+export const addressDialogVars = makeVar<boolean>(false);
 
 export const messageAlertVars = makeVar("");
 

@@ -7,6 +7,7 @@ import WatingOrdersPage from "./WatingOrdersPage";
 function OwnerOrdersPage() {
   const location = useLocation();
   const { restaurantId }: { restaurantId?: string } = qs.parse(location.search);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_, status] = location.pathname.split("/orders/");
   if (!restaurantId) return null;
   return (

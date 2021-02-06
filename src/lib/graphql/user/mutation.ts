@@ -1,4 +1,5 @@
 import { gql } from "@apollo/client";
+import { USER_FRAGMENT } from "../../../fragments";
 
 export const CREATE_ACCOUNT_MUTATION = gql`
   mutation createAccountMutation($createAccountInput: CreateAccountInput!) {
@@ -35,4 +36,17 @@ export const EDIT_PROFILE_MUTATION = gql`
       error
     }
   }
+`;
+
+export const CREATE_ADDRESS_MUTATION = gql`
+  mutation createAddress($input: CreateAddressInput!) {
+    createAddress(input: $input) {
+      ok
+      error
+      user {
+        ...UserParts
+      }
+    }
+  }
+  ${USER_FRAGMENT}
 `;

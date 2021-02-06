@@ -6,18 +6,14 @@
 import { UserRole } from "./globalTypes";
 
 // ====================================================
-// GraphQL query operation: MeQuery
+// GraphQL fragment: UserParts
 // ====================================================
 
-export interface MeQuery_me {
+export interface UserParts {
   __typename: "User";
   id: number;
   email: string;
   role: UserRole;
   verified: boolean;
   address: string | null;
-}
-
-export interface MeQuery {
-  me: MeQuery_me;
 }

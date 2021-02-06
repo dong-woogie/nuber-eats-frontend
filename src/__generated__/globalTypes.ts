@@ -32,6 +32,10 @@ export interface CreateAccountInput {
   role: UserRole;
 }
 
+export interface CreateAddressInput {
+  address: string;
+}
+
 export interface CreateDishInput {
   name: string;
   price: number;

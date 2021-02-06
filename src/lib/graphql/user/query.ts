@@ -1,12 +1,11 @@
 import { gql } from "@apollo/client";
+import { USER_FRAGMENT } from "../../../fragments";
 
 export const ME_QUERY = gql`
   query MeQuery {
     me {
-      id
-      email
-      role
-      verified
+      ...UserParts
     }
   }
+  ${USER_FRAGMENT}
 `;

@@ -11,11 +11,14 @@ import {
   basketDialogVars,
   messageAlertVars,
   selectDishFormVars,
+  addressDialogVars,
 } from "../apollo";
 import { useReactiveVar } from "@apollo/client";
 import BasketDialog from "../components/basket/BasketDialog";
 import MessageAlert from "../components/common/alert/MessageAlert";
 import ConfirmDialog from "../components/common/alert/ConfirmDialog";
+import AddressDialog from "../components/common/dialog/AddressDialog";
+import Address from "../components/common/Address";
 
 const CategoryPage = loadable(() => import("../pages/client/CategoryPage"));
 const RestaurantPage = loadable(() => import("../pages/client/RestaurantPage"));
@@ -99,13 +102,14 @@ function LoggedInRoute() {
   const isSelectDishFormDialog = !!useReactiveVar(selectDishFormVars);
   const isBasketDialog = useReactiveVar(basketDialogVars);
   const isMessageAlert = !!useReactiveVar(messageAlertVars);
-
+  const isAddressDialog = useReactiveVar(addressDialogVars);
   const isOverflowHidden = () => {
     if (
       isConfirmDialog ||
       isSelectDishFormDialog ||
       isBasketDialog ||
-      isMessageAlert
+      isMessageAlert ||
+      isAddressDialog
     ) {
       return "overflow-hidden";
     }
@@ -115,6 +119,7 @@ function LoggedInRoute() {
   return (
     <>
       <div className={`h-screen flex flex-col ${isOverflowHidden()}`}>
+        <Address />
         <Header />
         <Switch>
           {data?.me.role === UserRole.Client &&
@@ -172,6 +177,7 @@ function LoggedInRoute() {
       )}
       {data?.me.role === UserRole.Client && isBasketDialog && <BasketDialog />}
       {data?.me.role === UserRole.Client && isMessageAlert && <MessageAlert />}
+      <AddressDialog />
       {data?.me.role === UserRole.Owner && (
         <Switch>
           {ownerFixedComponent.map(({ path, components }, index) => (
