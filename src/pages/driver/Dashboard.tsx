@@ -6,10 +6,14 @@ interface ICoords {
   lng: number;
 }
 
+interface IDriverProps extends ICoords {
+  $hover?: any;
+}
+
+const Driver: React.FC<IDriverProps> = () => <div className="text-lg">🚖</div>;
+
 function Dashboard() {
   const [driverCoords, setDriverCoords] = useState<ICoords>({ lat: 0, lng: 0 });
-  const [map, setMap] = useState<any>();
-  const [maps, setMaps] = useState<any>();
 
   const onSuccess = ({
     coords: { latitude, longitude },
@@ -28,24 +32,13 @@ function Dashboard() {
     };
   }, []);
 
-  useEffect(() => {
-    if (map && maps) {
-      map.panTo(new maps.LatLng(driverCoords.lat, driverCoords.lng));
-    }
-  }, [driverCoords.lat, driverCoords.lng, map, maps]);
-
-  const onApiLoaded = ({ map, maps }: { map: any; maps: any }) => {
-    map.panTo(new maps.LatLng(driverCoords.lat, driverCoords.lng));
-    setMap(map);
-    setMaps(maps);
+  const onApiLoaded = ({ map, maps }: { map: google.maps.Map; maps: any }) => {
+    map.panTo(new google.maps.LatLng(driverCoords.lat, driverCoords.lng));
   };
 
   return (
     <div className="flex-1">
-      <div
-        className="overflow-hidden"
-        style={{ width: window.innerWidth, height: "50vh" }}
-      >
+      <div className="overflow-hidden w-full h-1/2">
         <GoogleMapReact
           yesIWantToUseGoogleMapApiInternals
           onGoogleApiLoaded={onApiLoaded}
@@ -57,14 +50,7 @@ function Dashboard() {
           }}
           bootstrapURLKeys={{ key: "AIzaSyDS6BuMms5Hz6FQgnoEDt_7V2Tb-mdL_K4" }}
         >
-          <div
-            // @ts-ignore
-            lat={driverCoords.lat}
-            lng={driverCoords.lng}
-            className="text-lg"
-          >
-            🚖
-          </div>
+          <Driver lat={driverCoords.lat} lng={driverCoords.lng} />
         </GoogleMapReact>
       </div>
     </div>
