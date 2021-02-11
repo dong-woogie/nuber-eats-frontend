@@ -18,3 +18,12 @@ export const PENDING_ORDER_SUBSCRIPTION = gql`
   }
   ${GET_ORDER_FRAGMENT}
 `;
+
+export const COOKED_ORDER_SUBSCRIPTION = gql`
+  subscription cookedOrder($input: CookedOrderInput!) {
+    cookedOrder(input: $input) {
+      ...GetOrderParts
+    }
+  }
+  ${GET_ORDER_FRAGMENT}
+`;

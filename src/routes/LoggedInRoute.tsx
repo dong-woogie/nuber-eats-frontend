@@ -119,7 +119,7 @@ function LoggedInRoute() {
   return (
     <>
       <div className={`h-screen flex flex-col ${isOverflowHidden()}`}>
-        <Address />
+        {data?.me.role === UserRole.Client && <Address />}
         <Header />
         <Switch>
           {data?.me.role === UserRole.Client &&

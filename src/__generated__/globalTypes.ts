@@ -26,6 +26,11 @@ export interface CategoryInput {
   slug: string;
 }
 
+export interface CookedOrderInput {
+  lat: number;
+  lng: number;
+}
+
 export interface CreateAccountInput {
   email: string;
   password: string;
