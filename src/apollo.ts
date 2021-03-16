@@ -37,6 +37,10 @@ interface IConfirmDialog {
   onConfirm: () => void;
 }
 
+interface IAddressDialog {
+  onComplete: (address: string) => void;
+}
+
 const token = localStorage.getItem(LOCAL_STORAGE_TOKEN);
 export const loggedVars = makeVar(Boolean(token));
 export const authTokenVars = makeVar(token);
@@ -45,8 +49,8 @@ export const createDishDialogVars = makeVar(false);
 export const optionDialogVars = makeVar(false);
 export const basketDialogVars = makeVar(false);
 export const confirmDialogVars = makeVar<IConfirmDialog | null>(null);
-export const addressDialogVars = makeVar<boolean>(false);
-
+export const createAddressDialogVars = makeVar<boolean>(false);
+export const addressDialogVars = makeVar<IAddressDialog | null>(null);
 export const messageAlertVars = makeVar("");
 
 export const selectDishFormVars = makeVar<ISelectDish | null>(null);

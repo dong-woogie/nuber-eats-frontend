@@ -1,7 +1,7 @@
 import { useApolloClient, useMutation, useReactiveVar } from "@apollo/client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { createRestaurantDialogVars } from "../../apollo";
+import { addressDialogVars, createRestaurantDialogVars } from "../../apollo";
 import Button from "../common/Button";
 import DialogWrap from "../common/DialogWrap";
 import FormError from "../common/FormError";
@@ -19,7 +19,7 @@ import { useFileInput } from "../common/hooks/useFileInput";
 
 interface IFormProps {
   name: string;
-  address: string;
+  detailAddress: string;
   categoryName: string;
 }
 
@@ -43,6 +43,8 @@ function CreateRestaurantDialog() {
   const { fileInput, onChangeFileInput, resetFileInput } = useFileInput();
   const client = useApolloClient();
 
+  const [address, setAddress] = useState("");
+
   useEffect(() => {
     if (dialog) return;
     resetFileInput();
@@ -50,12 +52,13 @@ function CreateRestaurantDialog() {
 
   const onClose = () => createRestaurantDialogVars(false);
   const onSubmit = handleSubmit(() => {
-    const { name, address, categoryName } = getValues();
+    const { name, detailAddress, categoryName } = getValues();
     createRestaurant({
       variables: {
         input: {
           name,
           address,
+          detailAddress,
           categoryName,
           coverImg: fileInput.coverImg,
         },
@@ -68,7 +71,7 @@ function CreateRestaurantDialog() {
       createRestaurant: { ok, restaurantId },
     } = data;
     if (!ok || restaurantId === null) return;
-    const { name, address, categoryName } = getValues();
+    const { name, categoryName } = getValues();
     const cacheQuery = client.readQuery({
       query: MY_RESTAURANTS_QUERY,
     });
@@ -109,14 +112,31 @@ function CreateRestaurantDialog() {
           )}
 
           <input
-            ref={register({ required: "address is required" })}
             type="text"
             name="address"
             placeholder="address"
-            className="input-base"
+            className="input-base cursor-pointer"
+            value={address}
+            onClick={() => {
+              addressDialogVars({
+                onComplete: (address) => {
+                  setAddress(address);
+                },
+              });
+            }}
+            readOnly
           />
-          {errors.address?.message && (
-            <FormError errorMessage={errors.address?.message} />
+
+          <input
+            ref={register({ required: "detail address is required" })}
+            type="text"
+            name="detailAddress"
+            placeholder="detail address"
+            className="input-base"
+            readOnly={!address}
+          />
+          {errors.detailAddress?.message && (
+            <FormError errorMessage={errors.detailAddress?.message} />
           )}
 
           <input

@@ -11,14 +11,17 @@ import {
   basketDialogVars,
   messageAlertVars,
   selectDishFormVars,
+  createAddressDialogVars,
   addressDialogVars,
+  createDishDialogVars,
 } from "../apollo";
 import { useReactiveVar } from "@apollo/client";
 import BasketDialog from "../components/basket/BasketDialog";
 import MessageAlert from "../components/common/alert/MessageAlert";
 import ConfirmDialog from "../components/common/alert/ConfirmDialog";
-import AddressDialog from "../components/common/dialog/AddressDialog";
+import CreateAddressDialog from "../components/common/dialog/CreateAddressDialog";
 import Address from "../components/common/Address";
+import AddressDialog from "../components/common/dialog/AddressDialog";
 
 const CategoryPage = loadable(() => import("../pages/client/CategoryPage"));
 const RestaurantPage = loadable(() => import("../pages/client/RestaurantPage"));
@@ -86,7 +89,7 @@ const ownerFixedComponent = [
     components: [CreateRestaurantFixedButton, CreateRestaurantDialog],
   },
   {
-    path: "/restaurants/:id",
+    path: "/restaurant/:id",
     components: [CreateDishFixedButton, CreateDishDialog],
   },
 ];
@@ -102,14 +105,19 @@ function LoggedInRoute() {
   const isSelectDishFormDialog = !!useReactiveVar(selectDishFormVars);
   const isBasketDialog = useReactiveVar(basketDialogVars);
   const isMessageAlert = !!useReactiveVar(messageAlertVars);
-  const isAddressDialog = useReactiveVar(addressDialogVars);
+  const isCreateAddressDialog = useReactiveVar(createAddressDialogVars);
+  const isAddressDialog = !!useReactiveVar(addressDialogVars);
+  const isCreateDishDialog = useReactiveVar(createDishDialogVars);
+
   const isOverflowHidden = () => {
     if (
       isConfirmDialog ||
       isSelectDishFormDialog ||
       isBasketDialog ||
       isMessageAlert ||
-      isAddressDialog
+      isCreateAddressDialog ||
+      isAddressDialog ||
+      isCreateDishDialog
     ) {
       return "overflow-hidden";
     }
@@ -118,7 +126,7 @@ function LoggedInRoute() {
 
   return (
     <>
-      <div className={`h-screen flex flex-col ${isOverflowHidden()}`}>
+      <div className={`min-h-screen flex flex-col ${isOverflowHidden()}`}>
         {data?.me.role === UserRole.Client && <Address />}
         <Header />
         <Switch>
@@ -177,6 +185,7 @@ function LoggedInRoute() {
       )}
       {data?.me.role === UserRole.Client && isBasketDialog && <BasketDialog />}
       {data?.me.role === UserRole.Client && isMessageAlert && <MessageAlert />}
+      <CreateAddressDialog />
       <AddressDialog />
       {data?.me.role === UserRole.Owner && (
         <Switch>

@@ -1,12 +1,12 @@
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-import { addressDialogVars } from "../../apollo";
+import { createAddressDialogVars } from "../../apollo";
 import { useMe } from "../../lib/hooks/useMe";
 
 function Address() {
   const { data } = useMe();
-  const onClick = () => addressDialogVars(true);
+  const onClick = () => createAddressDialogVars(true);
   return (
     <div className="absolute w-full center cursor-pointer" onClick={onClick}>
       <h5 className="whitespace-nowrap overflow-ellipsis overflow-hidden font-bold text-sm text-gray-800">
