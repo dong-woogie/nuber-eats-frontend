@@ -1,28 +1,32 @@
 import { useLazyQuery } from "@apollo/client";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import {
   searchRestaurantsQuery,
   searchRestaurantsQueryVariables,
 } from "../../__generated__/searchRestaurantsQuery";
 import { SEARCH_RESTAURANTS_QUERY } from "../graphql/restaurant";
+import { useScrollPagination } from "./useScrollPagination";
 
 export const useSearchRestaurants = (query: string) => {
   const [called, { data, loading, fetchMore }] = useLazyQuery<
     searchRestaurantsQuery,
     searchRestaurantsQueryVariables
   >(SEARCH_RESTAURANTS_QUERY, {
-    variables: { input: { query } },
+    variables: { input: { query, take: 3 } },
   });
+  const [hasMore, setHasMore] = useState(true);
 
   const onLoadMore = useCallback(
-    (page: number) => {
+    (skip: number) => {
+      const take = 3;
       return (
         fetchMore &&
         fetchMore({
-          variables: { input: { query, page } },
+          variables: { input: { query, take, skip } },
           updateQuery(prev, { fetchMoreResult }) {
             if (!fetchMoreResult) return prev;
             if (fetchMoreResult.searchRestaurants.restaurants?.length === 0) {
+              setHasMore(false);
               return prev;
             }
             const result = [
@@ -43,7 +47,11 @@ export const useSearchRestaurants = (query: string) => {
     [fetchMore, query]
   );
 
-  const page = (data?.searchRestaurants.restaurants?.length || 1) / 3 + 1;
+  useScrollPagination({
+    onLoadMore,
+    skip: data?.searchRestaurants.restaurants?.length || 0,
+    hasMore,
+  });
 
-  return { called, data, loading, onLoadMore, page };
+  return { called, data, loading, onLoadMore };
 };

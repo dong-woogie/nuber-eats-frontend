@@ -18,8 +18,6 @@ export const RESTAURANTS_PAGE_QUERY = gql`
     restaurants(input: $input) {
       ok
       error
-      totalPages
-      totalResults
       restaurants {
         ...RestaurantParts
       }
@@ -34,8 +32,6 @@ export const SEARCH_RESTAURANTS_QUERY = gql`
     searchRestaurants(input: $input) {
       ok
       error
-      totalPages
-      totalResults
       restaurants {
         ...RestaurantParts
       }
@@ -49,8 +45,6 @@ export const CATEGORY_QUERY = gql`
     category(input: $input) {
       ok
       error
-      totalPages
-      totalResults
       category {
         ...CategoryParts
       }

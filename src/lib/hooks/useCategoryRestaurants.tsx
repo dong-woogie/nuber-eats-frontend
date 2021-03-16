@@ -1,10 +1,11 @@
 import { useQuery } from "@apollo/client";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import {
   categoryQuery,
   categoryQueryVariables,
 } from "../../__generated__/categoryQuery";
 import { CATEGORY_QUERY } from "../graphql/restaurant";
+import { useScrollPagination } from "./useScrollPagination";
 
 export const useCategoryRestaurants = (slug: string) => {
   const { data, loading, fetchMore } = useQuery<
@@ -13,17 +14,25 @@ export const useCategoryRestaurants = (slug: string) => {
   >(CATEGORY_QUERY, {
     variables: {
       input: {
-        page: 1,
+        take: 3,
         slug,
       },
     },
   });
 
+  const [hasMore, setHasMore] = useState(true);
+
   const onLoadMore = useCallback(
-    (page: number) => {
+    (skip: number) => {
+      const take = 3;
       return fetchMore({
-        variables: { input: { slug, page } },
+        variables: { input: { slug, take, skip } },
         updateQuery(prev, { fetchMoreResult }) {
+          if (!fetchMoreResult) return prev;
+          if (fetchMoreResult.category.restaurants?.length === 0) {
+            setHasMore(false);
+            return prev;
+          }
           const result = [
             ...(prev.category.restaurants || []),
             ...(fetchMoreResult?.category.restaurants || []),
@@ -41,7 +50,11 @@ export const useCategoryRestaurants = (slug: string) => {
     [fetchMore, slug]
   );
 
-  const page = Math.ceil((data?.category.restaurants?.length || 1) / 3 + 1);
+  useScrollPagination({
+    onLoadMore,
+    hasMore,
+    skip: data?.category.restaurants?.length || 0,
+  });
 
-  return { data, onLoadMore, page, loading };
+  return { data, loading };
 };
