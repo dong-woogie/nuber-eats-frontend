@@ -11,13 +11,7 @@ interface ICategoryParams {
 function CategoryPage() {
   const params = useParams<ICategoryParams>();
 
-  const { data, loading, onLoadMore, page } = useCategoryRestaurants(
-    params.slug
-  );
-
-  const onClickMoreView = async () => {
-    await onLoadMore(page);
-  };
+  const { data, loading } = useCategoryRestaurants(params.slug);
 
   if (!data?.category.ok) return <LoadError error={data?.category.error} />;
   return (
@@ -25,8 +19,6 @@ function CategoryPage() {
       <RestaurantGrid
         restaurants={data?.category.restaurants || []}
         loading={loading}
-        onClickMoreView={onClickMoreView}
-        isMoreView={page <= (data.category.totalPages || 0)}
       />
     </div>
   );

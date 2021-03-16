@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React from "react";
 import foodImg from "../../images/food.png";
 import marketingImg from "../../images/marketing.png";
 import { useRestaurantsPage } from "../../lib/hooks/useRestaurantsPage";
@@ -6,10 +6,7 @@ import RestaurantGrid from "../../components/restaurant/RestaurantGrid";
 import CategoryList from "../../components/category/CategoryList";
 
 function RestaurantsPage() {
-  const { data, onLoadMore, loading, page } = useRestaurantsPage();
-  const onClickMoreView = useCallback(async () => {
-    await onLoadMore(page);
-  }, [page, onLoadMore]);
+  const { data, loading } = useRestaurantsPage();
 
   return (
     <div className="flex-1 flex flex-col">
@@ -38,8 +35,6 @@ function RestaurantsPage() {
       <RestaurantGrid
         restaurants={data?.restaurants.restaurants || []}
         loading={loading}
-        onClickMoreView={onClickMoreView}
-        isMoreView={page <= (data?.restaurants.totalPages || 0)}
       />
     </div>
   );

@@ -8,13 +8,7 @@ function SearchRestaurantsPage() {
   const location = useLocation();
   const history = useHistory();
   const { term }: { term?: string } = qs.parse(location.search);
-  const { called, data, loading, page, onLoadMore } = useSearchRestaurants(
-    term || ""
-  );
-
-  const onClickMoreView = async () => {
-    await onLoadMore(page);
-  };
+  const { called, data, loading } = useSearchRestaurants(term || "");
 
   useEffect(() => {
     if (!term) return history.replace("/");
@@ -26,8 +20,6 @@ function SearchRestaurantsPage() {
       <RestaurantGrid
         restaurants={data?.searchRestaurants.restaurants || []}
         loading={loading}
-        onClickMoreView={onClickMoreView}
-        isMoreView={page <= (data?.searchRestaurants.totalPages || 0)}
       />
     </div>
   );

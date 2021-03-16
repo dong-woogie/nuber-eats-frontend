@@ -1,27 +1,18 @@
 import React from "react";
 import { RestaurantParts } from "../../__generated__/RestaurantParts";
-import MoreViewBtn from "../common/MoreViewBtn";
 import Restaurant from "./Restaurant";
 import SkeletonRestaurant from "./SkeletonRestaurant";
 
 interface IRestaurantGridProps {
   restaurants: RestaurantParts[];
   loading: boolean;
-  isMoreView?: boolean;
-  onClickMoreView?: () => Promise<void>;
 }
 
 RestaurantGrid.defaultProps = {
   loading: false,
-  isMoreView: false,
 };
 
-function RestaurantGrid({
-  restaurants,
-  loading,
-  onClickMoreView,
-  isMoreView,
-}: IRestaurantGridProps) {
+function RestaurantGrid({ restaurants, loading }: IRestaurantGridProps) {
   return (
     <div>
       <section className="restaurants-wrap">
@@ -39,9 +30,6 @@ function RestaurantGrid({
             <SkeletonRestaurant key={index} />
           ))}
       </section>
-      {!loading && isMoreView && (
-        <MoreViewBtn onClick={onClickMoreView || async function () {}} />
-      )}
     </div>
   );
 }
