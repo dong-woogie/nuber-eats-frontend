@@ -29,8 +29,6 @@ export interface searchRestaurantsQuery_searchRestaurants {
   __typename: "SearchRestaurantsOutput";
   ok: boolean;
   error: string | null;
-  totalPages: number | null;
-  totalResults: number | null;
   restaurants: searchRestaurantsQuery_searchRestaurants_restaurants[] | null;
 }
 

@@ -45,8 +45,6 @@ export interface restaurantsPageQuery_restaurants {
   __typename: "RestaurantsOutput";
   ok: boolean;
   error: string | null;
-  totalPages: number | null;
-  totalResults: number | null;
   restaurants: restaurantsPageQuery_restaurants_restaurants[] | null;
 }
 

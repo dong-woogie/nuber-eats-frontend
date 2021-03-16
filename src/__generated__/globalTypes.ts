@@ -22,7 +22,8 @@ export enum UserRole {
 }
 
 export interface CategoryInput {
-  page?: number | null;
+  take: number;
+  skip?: number | null;
   slug: string;
 }
 
@@ -39,6 +40,7 @@ export interface CreateAccountInput {
 
 export interface CreateAddressInput {
   address: string;
+  detailAddress: string;
 }
 
 export interface CreateDishInput {
@@ -65,6 +67,7 @@ export interface CreateRestaurantInput {
   address: string;
   categoryName: string;
   coverImg?: string | null;
+  detailAddress?: string | null;
 }
 
 export interface DishChoiceInputType {
@@ -122,11 +125,13 @@ export interface RestaurantInput {
 }
 
 export interface RestaurantsInput {
-  page?: number | null;
+  take: number;
+  skip?: number | null;
 }
 
 export interface SearchRestaurantsInput {
-  page?: number | null;
+  take: number;
+  skip?: number | null;
   query: string;
 }
 

@@ -38,8 +38,6 @@ export interface categoryQuery_category {
   __typename: "CategoryOutput";
   ok: boolean;
   error: string | null;
-  totalPages: number | null;
-  totalResults: number | null;
   category: categoryQuery_category_category | null;
   restaurants: categoryQuery_category_restaurants[] | null;
 }
