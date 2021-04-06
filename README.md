@@ -1,46 +1,45 @@
-# Getting Started with Create React App
+# Nuber-Eats Frontend Clone Coding
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+> 음식배달서비스 클론코딩
+>
+> 고객과 음식점과 배달원이 상호작용하는 웹 어플리케이션 서비스
 
-## Available Scripts
+## Stack
 
-In the project directory, you can run:
+* React + Typescript
+* Grahpql ( Apollo Client )
+* TailwindCSS
+* jest
 
-### `yarn start`
+## 주요 기능
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Common
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+* 로그인 / 회원가입
+* 이메일 인증
+* 반응형 웹디자인
+* 웹소켓을 이용한 실시간통신 ( 요청 및 응답 )
+* SPA ( Single Page Application )
+* 코드스플리팅 ( loadable-components )
 
-### `yarn test`
+### User
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+* 메인페이지 , 카테고리페이지 , 검색페이지
+* 현재 주소 기준으로 배달가능한 음식점 화면에 렌더링
+* Pagination - infinite scroll
+* 메뉴 장바구니 저장 및 삭제 ( 메뉴, 옵션선택 )
+* 메뉴 주문
 
-### `yarn build`
+### Owner
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+* 음식점 생성하기
+* 메뉴 생성하기
+* 주문현황 보기
+* 실시간 주문 받기
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Driver
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+* 현재위치 기준 일정범위 안의 배달주문 리스트 받기
+* 실시간으로 배달요청하는 매장 UI 추가하기
+* 구글맵을 이용해서 현재위치 음식점위치 도착지 위치 화면에 렌더링
+* 현재위치 기준 거리 화면에 렌더링
