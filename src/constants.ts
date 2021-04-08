@@ -13,3 +13,11 @@ export const ORDER_STATUS_TEXT = {
   [OrderStatus.PickUp]: "배달을 시작했어요.",
   [OrderStatus.Drivered]: "배달이 완료되었어요.",
 };
+
+export const DRIVER_ORDER_STATUS_TEXT = {
+  [OrderStatus.Pending]: "메뉴 준비전",
+  [OrderStatus.Cooking]: "메뉴 준비중",
+  [OrderStatus.Cooked]: "메뉴 준비끝",
+  [OrderStatus.PickUp]: "배달 중",
+  [OrderStatus.Drivered]: "배달 완료",
+};
