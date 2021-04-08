@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import loadable from "@loadable/component";
 import { Route, Switch } from "react-router-dom";
 import Header from "../components/home/Header";
@@ -14,6 +14,7 @@ import {
   createAddressDialogVars,
   addressDialogVars,
   createDishDialogVars,
+  globalPositionVars,
 } from "../apollo";
 import { useReactiveVar } from "@apollo/client";
 import BasketDialog from "../components/basket/BasketDialog";
@@ -22,6 +23,7 @@ import ConfirmDialog from "../components/common/alert/ConfirmDialog";
 import CreateAddressDialog from "../components/common/dialog/CreateAddressDialog";
 import Address from "../components/common/Address";
 import AddressDialog from "../components/common/dialog/AddressDialog";
+import { Helmet } from "react-helmet-async";
 
 const CategoryPage = loadable(() => import("../pages/client/CategoryPage"));
 const RestaurantPage = loadable(() => import("../pages/client/RestaurantPage"));
@@ -44,7 +46,7 @@ const OrderPage = loadable(() => import("../pages/client/OrderPage"));
 const OrdersPage = loadable(() => import("../pages/client/OrdersPage"));
 const OwnerOrderPage = loadable(() => import("../pages/owner/OwnerOrderPage"));
 const OwnerOrdersPage = loadable(
-  () => import("../pages/owner/orders/OwnerOrdersPage")
+  () => import("../pages/owner/OwnerOrdersPage")
 );
 const CreateRestaurantDialog = loadable(
   () => import("../components/restaurant/CreateRestaurantDialog")
@@ -59,6 +61,9 @@ const CreateDishFixedButton = loadable(
   () => import("../components/common/fixed/CreateDishFixedButton")
 );
 const Dashboard = loadable(() => import("../pages/driver/Dashboard"));
+const DriverOrderPage = loadable(
+  () => import("../pages/driver/DriverOrderPage")
+);
 
 // Route컴포넌트와 Dialog컴포넌트는 route기준으로 코드스플리팅
 const clientRoutes = [
@@ -96,6 +101,7 @@ const ownerFixedComponent = [
 
 const driverRoutes = [
   { path: "/", component: Dashboard },
+  { path: "/order/:orderId", component: DriverOrderPage },
   { component: NotFoundPage },
 ];
 
@@ -124,9 +130,30 @@ function LoggedInRoute() {
     return "";
   };
 
+  const onSuccess = (data: GeolocationPosition) => {
+    globalPositionVars({
+      lat: data.coords.latitude,
+      lng: data.coords.longitude,
+    });
+  };
+
+  const onError = () => {};
+
+  useEffect(() => {
+    if (data?.me.role !== UserRole.Delivery) return;
+    navigator.geolocation.getCurrentPosition(onSuccess, onError, {
+      enableHighAccuracy: true,
+    });
+  }, [data?.me.role]);
+
   return (
     <>
-      <div className={`min-h-screen flex flex-col ${isOverflowHidden()}`}>
+      <div
+        className={`min-h-screen flex flex-col ${isOverflowHidden()} bg-white`}
+      >
+        <Helmet>
+          <title>Nuber-eats</title>
+        </Helmet>
         {data?.me.role === UserRole.Client && <Address />}
         <Header />
         <Switch>
@@ -184,7 +211,7 @@ function LoggedInRoute() {
         <ConfirmDialog />
       )}
       {data?.me.role === UserRole.Client && isBasketDialog && <BasketDialog />}
-      {data?.me.role === UserRole.Client && isMessageAlert && <MessageAlert />}
+      {isMessageAlert && <MessageAlert />}
       <CreateAddressDialog />
       <AddressDialog />
       {data?.me.role === UserRole.Owner && (
