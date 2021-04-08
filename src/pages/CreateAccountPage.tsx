@@ -7,12 +7,12 @@ import Button from "../components/common/Button";
 import { Link, useHistory } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { UserRole } from "../__generated__/globalTypes";
+import { EMAIL_PATTERN, VALIDATION_ERROR_MESSAGE } from "../constants";
+import { CREATE_ACCOUNT_MUTATION } from "../lib/graphql/user";
 import {
   createAccountMutation,
   createAccountMutationVariables,
 } from "../__generated__/createAccountMutation";
-import { EMAIL_PATTERN, VALIDATION_ERROR_MESSAGE } from "../constants";
-import { CREATE_ACCOUNT_MUTATION } from "../lib/graphql/user";
 
 interface ICreateAccountForm {
   email: string;
