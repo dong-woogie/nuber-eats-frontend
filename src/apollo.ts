@@ -83,11 +83,17 @@ export const orderStatusCountVars = makeVar<IOrderStatusCount>({
 });
 
 const httpLink = createHttpLink({
-  uri: "http://localhost:4000/graphql",
+  uri:
+    process.env.NODE_ENV === "production"
+      ? "https://nuguri-backend.herokuapp.com/graphql"
+      : "http://localhost:4000/graphql",
 });
 
 const wsLink = new WebSocketLink({
-  uri: `ws://localhost:4000/graphql`,
+  uri:
+    process.env.NODE_ENV === "production"
+      ? "wss://nuguri-backend.herokuapp.com/graphql"
+      : `ws://localhost:4000/graphql`,
   options: {
     reconnect: true,
     connectionParams: {
