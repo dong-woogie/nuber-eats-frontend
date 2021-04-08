@@ -41,6 +41,23 @@ interface IAddressDialog {
   onComplete: (address: string) => void;
 }
 
+export interface IGlobalPosition {
+  lat: number;
+  lng: number;
+}
+
+export enum IStatus {
+  wating = "wating",
+  working = "working",
+  done = "done",
+}
+
+interface IOrderStatusCount {
+  [IStatus.wating]: number;
+  [IStatus.working]: number;
+  [IStatus.done]: number;
+}
+
 const token = localStorage.getItem(LOCAL_STORAGE_TOKEN);
 export const loggedVars = makeVar(Boolean(token));
 export const authTokenVars = makeVar(token);
@@ -55,6 +72,15 @@ export const messageAlertVars = makeVar("");
 
 export const selectDishFormVars = makeVar<ISelectDish | null>(null);
 export const basketsVars = makeVar<IBasketVars | null>(null);
+
+export const globalPositionVars = makeVar<IGlobalPosition>({ lat: 0, lng: 0 });
+export const orderStatusVars = makeVar<IStatus>(IStatus.wating);
+
+export const orderStatusCountVars = makeVar<IOrderStatusCount>({
+  wating: 0,
+  working: 0,
+  done: 0,
+});
 
 const httpLink = createHttpLink({
   uri: "http://localhost:4000/graphql",
