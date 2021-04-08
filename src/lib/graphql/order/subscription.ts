@@ -27,3 +27,19 @@ export const COOKED_ORDER_SUBSCRIPTION = gql`
   }
   ${GET_ORDER_FRAGMENT}
 `;
+
+export const ANOTHER_DRIVER_TAKE_ORDER = gql`
+  subscription anotherDriverTakeOrder($input: AnotherDriverTakeOrderInput!) {
+    anotherDriverTakeOrder(input: $input) {
+      orderId
+    }
+  }
+`;
+
+export const PICKUP_ORDER_SUBSCRIPTION = gql`
+  subscription pickupOrder($input: PickupOrderInput!) {
+    pickupOrder(input: $input) {
+      orderId
+    }
+  }
+`;

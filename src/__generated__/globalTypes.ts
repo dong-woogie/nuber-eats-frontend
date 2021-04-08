@@ -21,6 +21,11 @@ export enum UserRole {
   Owner = "Owner",
 }
 
+export interface AnotherDriverTakeOrderInput {
+  lat: number;
+  lng: number;
+}
+
 export interface CategoryInput {
   take: number;
   skip?: number | null;
@@ -93,12 +98,29 @@ export interface EditProfileInput {
   password?: string | null;
 }
 
+export interface GetDriverOrderInput {
+  id: number;
+  lat: number;
+  lng: number;
+}
+
+export interface GetDriverOrdersInput {
+  status?: OrderStatus | null;
+  lat: number;
+  lng: number;
+}
+
 export interface GetOrderInput {
   id: number;
 }
 
 export interface GetOrdersInput {
   status?: OrderStatus | null;
+}
+
+export interface GetOwnerOrdersInput {
+  restaurantId: number;
+  statuses?: OrderStatus[] | null;
 }
 
 export interface LoginInput {
@@ -120,6 +142,10 @@ export interface OrderUpdatesInput {
   id: number;
 }
 
+export interface PickupOrderInput {
+  restaurantId: number;
+}
+
 export interface RestaurantInput {
   restaurantId: number;
 }
@@ -133,6 +159,10 @@ export interface SearchRestaurantsInput {
   take: number;
   skip?: number | null;
   query: string;
+}
+
+export interface TakeOrderInput {
+  id: number;
 }
 
 export interface VerifyEmailInput {

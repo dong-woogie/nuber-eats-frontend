@@ -9,20 +9,36 @@ import { GetOrderInput, OrderStatus } from "./globalTypes";
 // GraphQL query operation: getOrderQuery
 // ====================================================
 
+export interface getOrderQuery_getOrder_order_customer_position {
+  __typename: "PositionEntity";
+  coordinates: number[];
+}
+
 export interface getOrderQuery_getOrder_order_customer {
   __typename: "User";
+  id: number;
   email: string;
+  address: string | null;
+  position: getOrderQuery_getOrder_order_customer_position;
 }
 
 export interface getOrderQuery_getOrder_order_driver {
   __typename: "User";
+  id: number;
   email: string;
+}
+
+export interface getOrderQuery_getOrder_order_restaurant_position {
+  __typename: "PositionEntity";
+  coordinates: number[];
 }
 
 export interface getOrderQuery_getOrder_order_restaurant {
   __typename: "Restaurant";
   id: number;
   name: string;
+  address: string;
+  position: getOrderQuery_getOrder_order_restaurant_position | null;
 }
 
 export interface getOrderQuery_getOrder_order_items_dish {
@@ -52,6 +68,7 @@ export interface getOrderQuery_getOrder_order {
   createdAt: any;
   total: number | null;
   status: OrderStatus;
+  distance: number | null;
   customer: getOrderQuery_getOrder_order_customer | null;
   driver: getOrderQuery_getOrder_order_driver | null;
   restaurant: getOrderQuery_getOrder_order_restaurant;

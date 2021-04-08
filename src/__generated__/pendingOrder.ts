@@ -9,20 +9,36 @@ import { OrderStatus } from "./globalTypes";
 // GraphQL subscription operation: pendingOrder
 // ====================================================
 
+export interface pendingOrder_pendingOrder_customer_position {
+  __typename: "PositionEntity";
+  coordinates: number[];
+}
+
 export interface pendingOrder_pendingOrder_customer {
   __typename: "User";
+  id: number;
   email: string;
+  address: string | null;
+  position: pendingOrder_pendingOrder_customer_position;
 }
 
 export interface pendingOrder_pendingOrder_driver {
   __typename: "User";
+  id: number;
   email: string;
+}
+
+export interface pendingOrder_pendingOrder_restaurant_position {
+  __typename: "PositionEntity";
+  coordinates: number[];
 }
 
 export interface pendingOrder_pendingOrder_restaurant {
   __typename: "Restaurant";
   id: number;
   name: string;
+  address: string;
+  position: pendingOrder_pendingOrder_restaurant_position | null;
 }
 
 export interface pendingOrder_pendingOrder_items_dish {
@@ -52,6 +68,7 @@ export interface pendingOrder_pendingOrder {
   createdAt: any;
   total: number | null;
   status: OrderStatus;
+  distance: number | null;
   customer: pendingOrder_pendingOrder_customer | null;
   driver: pendingOrder_pendingOrder_driver | null;
   restaurant: pendingOrder_pendingOrder_restaurant;

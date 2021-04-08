@@ -66,15 +66,26 @@ export const GET_ORDER_FRAGMENT = gql`
     createdAt
     total
     status
+    distance
     customer {
+      id
       email
+      address
+      position {
+        coordinates
+      }
     }
     driver {
+      id
       email
     }
     restaurant {
       id
       name
+      address
+      position {
+        coordinates
+      }
     }
     items {
       dish {

@@ -9,20 +9,36 @@ import { OrderStatus } from "./globalTypes";
 // GraphQL fragment: GetOrderParts
 // ====================================================
 
+export interface GetOrderParts_customer_position {
+  __typename: "PositionEntity";
+  coordinates: number[];
+}
+
 export interface GetOrderParts_customer {
   __typename: "User";
+  id: number;
   email: string;
+  address: string | null;
+  position: GetOrderParts_customer_position;
 }
 
 export interface GetOrderParts_driver {
   __typename: "User";
+  id: number;
   email: string;
+}
+
+export interface GetOrderParts_restaurant_position {
+  __typename: "PositionEntity";
+  coordinates: number[];
 }
 
 export interface GetOrderParts_restaurant {
   __typename: "Restaurant";
   id: number;
   name: string;
+  address: string;
+  position: GetOrderParts_restaurant_position | null;
 }
 
 export interface GetOrderParts_items_dish {
@@ -52,6 +68,7 @@ export interface GetOrderParts {
   createdAt: any;
   total: number | null;
   status: OrderStatus;
+  distance: number | null;
   customer: GetOrderParts_customer | null;
   driver: GetOrderParts_driver | null;
   restaurant: GetOrderParts_restaurant;
