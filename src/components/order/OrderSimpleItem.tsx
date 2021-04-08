@@ -1,14 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useMe } from "../../lib/hooks/useMe";
+import { distanceText } from "../../lib/utils";
 import { getOrdersQuery_getOrders_orders } from "../../__generated__/getOrdersQuery";
+import { UserRole } from "../../__generated__/globalTypes";
 
 interface IOrderSimpleItemProps {
   order: getOrdersQuery_getOrders_orders;
 }
 
 function OrderSimpleItem({ order }: IOrderSimpleItemProps) {
+  const { data } = useMe();
+  const isDriver = data?.me.role === UserRole.Delivery;
   return (
-    <div className="relative flex bg-gray-500 text-white border-b-2 border-gray-600 px-2 py-3 shadow-2xl">
+    <div className="relative flex bg-gray-400 text-white border-t-2 px-2 py-3 shadow-2xl">
       <div className="flex-1 overflow-hidden">
         <h4>주문일시 - {new Date(order.createdAt).toLocaleTimeString("ko")}</h4>
         <h4>주문번호 - {order.id}</h4>
@@ -32,7 +37,7 @@ function OrderSimpleItem({ order }: IOrderSimpleItemProps) {
         ))}
       </div>
       <div className="w-24 max-w-max px-2 center font-bold text-lg">
-        {order.total}원
+        {isDriver ? distanceText(order.distance || 0) : order.total + "원"}
       </div>
 
       <Link to={`/order/${order.id}`}>
