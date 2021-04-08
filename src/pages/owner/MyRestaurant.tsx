@@ -39,7 +39,7 @@ function MyRestaurant() {
         }}
       ></section>
 
-      <Link to={`/orders/wating?restaurantId=${restaurantId}`}>
+      <Link to={`/orders?restaurantId=${restaurantId}`}>
         <div className="py-5 bg-green-400 hover:bg-green-500 active:bg-green-600 text-center text-white text-lg font-bold">
           장사 시작하기
         </div>
