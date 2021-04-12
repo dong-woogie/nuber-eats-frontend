@@ -6,6 +6,8 @@ import SearchForm from "./SearchForm";
 import { faSearch, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { UserRole } from "../../__generated__/globalTypes";
+import VerifyMessage from "../common/VerifyMessage";
+import Address from "../common/Address";
 
 function Header() {
   const { data } = useMe();
@@ -19,14 +21,9 @@ function Header() {
 
   return (
     <>
-      {data && !data?.me.verified && (
-        <div className="p-3 text-center bg-gray-700 text-white">
-          <span className="font-medium text-base">
-            Please verify your email
-          </span>
-        </div>
-      )}
-      <header className="py-1 sm:py-5">
+      <VerifyMessage />
+      <Address />
+      <header className="pb-1 sm:py-3">
         <div className="base-wrap-w flex flex-wrap items-center">
           <Link to="/" className="order-1">
             <img src={Logo} alt="logo" className="w-40" />

@@ -40,7 +40,7 @@ export const useLazyDriverOrders = ({ lat, lng }: IGlobalPosition) => {
       },
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [subscribeToMore]);
+  }, [subscribeToMore, data]);
 
   useEffect(() => {
     if (!subscribeToMore) return;

@@ -21,7 +21,6 @@ import BasketDialog from "../components/basket/BasketDialog";
 import MessageAlert from "../components/common/alert/MessageAlert";
 import ConfirmDialog from "../components/common/alert/ConfirmDialog";
 import CreateAddressDialog from "../components/common/dialog/CreateAddressDialog";
-import Address from "../components/common/Address";
 import AddressDialog from "../components/common/dialog/AddressDialog";
 import { Helmet } from "react-helmet-async";
 
@@ -154,7 +153,6 @@ function LoggedInRoute() {
         <Helmet>
           <title>Nuber-eats</title>
         </Helmet>
-        {data?.me.role === UserRole.Client && <Address />}
         <Header />
         <Switch>
           {data?.me.role === UserRole.Client &&

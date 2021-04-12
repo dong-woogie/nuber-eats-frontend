@@ -3,12 +3,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { createAddressDialogVars } from "../../apollo";
 import { useMe } from "../../lib/hooks/useMe";
+import { UserRole } from "../../__generated__/globalTypes";
 
 function Address() {
   const { data } = useMe();
   const onClick = () => createAddressDialogVars(true);
+  const isClient = data?.me.role === UserRole.Client;
+
+  if (!isClient) return null;
   return (
-    <div className="absolute w-full center cursor-pointer" onClick={onClick}>
+    <div className="center cursor-pointer" onClick={onClick}>
       <h5 className="whitespace-nowrap overflow-ellipsis overflow-hidden font-bold text-sm text-gray-800">
         {data?.me.address ? data?.me.address : "주소 입력하기"}
         <FontAwesomeIcon icon={faCaretDown} className="ml-1" />
