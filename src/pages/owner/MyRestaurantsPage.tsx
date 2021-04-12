@@ -10,7 +10,7 @@ function MyRestaurantsPage() {
   const { data } = useQuery<myRestaurantsQuery>(MY_RESTAURANTS_QUERY);
   const onOpenDialog = () => createRestaurantDialogVars(true);
   return (
-    <div className="flex-1">
+    <div className="flex-1 center">
       <Helmet>
         <title>Owner Home | Nuber Eats</title>
       </Helmet>
