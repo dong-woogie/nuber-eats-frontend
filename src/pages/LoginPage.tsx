@@ -39,7 +39,8 @@ function LoginPage() {
     authTokenVars(token);
     loggedVars(true);
     localStorage.setItem(LOCAL_STORAGE_TOKEN, token);
-    window.history.go();
+    // @ts-ignore
+    window.history.go("/");
   };
   const [loginMutation, { data: loginMutationResult, loading }] = useMutation<
     loginMitation,
