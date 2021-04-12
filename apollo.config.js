@@ -5,7 +5,10 @@ module.exports = {
     tagName: "gql",
     service: {
       name: "nuber-eats-backend",
-      url: "http://localhost:4000/graphql",
+      url:
+        process.env.NODE_ENV === "production"
+          ? "https://nuguri-backend.herokuapp.com/graphql"
+          : "http://localhost:4000/graphql",
     },
   },
 };

@@ -22,10 +22,15 @@ export const useFileInput = () => {
         loading: true,
       });
       const { url } = await (
-        await fetch("http://localhost:4000/uploads", {
-          method: "post",
-          body: formData,
-        })
+        await fetch(
+          process.env.NODE_ENV === "production"
+            ? "https://nuguri-backend.herokuapp.com/uploads"
+            : "http://localhost:4000/uploads",
+          {
+            method: "post",
+            body: formData,
+          }
+        )
       ).json();
 
       setState({
