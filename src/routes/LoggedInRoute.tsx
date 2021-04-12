@@ -15,6 +15,8 @@ import {
   addressDialogVars,
   createDishDialogVars,
   globalPositionVars,
+  optionDialogVars,
+  createRestaurantDialogVars,
 } from "../apollo";
 import { useReactiveVar } from "@apollo/client";
 import BasketDialog from "../components/basket/BasketDialog";
@@ -113,6 +115,8 @@ function LoggedInRoute() {
   const isCreateAddressDialog = useReactiveVar(createAddressDialogVars);
   const isAddressDialog = !!useReactiveVar(addressDialogVars);
   const isCreateDishDialog = useReactiveVar(createDishDialogVars);
+  const isOptionDialog = useReactiveVar(optionDialogVars);
+  const isCreateRestaurantDialog = useReactiveVar(createRestaurantDialogVars);
 
   const isOverflowHidden = () => {
     if (
@@ -122,7 +126,9 @@ function LoggedInRoute() {
       isMessageAlert ||
       isCreateAddressDialog ||
       isAddressDialog ||
-      isCreateDishDialog
+      isCreateDishDialog ||
+      isOptionDialog ||
+      isCreateRestaurantDialog
     ) {
       return "overflow-hidden";
     }

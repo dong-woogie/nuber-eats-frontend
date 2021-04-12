@@ -31,7 +31,7 @@ function AddDishOptionDialog({ onSubmit }: IAddDishOptionDialogProps) {
   const addOptionChoice = () => {
     let result: any;
     if (optionState.choices && optionState.choices[0]) {
-      const id = (optionState?.choices[0]?.id || 0) + 1;
+      const id = (optionState?.choices.slice(-1)[0]?.id || 0) + 1;
       result = { id };
     } else {
       result = { id: 1 };
