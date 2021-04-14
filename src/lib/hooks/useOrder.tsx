@@ -14,20 +14,21 @@ export const useOrder = (orderId: number) => {
     getOrderQueryVariables
   >(GET_ORDER_QUERY, {
     variables: { input: { id: orderId } },
+    fetchPolicy: "cache-and-network",
   });
 
   useEffect(() => {
-    if (!data?.getOrder.ok) return;
-    if (!subscribeToMore) return;
+    if (!subscribeToMore || !orderId) return;
+
     subscribeToMore({
       document: ORDER_SUBSCRIPTION,
       variables: { input: { id: orderId } },
-      updateQuery(
+      updateQuery: (
         prev,
         {
           subscriptionData: { data },
         }: { subscriptionData: { data: orderUpdate } }
-      ) {
+      ) => {
         if (!data) return prev;
         messageAlertVars(ORDER_STATUS_TEXT[data.orderUpdate.status]);
         return {
@@ -40,7 +41,7 @@ export const useOrder = (orderId: number) => {
         };
       },
     });
-  }, [data, orderId, subscribeToMore]);
+  }, [orderId, subscribeToMore]);
 
   return { data };
 };
