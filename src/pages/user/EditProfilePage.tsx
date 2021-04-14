@@ -95,7 +95,7 @@ function EditProfilePage() {
       <Helmet>
         <title>Edit Profile | Nuber Eats</title>
       </Helmet>
-      <h4 className="sub">Edit Profile</h4>
+      <h4 className="sub">프로필 수정</h4>
       <form
         className="grid gap-3 w-full max-w-screen-sm px-10 md:px-0"
         onSubmit={handleSubmit(onSubmit)}

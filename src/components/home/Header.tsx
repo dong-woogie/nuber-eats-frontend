@@ -8,13 +8,24 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { UserRole } from "../../__generated__/globalTypes";
 import VerifyMessage from "../common/VerifyMessage";
 import Address from "../common/Address";
+import { loggedVars } from "../../apollo";
 
 function Header() {
   const { data } = useMe();
   const [isSearchForm, setIsSearchForm] = useState(false);
+  const [isSettingTab, setIsSettingTab] = useState(false);
 
   const onClickSearchIcon = () => {
     setIsSearchForm(!isSearchForm);
+  };
+
+  const onClickUserIcon = () => {
+    setIsSettingTab(!isSettingTab);
+  };
+
+  const logout = () => {
+    localStorage.clear();
+    loggedVars(false);
   };
 
   const isClient = data?.me.role === UserRole.Client;
@@ -42,14 +53,29 @@ function Header() {
             </div>
           )}
 
-          <Link
-            to="/edit-profile"
-            className={`w-14 h-14 flex justify-center items-center order-3 sm:order-4 ${
+          <div
+            className={`relative w-14 h-14 flex justify-center items-center order-3 sm:order-4 cursor-pointer ${
               isClient ? "" : "ml-auto"
             }`}
+            onClick={onClickUserIcon}
           >
             <FontAwesomeIcon icon={faUser} className="text-xl" />
-          </Link>
+            {isSettingTab && (
+              <div className="absolute w-32 top-3/4 right-1/4 rounded-md shadow-2xl bg-gray-50 border border-gray-200">
+                <Link to="/edit-profile">
+                  <div className="py-1.5 px-3 hover:bg-gray-100 active:bg-gray-200 rounded-md rounded-b-none">
+                    <span className="text-sm font-bold">프로필</span>
+                  </div>
+                </Link>
+                <div
+                  className="py-1.5 px-3 border-t border-gray-400 rounded-md rounded-t-none cursor-pointer hover:bg-gray-100 active:bg-gray-200"
+                  onClick={logout}
+                >
+                  <span className="text-sm font-bold">로그아웃</span>
+                </div>
+              </div>
+            )}
+          </div>
 
           <div
             className={`${
