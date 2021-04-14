@@ -10,7 +10,6 @@ import LogoImage from "../images/eats-logo.svg";
 import Button from "../components/common/Button";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { authTokenVars, loggedVars } from "../apollo";
 import {
   EMAIL_PATTERN,
   LOCAL_STORAGE_TOKEN,
@@ -36,11 +35,8 @@ function LoginPage() {
   const onCompleted = ({ login }: loginMitation) => {
     const { ok, token } = login;
     if (!(ok && token)) return;
-    authTokenVars(token);
-    loggedVars(true);
     localStorage.setItem(LOCAL_STORAGE_TOKEN, token);
-    // @ts-ignore
-    window.history.go("/");
+    window.location.href = "/";
   };
   const [loginMutation, { data: loginMutationResult, loading }] = useMutation<
     loginMitation,
