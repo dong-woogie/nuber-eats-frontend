@@ -4,6 +4,10 @@
 >
 > 고객과 음식점과 배달원이 상호작용하는 웹 어플리케이션 서비스
 
+Website link: [https://romantic-bohr-f9d4d5.netlify.app/](https://romantic-bohr-f9d4d5.netlify.app/) 
+
+backend project repo: [nuber-eats-backend](https://github.com/dong-woogie/nuber-eats-backend)
+
 ## Stack
 
 * React + Typescript
